@@ -1,0 +1,289 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F8C45D8814DF822D00F12A1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8714DF822D00F12A1D /* UIKit.framework */; };
+		F8C45D8A14DF822D00F12A1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8914DF822D00F12A1D /* Foundation.framework */; };
+		F8C45D8C14DF822D00F12A1D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8B14DF822D00F12A1D /* CoreGraphics.framework */; };
+		F8C45D9214DF822D00F12A1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8C45D9014DF822D00F12A1D /* InfoPlist.strings */; };
+		F8C45D9414DF822D00F12A1D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45D9314DF822D00F12A1D /* main.m */; };
+		F8C45D9814DF822D00F12A1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45D9714DF822D00F12A1D /* AppDelegate.m */; };
+		F8C45DA014DF823C00F12A1D /* PaperFoldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45D9F14DF823C00F12A1D /* PaperFoldViewController.m */; };
+		F8C45DA214DF848700F12A1D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45DA114DF848700F12A1D /* QuartzCore.framework */; };
+		F8C45DB714DFDD9400F12A1D /* ShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45DB614DFDD9400F12A1D /* ShadowView.m */; };
+		F8C45DBB14DFDDAB00F12A1D /* FoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45DBA14DFDDAB00F12A1D /* FoldView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F8C45D8314DF822D00F12A1D /* PaperFold.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaperFold.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8C45D8714DF822D00F12A1D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F8C45D8914DF822D00F12A1D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F8C45D8B14DF822D00F12A1D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F8C45D8F14DF822D00F12A1D /* PaperFold-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PaperFold-Info.plist"; sourceTree = "<group>"; };
+		F8C45D9114DF822D00F12A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F8C45D9314DF822D00F12A1D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F8C45D9514DF822D00F12A1D /* PaperFold-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PaperFold-Prefix.pch"; sourceTree = "<group>"; };
+		F8C45D9614DF822D00F12A1D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F8C45D9714DF822D00F12A1D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F8C45D9E14DF823C00F12A1D /* PaperFoldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperFoldViewController.h; sourceTree = "<group>"; };
+		F8C45D9F14DF823C00F12A1D /* PaperFoldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperFoldViewController.m; sourceTree = "<group>"; };
+		F8C45DA114DF848700F12A1D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F8C45DB514DFDD9400F12A1D /* ShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowView.h; sourceTree = "<group>"; };
+		F8C45DB614DFDD9400F12A1D /* ShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowView.m; sourceTree = "<group>"; };
+		F8C45DB914DFDDAB00F12A1D /* FoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldView.h; sourceTree = "<group>"; };
+		F8C45DBA14DFDDAB00F12A1D /* FoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoldView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F8C45D8014DF822D00F12A1D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8C45DA214DF848700F12A1D /* QuartzCore.framework in Frameworks */,
+				F8C45D8814DF822D00F12A1D /* UIKit.framework in Frameworks */,
+				F8C45D8A14DF822D00F12A1D /* Foundation.framework in Frameworks */,
+				F8C45D8C14DF822D00F12A1D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F8C45D7814DF822C00F12A1D = {
+			isa = PBXGroup;
+			children = (
+				F8C45D8D14DF822D00F12A1D /* PaperFold */,
+				F8C45D8614DF822D00F12A1D /* Frameworks */,
+				F8C45D8414DF822D00F12A1D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F8C45D8414DF822D00F12A1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F8C45D8314DF822D00F12A1D /* PaperFold.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8C45D8614DF822D00F12A1D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F8C45DA114DF848700F12A1D /* QuartzCore.framework */,
+				F8C45D8714DF822D00F12A1D /* UIKit.framework */,
+				F8C45D8914DF822D00F12A1D /* Foundation.framework */,
+				F8C45D8B14DF822D00F12A1D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F8C45D8D14DF822D00F12A1D /* PaperFold */ = {
+			isa = PBXGroup;
+			children = (
+				F8C45D9614DF822D00F12A1D /* AppDelegate.h */,
+				F8C45D9714DF822D00F12A1D /* AppDelegate.m */,
+				F8C45D9E14DF823C00F12A1D /* PaperFoldViewController.h */,
+				F8C45D9F14DF823C00F12A1D /* PaperFoldViewController.m */,
+				F8C45DB914DFDDAB00F12A1D /* FoldView.h */,
+				F8C45DBA14DFDDAB00F12A1D /* FoldView.m */,
+				F8C45DB514DFDD9400F12A1D /* ShadowView.h */,
+				F8C45DB614DFDD9400F12A1D /* ShadowView.m */,
+				F8C45D8E14DF822D00F12A1D /* Supporting Files */,
+			);
+			path = PaperFold;
+			sourceTree = "<group>";
+		};
+		F8C45D8E14DF822D00F12A1D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F8C45D8F14DF822D00F12A1D /* PaperFold-Info.plist */,
+				F8C45D9014DF822D00F12A1D /* InfoPlist.strings */,
+				F8C45D9314DF822D00F12A1D /* main.m */,
+				F8C45D9514DF822D00F12A1D /* PaperFold-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F8C45D8214DF822D00F12A1D /* PaperFold */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8C45D9B14DF822D00F12A1D /* Build configuration list for PBXNativeTarget "PaperFold" */;
+			buildPhases = (
+				F8C45D7F14DF822D00F12A1D /* Sources */,
+				F8C45D8014DF822D00F12A1D /* Frameworks */,
+				F8C45D8114DF822D00F12A1D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PaperFold;
+			productName = PaperFold;
+			productReference = F8C45D8314DF822D00F12A1D /* PaperFold.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F8C45D7A14DF822C00F12A1D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "honcheng@gmail.com";
+			};
+			buildConfigurationList = F8C45D7D14DF822C00F12A1D /* Build configuration list for PBXProject "PaperFold" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F8C45D7814DF822C00F12A1D;
+			productRefGroup = F8C45D8414DF822D00F12A1D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F8C45D8214DF822D00F12A1D /* PaperFold */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F8C45D8114DF822D00F12A1D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8C45D9214DF822D00F12A1D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F8C45D7F14DF822D00F12A1D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8C45D9414DF822D00F12A1D /* main.m in Sources */,
+				F8C45D9814DF822D00F12A1D /* AppDelegate.m in Sources */,
+				F8C45DA014DF823C00F12A1D /* PaperFoldViewController.m in Sources */,
+				F8C45DB714DFDD9400F12A1D /* ShadowView.m in Sources */,
+				F8C45DBB14DFDDAB00F12A1D /* FoldView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F8C45D9014DF822D00F12A1D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F8C45D9114DF822D00F12A1D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F8C45D9914DF822D00F12A1D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F8C45D9A14DF822D00F12A1D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F8C45D9C14DF822D00F12A1D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PaperFold/PaperFold-Prefix.pch";
+				INFOPLIST_FILE = "PaperFold/PaperFold-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F8C45D9D14DF822D00F12A1D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: buUuk private limited";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PaperFold/PaperFold-Prefix.pch";
+				INFOPLIST_FILE = "PaperFold/PaperFold-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8080FEDE-7E71-441D-9A18-FD78D0998610";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F8C45D7D14DF822C00F12A1D /* Build configuration list for PBXProject "PaperFold" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8C45D9914DF822D00F12A1D /* Debug */,
+				F8C45D9A14DF822D00F12A1D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8C45D9B14DF822D00F12A1D /* Build configuration list for PBXNativeTarget "PaperFold" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8C45D9C14DF822D00F12A1D /* Debug */,
+				F8C45D9D14DF822D00F12A1D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F8C45D7A14DF822C00F12A1D /* Project object */;
+}
