@@ -11,6 +11,13 @@
 #import "FoldView.h"
 #import "MultiFoldView.h"
 
+typedef enum
+{
+    PaperFoldStateDefault = 0,
+    PaperFoldStateLeftUnfolded = 1,
+    PaperFoldStateRightUnfolded = 2
+} PaperFoldState;
+
 @interface PaperFoldViewController : UIViewController
 
 // main content view
@@ -22,6 +29,8 @@
 @property (strong, nonatomic) FoldView *leftFoldView;
 // the multiple fold view on the right
 @property (strong, nonatomic) MultiFoldView *rightFoldView;
+// state of the current fold
+@property (assign) PaperFoldState state;
 
 // animate folding and unfolding when sent the offset of contentView
 // offset are either sent from pan gesture recognizer, or manual animation done with NSTimer after gesture ended
