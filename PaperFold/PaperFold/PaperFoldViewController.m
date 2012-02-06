@@ -15,11 +15,13 @@
 
 @synthesize leftFoldView = _leftFoldView;
 CGFloat const kLeftViewWidth = 100.0;
+CGFloat const kLeftViewUnfoldThreshold = 0.5;
 
 @synthesize rightFoldView = _rightFoldView;
 CGFloat const kRightViewWidth = 240.0;
 CGFloat const kRightViewPullFactor = 0.9;
 NSInteger const kRightViewFoldCount = 4;
+CGFloat const kRightViewUnfoldThreshold = 0.5;
 
 - (id)init
 {
@@ -62,7 +64,29 @@ NSInteger const kRightViewFoldCount = 4;
     }
     else if ([gesture state]==UIGestureRecognizerStateEnded || [gesture state]==UIGestureRecognizerStateCancelled)
     {
+        float x = point.x;
+        
+        if (x>=0.0) // offset to the right
+        {
+            if (x>=kLeftViewUnfoldThreshold*kLeftViewWidth) 
+            {
+                // if offset more than threshold, open fully
+                _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
+                return;
+            }
+        }
+        else if (x<0)
+        {
+            if (x<=-kRightViewUnfoldThreshold*kRightViewWidth)
+            {
+                // if offset more than threshold, open fully
+                _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
+                return;
+            }
+        }
+        
         // after panning completes
+        // if offset does not exceed threshold
         // use NSTimer to create manual animation to restore view
         _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
         
@@ -74,7 +98,7 @@ NSInteger const kRightViewFoldCount = 4;
     float x = point.x;
     // if offset to the right, show the left view
     // if offset to the left, show the right multi-fold view
-    if (x>0)
+    if (x>=0.0)
     {
         // set the limit of the right offset
         if (x>kLeftViewWidth)
@@ -84,7 +108,7 @@ NSInteger const kRightViewFoldCount = 4;
         [_contentView setTransform:CGAffineTransformMakeTranslation(x, 0)];
         [_leftFoldView unfoldWithParentOffset:x];
     }
-    else if (x<0)
+    else if (x<0.0)
     {
         // set the limit of the left offset
         // original x value not changed, to be sent to multi-fold view
@@ -96,6 +120,44 @@ NSInteger const kRightViewFoldCount = 4;
         [_contentView setTransform:CGAffineTransformMakeTranslation(x1, 0)];
         [_rightFoldView unfoldWithParentOffset:x];
     }
+}
+
+// unfold the left view
+- (void)unfoldLeftView:(NSTimer*)timer
+{
+    CGAffineTransform transform = [_contentView transform];
+    float x = transform.tx + (kLeftViewWidth-transform.tx)/4*3;
+    transform = CGAffineTransformMakeTranslation(x, 0);
+    [_contentView setTransform:transform];
+    
+    if (x>=kLeftViewWidth)
+    {
+        [timer invalidate];
+        transform = CGAffineTransformMakeTranslation(kLeftViewWidth, 0);
+        [_contentView setTransform:transform];
+    }
+    
+    // use the x value to animate folding
+    [self animateWhenPanned:CGPointMake(_contentView.frame.origin.x, 0)];
+}
+
+// unfold the right view
+- (void)unfoldRightView:(NSTimer*)timer
+{
+    CGAffineTransform transform = [_contentView transform];
+    float x = transform.tx - (transform.tx+kRightViewWidth)/4*3;
+    transform = CGAffineTransformMakeTranslation(x, 0);
+    [_contentView setTransform:transform];
+
+    if (x<=-kRightViewWidth)
+    {
+        [timer invalidate];
+        transform = CGAffineTransformMakeTranslation(-kRightViewWidth, 0);
+        [_contentView setTransform:transform];
+    }
+    
+    // use the x value to animate folding
+    [self animateWhenPanned:CGPointMake(_contentView.frame.origin.x, 0)];
 }
 
 // restore contentView back to original position
