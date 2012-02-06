@@ -17,6 +17,10 @@
 // unfold the 2 facing views using a fraction 0 to 1
 // 0 when it's completely folded
 // 1 when it's completely unfolded
+// fraction is calculated based on parent offset
 - (void)unfoldViewToFraction:(CGFloat)fraction;
+
+// unfold the 2 facing views based on parent offset
+- (void)unfoldWithParentOffset:(float)offset;
 
 @end

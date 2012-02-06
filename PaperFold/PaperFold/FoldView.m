@@ -38,6 +38,10 @@
         CATransform3D transform = CATransform3DIdentity;
         transform.m34 = -1/800.0;
         [self.layer setSublayerTransform:transform];
+        
+        // make sure the views are closed properly when initialized
+        [_leftView.layer setTransform:CATransform3DMakeRotation((M_PI / 2), 0, 1, 0)];
+        [_rightView.layer setTransform:CATransform3DMakeRotation((M_PI / 2), 0, 1, 0)];
     }
     return self;
 }
@@ -61,6 +65,14 @@
     [_leftView.shadowView setAlpha:1-fraction];
     [_rightView.shadowView setAlpha:1-fraction];
     
+}
+
+- (void)unfoldWithParentOffset:(float)offset
+{
+    CGFloat fraction = offset / self.frame.size.width;
+    if (fraction < 0) fraction = 0;
+    if (fraction > 1) fraction = 1;
+    [self unfoldViewToFraction:fraction];
 }
 
 @end

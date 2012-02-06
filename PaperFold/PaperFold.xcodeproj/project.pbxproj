@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F8BEBB9A14E01A7E005CE661 /* FoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8BEBB9914E01A7E005CE661 /* FoldView.m */; };
+		F8BEBB9D14E01F39005CE661 /* MultiFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8BEBB9C14E01F39005CE661 /* MultiFoldView.m */; };
 		F8C45D8814DF822D00F12A1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8714DF822D00F12A1D /* UIKit.framework */; };
 		F8C45D8A14DF822D00F12A1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8914DF822D00F12A1D /* Foundation.framework */; };
 		F8C45D8C14DF822D00F12A1D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8B14DF822D00F12A1D /* CoreGraphics.framework */; };
@@ -23,6 +24,8 @@
 /* Begin PBXFileReference section */
 		F8BEBB9814E01A7E005CE661 /* FoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldView.h; sourceTree = "<group>"; };
 		F8BEBB9914E01A7E005CE661 /* FoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoldView.m; sourceTree = "<group>"; };
+		F8BEBB9B14E01F39005CE661 /* MultiFoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiFoldView.h; sourceTree = "<group>"; };
+		F8BEBB9C14E01F39005CE661 /* MultiFoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiFoldView.m; sourceTree = "<group>"; };
 		F8C45D8314DF822D00F12A1D /* PaperFold.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaperFold.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8C45D8714DF822D00F12A1D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F8C45D8914DF822D00F12A1D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -92,6 +95,8 @@
 				F8C45D9714DF822D00F12A1D /* AppDelegate.m */,
 				F8C45D9E14DF823C00F12A1D /* PaperFoldViewController.h */,
 				F8C45D9F14DF823C00F12A1D /* PaperFoldViewController.m */,
+				F8BEBB9B14E01F39005CE661 /* MultiFoldView.h */,
+				F8BEBB9C14E01F39005CE661 /* MultiFoldView.m */,
 				F8BEBB9814E01A7E005CE661 /* FoldView.h */,
 				F8BEBB9914E01A7E005CE661 /* FoldView.m */,
 				F8C45DB914DFDDAB00F12A1D /* FacingView.h */,
@@ -182,6 +187,7 @@
 				F8C45DB714DFDD9400F12A1D /* ShadowView.m in Sources */,
 				F8C45DBB14DFDDAB00F12A1D /* FacingView.m in Sources */,
 				F8BEBB9A14E01A7E005CE661 /* FoldView.m in Sources */,
+				F8BEBB9D14E01F39005CE661 /* MultiFoldView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

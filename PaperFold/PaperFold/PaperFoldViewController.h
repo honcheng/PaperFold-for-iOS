@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FacingView.h"
 #import "FoldView.h"
+#import "MultiFoldView.h"
 
 @interface PaperFoldViewController : UIViewController
 
@@ -19,17 +20,8 @@
 @property (strong) NSTimer *animationTimer;
 // the fold view on the left
 @property (strong, nonatomic) FoldView *leftFoldView;
-
-@property (strong, nonatomic) UIView *rightView;
-@property (strong, nonatomic) FacingView *rightView1, *rightView2;
-@property (strong, nonatomic) UIView *rightViewSecond;
-@property (strong, nonatomic) FacingView *rightViewSecond1, *rightViewSecond2;
-@property (strong, nonatomic) UIView *rightViewThird;
-@property (strong, nonatomic) FacingView *rightViewThird1, *rightViewThird2;
-
-- (void)unfoldRightViewToFraction:(CGFloat)fraction;
-- (void)unfoldRightViewSecondToFraction:(CGFloat)fraction;
-- (void)unfoldRightViewThirdToFraction:(CGFloat)fraction;
+// the multiple fold view on the right
+@property (strong, nonatomic) MultiFoldView *rightFoldView;
 
 // animate folding and unfolding when sent the offset of contentView
 // offset are either sent from pan gesture recognizer, or manual animation done with NSTimer after gesture ended
