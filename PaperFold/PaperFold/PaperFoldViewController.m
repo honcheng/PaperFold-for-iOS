@@ -13,9 +13,7 @@
 @synthesize contentView = _contentView;
 @synthesize animationTimer = _animationTimer;
 
-@synthesize leftView = _leftView;
-@synthesize leftView1 = _leftView1;
-@synthesize leftView2 = _leftView2;
+@synthesize leftFoldView = _leftFoldView;
 CGFloat const kLeftViewWidth = 100;
 
 @synthesize rightView = _rightView;
@@ -45,28 +43,11 @@ CGFloat const kRightViewWidth = 80;
         
         UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
         [_contentView addGestureRecognizer:panGestureRecognizer];
+
+        [self.view setBackgroundColor:[UIColor darkGrayColor]];
         
-        _leftView = [[UIView alloc] initWithFrame:CGRectMake(0,0,kLeftViewWidth,[self.view bounds].size.height)];
-        [_leftView setBackgroundColor:[UIColor darkGrayColor]];
-        [self.view insertSubview:_leftView belowSubview:_contentView];
-        //[self.view addSubview:_leftView];
-        
-        _leftView1 = [[FoldView alloc] initWithFrame:CGRectMake(-kLeftViewWidth/4,0,kLeftViewWidth/2,[self.view bounds].size.height)];
-        [_leftView1 setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
-        [_leftView1.layer setAnchorPoint:CGPointMake(0.0, 0.5)];
-        [_leftView addSubview:_leftView1];
-        [_leftView1.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.05],[UIColor colorWithWhite:0 alpha:0.2], nil]];
-        
-        _leftView2 = [[FoldView alloc] initWithFrame:CGRectMake(-kLeftViewWidth/4,0,kLeftViewWidth/2,[self.view bounds].size.height)];
-        [_leftView2 setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
-        [_leftView2.layer setAnchorPoint:CGPointMake(1.0, 0.5)];
-        [_leftView addSubview:_leftView2];
-        [_leftView2.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.2],[UIColor colorWithWhite:0 alpha:0.05], nil]];
-        
-        CATransform3D transform = CATransform3DIdentity;
-        //transform.m34 = -1/500.0;
-        transform.m34 = -1/800.0;
-        [_leftView.layer setSublayerTransform:transform];
+        _leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,kLeftViewWidth,[self.view bounds].size.height)];
+        [self.view insertSubview:_leftFoldView belowSubview:_contentView];
         
         _rightView = [[UIView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,kRightViewWidth,[self.view bounds].size.height)];
         [_rightView setBackgroundColor:[UIColor darkGrayColor]];
@@ -75,13 +56,13 @@ CGFloat const kRightViewWidth = 80;
         transform2.m34 = -1/500.0;
         [_rightView.layer setSublayerTransform:transform2];
         
-        _rightView1 = [[FoldView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
+        _rightView1 = [[FacingView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
         [_rightView1 setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
         [_rightView1.layer setAnchorPoint:CGPointMake(0.0, 0.5)];
         [_rightView addSubview:_rightView1];
         [_rightView1.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.05],[UIColor colorWithWhite:0 alpha:0.2], nil]];
         
-        _rightView2 = [[FoldView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
+        _rightView2 = [[FacingView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
         [_rightView2 setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
         [_rightView2.layer setAnchorPoint:CGPointMake(1.0, 0.5)];
         [_rightView addSubview:_rightView2];
@@ -95,14 +76,14 @@ CGFloat const kRightViewWidth = 80;
         transform3.m34 = -1/500.0;
         [_rightViewSecond.layer setSublayerTransform:transform3];
         
-        _rightViewSecond1 = [[FoldView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
+        _rightViewSecond1 = [[FacingView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
         [_rightViewSecond1 setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
         [_rightViewSecond1.layer setAnchorPoint:CGPointMake(0.0, 0.5)];
         [_rightViewSecond addSubview:_rightViewSecond1];
         [_rightViewSecond1.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.05],[UIColor colorWithWhite:0 alpha:0.2], nil]];
 
         
-        _rightViewSecond2 = [[FoldView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
+        _rightViewSecond2 = [[FacingView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
         [_rightViewSecond2 setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
         [_rightViewSecond2.layer setAnchorPoint:CGPointMake(1.0, 0.5)];
         [_rightViewSecond addSubview:_rightViewSecond2];
@@ -115,14 +96,14 @@ CGFloat const kRightViewWidth = 80;
         transform4.m34 = -1/500.0;
         [_rightViewThird.layer setSublayerTransform:transform4];
         
-        _rightViewThird1 = [[FoldView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
+        _rightViewThird1 = [[FacingView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
         [_rightViewThird1 setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
         [_rightViewThird1.layer setAnchorPoint:CGPointMake(0.0, 0.5)];
         [_rightViewThird addSubview:_rightViewThird1];
         [_rightViewThird1.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.05],[UIColor colorWithWhite:0 alpha:0.2], nil]];
 
         
-        _rightViewThird2 = [[FoldView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
+        _rightViewThird2 = [[FacingView alloc] initWithFrame:CGRectMake(-kRightViewWidth/4,0,kRightViewWidth/2,[self.view bounds].size.height)];
         [_rightViewThird2 setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
         [_rightViewThird2.layer setAnchorPoint:CGPointMake(1.0, 0.5)];
         [_rightViewThird addSubview:_rightViewThird2];
@@ -189,8 +170,7 @@ CGFloat const kRightViewWidth = 80;
         CGFloat fraction = x / kLeftViewWidth;
         if (fraction < 0) fraction = 0;
         if (fraction > 1) fraction = 1;
-        
-        [self unfoldLeftViewToFraction:fraction];
+        [_leftFoldView unfoldViewToFraction:fraction];
     }
     else if (x<0)
     {
@@ -212,31 +192,6 @@ CGFloat const kRightViewWidth = 80;
         if (fraction < 0) fraction = 0;
         if (fraction > 1) fraction = 1;
         [self unfoldRightViewToFraction:fraction];
-        
-        // 2nd fold
-        /*
-        if (x<-1*(kRightViewWidth))
-        {
-            CGFloat fraction = -1*(x+kRightViewWidth)/kRightViewWidth;
-            if (fraction < 0) fraction = 0;
-            if (fraction > 1) fraction = 1;
-             NSLog(@".....%f", fraction);
-            [self unfoldRightViewSecondToFraction:fraction];
-        }*/
-        
-        // 3rd fold
-        /*
-        if (x<-2*(kRightViewWidth))
-        {
-            CGFloat fraction = -1*(x+2*kRightViewWidth)/kRightViewWidth;
-            if (fraction < 0) fraction = 0;
-            if (fraction > 1) fraction = 1;
-            [self unfoldRightViewThirdToFraction:fraction];
-        }
-        */
-        
-        
-        
     }
 }
 
@@ -352,38 +307,6 @@ CGFloat const kRightViewWidth = 80;
     
     [_rightViewThird1.shadowView setAlpha:1-fraction];
     [_rightViewThird2.shadowView setAlpha:1-fraction];
-}
-
-- (void)unfoldLeftViewToFraction:(CGFloat)fraction 
-{
-    float delta = asinf(fraction);
-    //delta = M_PI_2*fraction;
-    //NSLog(@"...%f %f", delta, fraction);
-    
-	[_leftView1.layer setTransform:CATransform3DMakeRotation((M_PI / 2) - delta, 0, 1, 0)];
-    //[_leftView1 setFrame:CGRectMake(kLeftViewWidth * (1 - fraction), 0, kLeftViewWidth/2, [self.view bounds].size.height)];
-    
-	//[_leftView2.layer setTransform:CATransform3DMakeRotation(asinf(fraction) + (((M_PI) * 3) / 2) , 0, 1, 0)];
-	
-    CATransform3D transform1 = CATransform3DMakeTranslation(2*_leftView1.frame.size.width, 0, 0);
-    //CATransform3D transform2 = CATransform3DMakeRotation(delta + (((M_PI) * 3) / 2) , 0, 1, 0);
-    CATransform3D transform2 = CATransform3DMakeRotation((M_PI / 2) - delta, 0, -1, 0);
-    CATransform3D transform = CATransform3DConcat(transform2, transform1);
-    
-    
-    
-    //CATransform3D transform = CATransform3DMakeRotation(asinf(fraction) + (((M_PI) * 3) / 2) , 0, 1, 0);
-    //transform = CATransform3DTranslate(transform, -1*_leftView1.frame.size.width, 0, 0);
-    [_leftView2.layer setTransform:transform];
-    
-    //float x2 = kLeftViewWidth/2 * (fraction);
-    //x2 = _leftView1.frame.size.width;
-    //[_leftView2 setFrame:CGRectMake(x2 , 0, kLeftViewWidth/2, [self.view bounds].size.height)];
-    //[_leftView2 setFrame:CGRectMake(0, 0, kLeftViewWidth/2, [self.view bounds].size.height)];
-    
-    [_leftView1.shadowView setAlpha:1-fraction];
-    [_leftView2.shadowView setAlpha:1-fraction];
-
 }
 
 @end
