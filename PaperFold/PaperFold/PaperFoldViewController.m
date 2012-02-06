@@ -18,7 +18,7 @@ CGFloat const kLeftViewWidth = 100.0;
 
 @synthesize rightFoldView = _rightFoldView;
 CGFloat const kRightViewWidth = 240.0;
-CGFloat const kRightViewPullFactor = 0.5;
+CGFloat const kRightViewPullFactor = 0.9;
 NSInteger const kRightViewFoldCount = 4;
 
 - (id)init
