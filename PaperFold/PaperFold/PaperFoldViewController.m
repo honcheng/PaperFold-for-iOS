@@ -25,21 +25,22 @@ NSInteger const kRightViewFoldCount = 4;
 {
     self = [super init];
     if (self) {
+        
+        [self.view setBackgroundColor:[UIColor darkGrayColor]];
+        
         _contentView = [[UIView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,[self.view bounds].size.height)];
         [_contentView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
         [self.view addSubview:_contentView];
         [_contentView setBackgroundColor:[UIColor whiteColor]];
-        
-        UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
-        [_contentView addGestureRecognizer:panGestureRecognizer];
-
-        [self.view setBackgroundColor:[UIColor darkGrayColor]];
         
         _leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,kLeftViewWidth,[self.view bounds].size.height)];
         [self.view insertSubview:_leftFoldView belowSubview:_contentView];
         
         _rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,kRightViewWidth,[self.view bounds].size.height) folds:kRightViewFoldCount pullFactor:kRightViewPullFactor];
         [_contentView addSubview:_rightFoldView];
+        
+        UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
+        [_contentView addGestureRecognizer:panGestureRecognizer];
     }
     return self;
 }
@@ -50,15 +51,19 @@ NSInteger const kRightViewFoldCount = 4;
     
     if ([gesture state]==UIGestureRecognizerStateBegan)
     {
+        // stop manual animation when pan begins, if the last manual animation is not complete
         [_animationTimer invalidate];
     }
     
     if ([gesture state]==UIGestureRecognizerStateChanged)
     {
+        // animate folding when panned
         [self animateWhenPanned:point];
     }
-    else if ([gesture state]==UIGestureRecognizerStateEnded)
+    else if ([gesture state]==UIGestureRecognizerStateEnded || [gesture state]==UIGestureRecognizerStateCancelled)
     {
+        // after panning completes
+        // use NSTimer to create manual animation to restore view
         _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
         
     }
@@ -67,18 +72,22 @@ NSInteger const kRightViewFoldCount = 4;
 - (void)animateWhenPanned:(CGPoint)point
 {
     float x = point.x;
+    // if offset to the right, show the left view
+    // if offset to the left, show the right multi-fold view
     if (x>0)
     {
+        // set the limit of the right offset
         if (x>kLeftViewWidth)
         {
             x = kLeftViewWidth;
         }
-        
         [_contentView setTransform:CGAffineTransformMakeTranslation(x, 0)];
         [_leftFoldView unfoldWithParentOffset:x];
     }
     else if (x<0)
     {
+        // set the limit of the left offset
+        // original x value not changed, to be sent to multi-fold view
         float x1 = x;
         if (x1<-kRightViewWidth)
         {
@@ -89,13 +98,16 @@ NSInteger const kRightViewFoldCount = 4;
     }
 }
 
+// restore contentView back to original position
 - (void)restoreView:(NSTimer*)timer
 {
     CGAffineTransform transform = [_contentView transform];
+    // restoring the x position 3/4 of the last x translation
     float x = transform.tx/4*3;
     transform = CGAffineTransformMakeTranslation(x, 0);
     [_contentView setTransform:transform];
     
+    // if -5<x<5, stop timer animation
     if ((x>=0 && x<5) || (x<=0 && x>-5))
     {
         [timer invalidate];
@@ -103,6 +115,7 @@ NSInteger const kRightViewFoldCount = 4;
         [_contentView setTransform:transform];
     }
     
+    // use the x value to animate folding
     [self animateWhenPanned:CGPointMake(_contentView.frame.origin.x, 0)];
 }
 
