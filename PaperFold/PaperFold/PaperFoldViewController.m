@@ -49,6 +49,10 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [_contentView addSubview:line];
         [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
         
+        UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,1,[self.view bounds].size.height)];
+        [_contentView addSubview:line2];
+        [line2 setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:1]];
+        
         _state = PaperFoldStateDefault;
     }
     return self;
