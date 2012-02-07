@@ -48,10 +48,11 @@
 - (void)drawScreenshotOnFolds
 {
     UIImage *image = [_contentView screenshot];
-    float foldWidth = self.frame.size.width/self.numberOfFolds;
+ 
+    float foldWidth = image.size.width/self.numberOfFolds;
     for (int i=0; i<self.numberOfFolds; i++)
     {
-        CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(foldWidth*i, 0, foldWidth, self.frame.size.height));
+        CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(foldWidth*i*image.scale, 0, foldWidth*image.scale, image.size.height*image.scale));
         UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
         CFRelease(imageRef);
         FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];

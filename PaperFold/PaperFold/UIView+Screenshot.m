@@ -13,12 +13,20 @@
 
 - (UIImage*)screenshot
 {
-    UIGraphicsBeginImageContext(CGSizeMake(self.frame.size.width, self.frame.size.height));
+    UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
     [self.layer renderInContext:UIGraphicsGetCurrentContext()];
     
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    /*
+    NSLog(@">>>> %f %f %f", screenshot.size.width, screenshot.size.height, screenshot.scale);
     
+    NSData *data = UIImagePNGRepresentation(screenshot);
+    UIImage *image2 = [UIImage imageWithData:data];
+    NSLog(@"%f %f %f", image2.size.width, image2.size.height, image2.scale);
+    
+    return image2;
+    */
     return screenshot;
 }
 

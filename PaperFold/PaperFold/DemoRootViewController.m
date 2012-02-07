@@ -19,8 +19,10 @@
 {
     self = [super init];
     if (self) {
-        _mapView = [[MKMapView alloc] initWithFrame:CGRectMake([self.view bounds].size.width-240,0,240,[self.view bounds].size.height)];
-        [_mapView setDelegate:self];
+        
+        _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,240,[self.view bounds].size.height)];
+        UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake([self.view bounds].size.width-240,0,240,[self.view bounds].size.height)];
+        [containerView addSubview:_mapView];
         [self.rightFoldView setContent:_mapView];
         
         _centerTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,[self.view bounds].size.height)];

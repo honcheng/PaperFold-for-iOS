@@ -116,14 +116,12 @@
 
 - (void)setImage:(UIImage*)image
 {
-    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, 0, self.frame.size.width/2, self.frame.size.height));
-    UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
-    [_leftView.layer setContents:(id)[croppedImage CGImage]];
+    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, 0, image.size.width*image.scale/2, image.size.height*image.scale));
+    [_leftView.layer setContents:(__bridge id)imageRef];
     CFRelease(imageRef);
     
-    CGImageRef imageRef2 = CGImageCreateWithImageInRect([image CGImage], CGRectMake(self.frame.size.width/2, 0, self.frame.size.width/2, self.frame.size.height));
-    UIImage *croppedImage2 = [UIImage imageWithCGImage:imageRef2];
-    [_rightView.layer setContents:(id)[croppedImage2 CGImage]];
+    CGImageRef imageRef2 = CGImageCreateWithImageInRect([image CGImage], CGRectMake(image.size.width*image.scale/2, 0, image.size.width*image.scale/2, image.size.height*image.scale));
+    [_rightView.layer setContents:(__bridge id)imageRef2];
     CFRelease(imageRef2);
 }
 
