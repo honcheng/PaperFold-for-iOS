@@ -48,7 +48,7 @@
 - (void)drawScreenshotOnFolds
 {
     UIImage *image = [_contentView screenshot];
- 
+    
     float foldWidth = image.size.width/self.numberOfFolds;
     for (int i=0; i<self.numberOfFolds; i++)
     {
@@ -193,5 +193,7 @@
     [_contentView setHidden:YES];
     [self showFolds:YES];
 }
+
+
 
 @end

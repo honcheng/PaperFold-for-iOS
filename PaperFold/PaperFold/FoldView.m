@@ -133,6 +133,7 @@
     [self drawScreenshotOnFolds];
 }
 
+
 - (void)drawScreenshotOnFolds
 {
     UIImage *image = [_contentView screenshot];
