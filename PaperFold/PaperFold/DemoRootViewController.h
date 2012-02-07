@@ -12,4 +12,5 @@
 
 @interface DemoRootViewController : PaperFoldViewController <MKMapViewDelegate>
 @property (strong, nonatomic) MKMapView *mapView;
+@property (strong, nonatomic) UITableView *leftTableView, *centerTableView;
 @end

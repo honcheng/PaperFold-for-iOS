@@ -22,6 +22,7 @@ typedef enum
 @property (strong) FacingView *leftView, *rightView;
 // indicate whether the fold is open or closed
 @property (assign) FoldState state;
+@property (assign) UIView *contentView;
 
 // unfold the 2 facing views using a fraction 0 to 1
 // 0 when it's completely folded
@@ -34,6 +35,10 @@ typedef enum
 
 // unfold the 2 facing views based on parent offset
 - (void)unfoldWithParentOffset:(float)offset;
+
+- (void)setContent:(UIView *)contentView;
+- (void)drawScreenshotOnFolds;
+- (void)showFolds:(BOOL)show;
 
 - (void)setImage:(UIImage*)image;
 

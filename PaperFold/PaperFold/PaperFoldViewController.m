@@ -45,6 +45,10 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
         [_contentView addGestureRecognizer:panGestureRecognizer];
         
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(-1,0,1,[self.view bounds].size.height)];
+        [_contentView addSubview:line];
+        [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
+        
         _state = PaperFoldStateDefault;
     }
     return self;

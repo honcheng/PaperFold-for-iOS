@@ -37,7 +37,8 @@
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    return YES;
+    if (point.x<0) return NO;
+    else return YES;
 }
 
 @end

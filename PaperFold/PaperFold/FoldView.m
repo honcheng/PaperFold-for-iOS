@@ -8,11 +8,13 @@
 
 #import "FoldView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIView+Screenshot.h"
 
 @implementation FoldView
 @synthesize leftView = _leftView;
 @synthesize rightView = _rightView;
 @synthesize state = _state;
+@synthesize contentView = _contentView;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -27,14 +29,14 @@
         [_leftView setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
         [_leftView.layer setAnchorPoint:CGPointMake(0.0, 0.5)];
         [self addSubview:_leftView];
-        [_leftView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.05],[UIColor colorWithWhite:0 alpha:0.4], nil]];
+        [_leftView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.05],[UIColor colorWithWhite:0 alpha:0.6], nil]];
         
         // set anchor point of the rightView to the right edge
         _rightView = [[FacingView alloc] initWithFrame:CGRectMake(-1*frame.size.width/4,0,frame.size.width/2,frame.size.height)];
         [_rightView setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
         [_rightView.layer setAnchorPoint:CGPointMake(1.0, 0.5)];
         [self addSubview:_rightView];
-        [_rightView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.4],[UIColor colorWithWhite:0 alpha:0.05], nil]];
+        [_rightView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.6],[UIColor colorWithWhite:0 alpha:0.05], nil]];
         
         // set perspective of the transformation
         CATransform3D transform = CATransform3DIdentity;
@@ -125,26 +127,55 @@
     CFRelease(imageRef2);
 }
 
+- (void)setContent:(UIView *)contentView
+{
+    _contentView = contentView;
+    [_contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
+    [self insertSubview:_contentView atIndex:0];
+    [self drawScreenshotOnFolds];
+}
+
+- (void)drawScreenshotOnFolds
+{
+    UIImage *image = [_contentView screenshot];
+    [self setImage:image];
+}
+
+- (void)showFolds:(BOOL)show
+{
+    [_leftView setHidden:!show];
+    [_rightView setHidden:!show];
+}
+
 #pragma mark states
 
 - (void)foldDidOpened
 {
     //NSLog(@"opened");
+    [_contentView setHidden:NO];
+    [self showFolds:NO];
 }
 
 - (void)foldDidClosed
 {
     //NSLog(@"closed");
+    [_contentView setHidden:NO];
+    [self showFolds:YES];
 }
 
 - (void)foldWillOpen
 {
     //NSLog(@"transition - opening");
+    //[self drawScreenshotOnFolds];
+    [_contentView setHidden:YES];
+    [self showFolds:YES];
 }
 
 - (void)foldWillClose
 {
     //NSLog(@"transition - closing");
+    [self drawScreenshotOnFolds];
+    [_contentView setHidden:YES];
+    [self showFolds:YES];
 }
-
 @end

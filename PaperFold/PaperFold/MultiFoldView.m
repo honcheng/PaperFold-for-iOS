@@ -42,7 +42,6 @@
     _contentView = contentView;
     [_contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
     [self insertSubview:_contentView atIndex:0];
-    //[_contentView setHidden:YES];
     [self drawScreenshotOnFolds];
 }
 
