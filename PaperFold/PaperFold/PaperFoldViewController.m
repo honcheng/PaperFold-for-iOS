@@ -16,7 +16,7 @@
 
 @synthesize leftFoldView = _leftFoldView;
 CGFloat const kLeftViewWidth = 100.0;
-CGFloat const kLeftViewUnfoldThreshold = 0.5;
+CGFloat const kLeftViewUnfoldThreshold = 0.3;
 
 @synthesize rightFoldView = _rightFoldView;
 CGFloat const kRightViewWidth = 240.0;
@@ -79,11 +79,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     else if ([gesture state]==UIGestureRecognizerStateEnded || [gesture state]==UIGestureRecognizerStateCancelled)
     {
         float x = point.x;
-        
         if (x>=0.0) // offset to the right
         {
-            if (x>=kLeftViewUnfoldThreshold*kLeftViewWidth && _state==PaperFoldStateDefault) 
+            if ( (x>=kLeftViewUnfoldThreshold*kLeftViewWidth && _state==PaperFoldStateDefault) || [_contentView frame].origin.x==kLeftViewWidth) 
             {
+                
                 // if offset more than threshold, open fully
                 _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
                 return;
@@ -91,7 +91,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         }
         else if (x<0)
         {
-            if (x<=-kRightViewUnfoldThreshold*kRightViewWidth && _state==PaperFoldStateDefault)
+            if ((x<=-kRightViewUnfoldThreshold*kRightViewWidth && _state==PaperFoldStateDefault) || [_contentView frame].origin.x==-kRightViewWidth)
             {
                 // if offset more than threshold, open fully
                 _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];

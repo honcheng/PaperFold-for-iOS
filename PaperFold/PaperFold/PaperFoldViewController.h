@@ -16,7 +16,8 @@ typedef enum
 {
     PaperFoldStateDefault = 0,
     PaperFoldStateLeftUnfolded = 1,
-    PaperFoldStateRightUnfolded = 2
+    PaperFoldStateRightUnfolded = 2,
+    PaperFoldStateTransition = 3
 } PaperFoldState;
 
 @interface PaperFoldViewController : UIViewController
