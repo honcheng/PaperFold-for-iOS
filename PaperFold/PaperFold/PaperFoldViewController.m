@@ -85,7 +85,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
             if (x>=kLeftViewUnfoldThreshold*kLeftViewWidth && _state==PaperFoldStateDefault) 
             {
                 // if offset more than threshold, open fully
-                _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
+                _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
                 return;
             }
         }
@@ -94,7 +94,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
             if (x<=-kRightViewUnfoldThreshold*kRightViewWidth && _state==PaperFoldStateDefault)
             {
                 // if offset more than threshold, open fully
-                _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
+                _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
                 return;
             }
         }
@@ -102,7 +102,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         // after panning completes
         // if offset does not exceed threshold
         // use NSTimer to create manual animation to restore view
-        _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
+        _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
         
     }
 }
@@ -139,6 +139,9 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     }
     else 
     {
+        [_contentView setTransform:CGAffineTransformMakeTranslation(0, 0)];
+        [_leftFoldView unfoldWithParentOffset:x];
+        [_rightFoldView unfoldWithParentOffset:x];
         _state = PaperFoldStateDefault;
     }
 }
@@ -147,11 +150,10 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 - (void)unfoldLeftView:(NSTimer*)timer
 {
     CGAffineTransform transform = [_contentView transform];
-    float x = transform.tx + (kLeftViewWidth-transform.tx)/4*3;
+    float x = transform.tx + (kLeftViewWidth-transform.tx)/4;
     transform = CGAffineTransformMakeTranslation(x, 0);
     [_contentView setTransform:transform];
-    
-    if (x>=kLeftViewWidth)
+    if (x>=kLeftViewWidth-2)
     {
         [timer invalidate];
         transform = CGAffineTransformMakeTranslation(kLeftViewWidth, 0);
@@ -166,7 +168,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 - (void)unfoldRightView:(NSTimer*)timer
 {
     CGAffineTransform transform = [_contentView transform];
-    float x = transform.tx - (transform.tx+kRightViewWidth)/4;
+    float x = transform.tx - (transform.tx+kRightViewWidth)/8;
     transform = CGAffineTransformMakeTranslation(x, 0);
     [_contentView setTransform:transform];
 
@@ -196,10 +198,14 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [timer invalidate];
         transform = CGAffineTransformMakeTranslation(0, 0);
         [_contentView setTransform:transform];
+        [self animateWhenPanned:CGPointMake(0, 0)];
+    }
+    else
+    {
+        // use the x value to animate folding
+        [self animateWhenPanned:CGPointMake(_contentView.frame.origin.x, 0)];
     }
     
-    // use the x value to animate folding
-    [self animateWhenPanned:CGPointMake(_contentView.frame.origin.x, 0)];
 }
 
 - (void)didReceiveMemoryWarning

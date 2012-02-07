@@ -7,10 +7,13 @@
 //
 
 #import "MultiFoldView.h"
+#import "UIView+Screenshot.h"
 
 @implementation MultiFoldView
 @synthesize numberOfFolds;
 @synthesize pullFactor;
+@synthesize contentView = _contentView;
+@synthesize state = _state;
 
 #define FOLDVIEW_TAG 1000
 
@@ -34,9 +37,63 @@
     return self;
 }
 
+- (void)setContent:(UIView *)contentView
+{
+    _contentView = contentView;
+    [self insertSubview:_contentView atIndex:0];
+    //[_contentView setHidden:YES];
+    [self drawScreenshotOnFolds];
+}
+
+- (void)drawScreenshotOnFolds
+{
+    UIImage *image = [_contentView screenshot];
+    float foldWidth = self.frame.size.width/self.numberOfFolds;
+    for (int i=0; i<self.numberOfFolds; i++)
+    {
+        CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(foldWidth*i, 0, foldWidth, self.frame.size.height));
+        UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+        CFRelease(imageRef);
+        FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
+        [foldView setImage:croppedImage];
+    }
+}
+
+// set fold states based on offset value
+- (void)calculateFoldStateFromOffset:(float)offset
+{
+    CGFloat fraction = -1*offset/self.frame.size.width;
+    if (_state==FoldStateClosed && fraction>0)
+    {
+        _state = FoldStateTransition;
+        [self foldWillOpen];
+    }
+    else if (_state==FoldStateOpened && fraction<1)
+    {
+        _state = FoldStateTransition;
+        [self foldWillClose];
+        
+    }
+    else if (_state==FoldStateTransition)
+    {
+        if (fraction==0)
+        {
+            _state = FoldStateClosed;
+            [self foldDidClosed];
+        }
+        else if (fraction==1)
+        {
+            _state = FoldStateOpened;
+            [self foldDidOpened];
+        }
+    }
+}
+
 // use the parent offset to calculate fraction
 - (void)unfoldWithParentOffset:(float)offset
 {
+    [self calculateFoldStateFromOffset:offset];
+    
     float foldWidth = self.frame.size.width/self.numberOfFolds;
     if (offset<-1*(foldWidth+self.pullFactor*foldWidth))
     {
@@ -93,6 +150,28 @@
         // this drills in to the next subfold in a cascading effect depending on the number of available folds
         [self unfoldView:nextFoldView toFraction:adjustedFraction];
     }
+}
+
+#pragma mark states
+
+- (void)foldDidOpened
+{
+    NSLog(@"opened");
+}
+
+- (void)foldDidClosed
+{
+    NSLog(@"closed");
+}
+
+- (void)foldWillOpen
+{
+    NSLog(@"transition - opening");
+}
+
+- (void)foldWillClose
+{
+    NSLog(@"transition - closing");
 }
 
 @end

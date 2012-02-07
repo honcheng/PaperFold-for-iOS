@@ -7,10 +7,12 @@
 //
 
 #import "FoldView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation FoldView
 @synthesize leftView = _leftView;
 @synthesize rightView = _rightView;
+@synthesize state = _state;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -64,15 +66,85 @@
     // fade out shadow when unfolding
     [_leftView.shadowView setAlpha:1-fraction];
     [_rightView.shadowView setAlpha:1-fraction];
-    
 }
 
-- (void)unfoldWithParentOffset:(float)offset
+// set fold states based on offset value
+- (void)calculateFoldStateFromOffset:(float)offset
 {
     CGFloat fraction = offset / self.frame.size.width;
     if (fraction < 0) fraction = 0;
     if (fraction > 1) fraction = 1;
+    
+    if (_state==FoldStateClosed && fraction>0)
+    {
+        _state = FoldStateTransition;
+        [self foldWillOpen];
+    }
+    else if (_state==FoldStateOpened && fraction<1)
+    {
+        _state = FoldStateTransition;
+        [self foldWillClose];
+        
+    }
+    else if (_state==FoldStateTransition)
+    {
+        if (fraction==0)
+        {
+            _state = FoldStateClosed;
+            [self foldDidClosed];
+        }
+        else if (fraction==1)
+        {
+            _state = FoldStateOpened;
+            [self foldDidOpened];
+        }
+    }
+}
+
+- (void)unfoldWithParentOffset:(float)offset
+{
+    [self calculateFoldStateFromOffset:offset];
+    
+    CGFloat fraction = offset / self.frame.size.width;
+    if (fraction < 0) fraction = 0;
+    if (fraction > 1) fraction = 1;
+    
     [self unfoldViewToFraction:fraction];
+}
+
+- (void)setImage:(UIImage*)image
+{
+    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, 0, self.frame.size.width/2, self.frame.size.height));
+    UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+    [_leftView.layer setContents:(id)[croppedImage CGImage]];
+    CFRelease(imageRef);
+    
+    CGImageRef imageRef2 = CGImageCreateWithImageInRect([image CGImage], CGRectMake(self.frame.size.width/2, 0, self.frame.size.width/2, self.frame.size.height));
+    UIImage *croppedImage2 = [UIImage imageWithCGImage:imageRef2];
+    [_rightView.layer setContents:(id)[croppedImage2 CGImage]];
+    CFRelease(imageRef2);
+}
+
+#pragma mark states
+
+- (void)foldDidOpened
+{
+    //NSLog(@"opened");
+}
+
+- (void)foldDidClosed
+{
+    //NSLog(@"closed");
+}
+
+- (void)foldWillOpen
+{
+    //NSLog(@"transition - opening");
+}
+
+- (void)foldWillClose
+{
+    //NSLog(@"transition - closing");
 }
 
 @end

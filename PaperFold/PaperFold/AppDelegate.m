@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "PaperFoldViewController.h"
+#import "DemoRootViewController.h"
 
 @implementation AppDelegate
 
@@ -20,7 +20,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    PaperFoldViewController *paper = [[PaperFoldViewController alloc] init];
+    DemoRootViewController *paper = [[DemoRootViewController alloc] init];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:paper];
     [navController setNavigationBarHidden:YES];
     [self.window setRootViewController:navController];

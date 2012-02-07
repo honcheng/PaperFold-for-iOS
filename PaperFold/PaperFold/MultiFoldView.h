@@ -15,10 +15,19 @@
 // fraction of the view on the right to its immediate left
 // determines when the next fold on the right should open
 @property (assign) float pullFactor;
+// indicate whether the fold is open or closed
+@property (assign) FoldState state;
+
+@property (assign) UIView *contentView;
 
 // init with the number of folds and pull factor
 - (id)initWithFrame:(CGRect)frame folds:(int)folds pullFactor:(float)pullFactor;
 
+- (void)setContent:(UIView *)contentView;
+- (void)drawScreenshotOnFolds;
+
+// set fold states based on offset value
+- (void)calculateFoldStateFromOffset:(float)offset;
 
 // unfold the based on parent offset
 - (void)unfoldWithParentOffset:(float)offset;
@@ -32,5 +41,10 @@
 // unfold foldView using fraction
 - (void)unfoldView:(FoldView*)foldView toFraction:(CGFloat)fraction;
 
+#pragma mark states
+- (void)foldDidOpened;
+- (void)foldDidClosed;
+- (void)foldWillOpen;
+- (void)foldWillClose;
 
 @end
