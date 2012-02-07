@@ -27,18 +27,18 @@
         [_leftView setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
         [_leftView.layer setAnchorPoint:CGPointMake(0.0, 0.5)];
         [self addSubview:_leftView];
-        [_leftView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.05],[UIColor colorWithWhite:0 alpha:0.2], nil]];
+        [_leftView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.05],[UIColor colorWithWhite:0 alpha:0.4], nil]];
         
         // set anchor point of the rightView to the right edge
         _rightView = [[FacingView alloc] initWithFrame:CGRectMake(-1*frame.size.width/4,0,frame.size.width/2,frame.size.height)];
         [_rightView setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
         [_rightView.layer setAnchorPoint:CGPointMake(1.0, 0.5)];
         [self addSubview:_rightView];
-        [_rightView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.2],[UIColor colorWithWhite:0 alpha:0.05], nil]];
+        [_rightView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.4],[UIColor colorWithWhite:0 alpha:0.05], nil]];
         
         // set perspective of the transformation
         CATransform3D transform = CATransform3DIdentity;
-        transform.m34 = -1/800.0;
+        transform.m34 = -1/500.0;
         [self.layer setSublayerTransform:transform];
         
         // make sure the views are closed properly when initialized

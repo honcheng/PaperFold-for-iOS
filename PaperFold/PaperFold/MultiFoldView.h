@@ -41,6 +41,9 @@
 // unfold foldView using fraction
 - (void)unfoldView:(FoldView*)foldView toFraction:(CGFloat)fraction;
 
+// show/hide all folds 
+- (void)showFolds:(BOOL)show;
+
 #pragma mark states
 - (void)foldDidOpened;
 - (void)foldDidClosed;

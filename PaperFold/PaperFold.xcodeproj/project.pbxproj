@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F877591714E0AE340013C191 /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = F877591614E0AE340013C191 /* UIView+Screenshot.m */; };
+		F877591B14E0F4E50013C191 /* TouchThroughUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877591A14E0F4E50013C191 /* TouchThroughUIView.m */; };
 		F8BEBB9A14E01A7E005CE661 /* FoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8BEBB9914E01A7E005CE661 /* FoldView.m */; };
 		F8BEBB9D14E01F39005CE661 /* MultiFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8BEBB9C14E01F39005CE661 /* MultiFoldView.m */; };
 		F8C45D8814DF822D00F12A1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8714DF822D00F12A1D /* UIKit.framework */; };
@@ -28,6 +29,8 @@
 /* Begin PBXFileReference section */
 		F877591514E0AE340013C191 /* UIView+Screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Screenshot.h"; sourceTree = "<group>"; };
 		F877591614E0AE340013C191 /* UIView+Screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Screenshot.m"; sourceTree = "<group>"; };
+		F877591914E0F4E50013C191 /* TouchThroughUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchThroughUIView.h; sourceTree = "<group>"; };
+		F877591A14E0F4E50013C191 /* TouchThroughUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchThroughUIView.m; sourceTree = "<group>"; };
 		F8BEBB9814E01A7E005CE661 /* FoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldView.h; sourceTree = "<group>"; };
 		F8BEBB9914E01A7E005CE661 /* FoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoldView.m; sourceTree = "<group>"; };
 		F8BEBB9B14E01F39005CE661 /* MultiFoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiFoldView.h; sourceTree = "<group>"; };
@@ -121,6 +124,8 @@
 				F8C45DB614DFDD9400F12A1D /* ShadowView.m */,
 				F877591514E0AE340013C191 /* UIView+Screenshot.h */,
 				F877591614E0AE340013C191 /* UIView+Screenshot.m */,
+				F877591914E0F4E50013C191 /* TouchThroughUIView.h */,
+				F877591A14E0F4E50013C191 /* TouchThroughUIView.m */,
 				F8C45D8E14DF822D00F12A1D /* Supporting Files */,
 			);
 			path = PaperFold;
@@ -208,6 +213,7 @@
 				F8BEBB9D14E01F39005CE661 /* MultiFoldView.m in Sources */,
 				F8DB47AA14E0A3E400067048 /* DemoRootViewController.m in Sources */,
 				F877591714E0AE340013C191 /* UIView+Screenshot.m in Sources */,
+				F877591B14E0F4E50013C191 /* TouchThroughUIView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

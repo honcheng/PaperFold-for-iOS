@@ -40,6 +40,7 @@
 - (void)setContent:(UIView *)contentView
 {
     _contentView = contentView;
+    [_contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
     [self insertSubview:_contentView atIndex:0];
     //[_contentView setHidden:YES];
     [self drawScreenshotOnFolds];
@@ -152,26 +153,45 @@
     }
 }
 
+- (void)showFolds:(BOOL)show
+{
+    for (int i=0; i<self.numberOfFolds; i++)
+    {
+        FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
+        [foldView setHidden:!show];
+    }
+}
+
 #pragma mark states
 
 - (void)foldDidOpened
 {
     NSLog(@"opened");
+    [_contentView setHidden:NO];
+    [self showFolds:NO];
 }
 
 - (void)foldDidClosed
 {
     NSLog(@"closed");
+    [_contentView setHidden:NO];
+    [self showFolds:YES];
 }
 
 - (void)foldWillOpen
 {
     NSLog(@"transition - opening");
+    //[self drawScreenshotOnFolds];
+    [_contentView setHidden:YES];
+    [self showFolds:YES];
 }
 
 - (void)foldWillClose
 {
     NSLog(@"transition - closing");
+    [self drawScreenshotOnFolds];
+    [_contentView setHidden:YES];
+    [self showFolds:YES];
 }
 
 @end

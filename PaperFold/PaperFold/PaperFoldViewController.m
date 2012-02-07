@@ -31,7 +31,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         
         [self.view setBackgroundColor:[UIColor darkGrayColor]];
         
-        _contentView = [[UIView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,[self.view bounds].size.height)];
+        _contentView = [[TouchThroughUIView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,[self.view bounds].size.height)];
         [_contentView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
         [self.view addSubview:_contentView];
         [_contentView setBackgroundColor:[UIColor whiteColor]];
@@ -144,6 +144,8 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [_rightFoldView unfoldWithParentOffset:x];
         _state = PaperFoldStateDefault;
     }
+    
+    //[_rightFoldView setFrame:CGRectMake(_contentView.frame.origin.x+_contentView.frame.size.width,0,kRightViewWidth,[self.view bounds].size.height)];
 }
 
 // unfold the left view

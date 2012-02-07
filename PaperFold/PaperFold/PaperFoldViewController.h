@@ -10,6 +10,7 @@
 #import "FacingView.h"
 #import "FoldView.h"
 #import "MultiFoldView.h"
+#import "TouchThroughUIView.h"
 
 typedef enum
 {
@@ -21,7 +22,7 @@ typedef enum
 @interface PaperFoldViewController : UIViewController
 
 // main content view
-@property (strong, nonatomic) UIView *contentView;
+@property (strong, nonatomic) TouchThroughUIView *contentView;
 // timer to animate folds after gesture ended
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
 @property (strong) NSTimer *animationTimer;
