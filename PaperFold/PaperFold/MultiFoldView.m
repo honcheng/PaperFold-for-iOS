@@ -47,17 +47,22 @@
 
 - (void)drawScreenshotOnFolds
 {
-    UIImage *image = [_contentView screenshot];
-    
-    float foldWidth = image.size.width/self.numberOfFolds;
-    for (int i=0; i<self.numberOfFolds; i++)
+    // only take screenshot when fold is opened or closed
+    if (_state==FoldStateOpened || _state==FoldStateClosed || YES)
     {
-        CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(foldWidth*i*image.scale, 0, foldWidth*image.scale, image.size.height*image.scale));
-        UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
-        CFRelease(imageRef);
-        FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
-        [foldView setImage:croppedImage];
+        UIImage *image = [_contentView screenshot];
+        
+        float foldWidth = image.size.width/self.numberOfFolds;
+        for (int i=0; i<self.numberOfFolds; i++)
+        {
+            CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(foldWidth*i*image.scale, 0, foldWidth*image.scale, image.size.height*image.scale));
+            UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+            CFRelease(imageRef);
+            FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
+            [foldView setImage:croppedImage];
+        }
     }
+    
 }
 
 // set fold states based on offset value
@@ -168,6 +173,7 @@
 {
     //NSLog(@"opened");
     [_contentView setHidden:NO];
+    [self drawScreenshotOnFolds];
     [self showFolds:NO];
 }
 
