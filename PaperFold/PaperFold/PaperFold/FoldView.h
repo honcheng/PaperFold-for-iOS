@@ -22,7 +22,7 @@ typedef enum
 @property (strong) FacingView *leftView, *rightView;
 // indicate whether the fold is open or closed
 @property (assign) FoldState state;
-@property (assign) UIView *contentView;
+@property (retain) UIView *contentView;
 
 // unfold the 2 facing views using a fraction 0 to 1
 // 0 when it's completely folded

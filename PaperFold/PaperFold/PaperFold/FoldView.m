@@ -21,6 +21,10 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        _contentView = [[UIView alloc] initWithFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
+        [_contentView setBackgroundColor:[UIColor clearColor]];
+        [self addSubview:_contentView];
+        
         // foldview consists of leftView and rightView
         // set shadow direction of leftView and rightView such that the shadow falls on the fold in the middle
         
@@ -127,9 +131,8 @@
 
 - (void)setContent:(UIView *)contentView
 {
-    _contentView = contentView;
-    [_contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
-    [self insertSubview:_contentView atIndex:0];
+    [contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
+    [_contentView addSubview:contentView];
     [self drawScreenshotOnFolds];
 }
 
