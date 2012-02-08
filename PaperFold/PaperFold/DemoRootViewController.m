@@ -22,7 +22,6 @@
         
         _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,240,[self.view bounds].size.height)];
         [self.rightFoldView setContent:_mapView];
-        //[_mapView setDelegate:self];
         
         _centerTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,[self.view bounds].size.height)];
         [_centerTableView setRowHeight:120];
@@ -34,28 +33,5 @@
     }
     return self;
 }
-
-/*
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
-{
-    
-    if (self.rightFoldView.state==FoldStateOpened)
-    {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self.rightFoldView selector:@selector(drawScreenshotOnFolds) object:nil];
-        [self.rightFoldView performSelector:@selector(drawScreenshotOnFolds) withObject:nil afterDelay:0.1];
-        //[self.rightFoldView drawScreenshotOnFolds];
-    }
-}
-
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
-{
-    if (self.rightFoldView.state==FoldStateOpened)
-    {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self.rightFoldView selector:@selector(drawScreenshotOnFolds) object:nil];
-        [self.rightFoldView performSelector:@selector(drawScreenshotOnFolds) withObject:nil afterDelay:0.1];
-        //[self.rightFoldView drawScreenshotOnFolds];
-    }
-    
-}*/
 
 @end

@@ -7,34 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F877591714E0AE340013C191 /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = F877591614E0AE340013C191 /* UIView+Screenshot.m */; };
-		F877591B14E0F4E50013C191 /* TouchThroughUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877591A14E0F4E50013C191 /* TouchThroughUIView.m */; };
-		F8BEBB9A14E01A7E005CE661 /* FoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8BEBB9914E01A7E005CE661 /* FoldView.m */; };
-		F8BEBB9D14E01F39005CE661 /* MultiFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8BEBB9C14E01F39005CE661 /* MultiFoldView.m */; };
+		F877BF0114E2B5F20076B1C6 /* FacingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF414E2B5F20076B1C6 /* FacingView.m */; };
+		F877BF0214E2B5F20076B1C6 /* FoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF614E2B5F20076B1C6 /* FoldView.m */; };
+		F877BF0314E2B5F20076B1C6 /* MultiFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF814E2B5F20076B1C6 /* MultiFoldView.m */; };
+		F877BF0414E2B5F20076B1C6 /* PaperFoldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFA14E2B5F20076B1C6 /* PaperFoldViewController.m */; };
+		F877BF0514E2B5F20076B1C6 /* ShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFC14E2B5F20076B1C6 /* ShadowView.m */; };
+		F877BF0614E2B5F20076B1C6 /* TouchThroughUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFE14E2B5F20076B1C6 /* TouchThroughUIView.m */; };
+		F877BF0714E2B5F20076B1C6 /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BF0014E2B5F20076B1C6 /* UIView+Screenshot.m */; };
 		F8C45D8814DF822D00F12A1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8714DF822D00F12A1D /* UIKit.framework */; };
 		F8C45D8A14DF822D00F12A1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8914DF822D00F12A1D /* Foundation.framework */; };
 		F8C45D8C14DF822D00F12A1D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8B14DF822D00F12A1D /* CoreGraphics.framework */; };
 		F8C45D9214DF822D00F12A1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8C45D9014DF822D00F12A1D /* InfoPlist.strings */; };
 		F8C45D9414DF822D00F12A1D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45D9314DF822D00F12A1D /* main.m */; };
 		F8C45D9814DF822D00F12A1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45D9714DF822D00F12A1D /* AppDelegate.m */; };
-		F8C45DA014DF823C00F12A1D /* PaperFoldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45D9F14DF823C00F12A1D /* PaperFoldViewController.m */; };
 		F8C45DA214DF848700F12A1D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45DA114DF848700F12A1D /* QuartzCore.framework */; };
-		F8C45DB714DFDD9400F12A1D /* ShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45DB614DFDD9400F12A1D /* ShadowView.m */; };
-		F8C45DBB14DFDDAB00F12A1D /* FacingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45DBA14DFDDAB00F12A1D /* FacingView.m */; };
 		F8DB47AA14E0A3E400067048 /* DemoRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DB47A914E0A3E400067048 /* DemoRootViewController.m */; };
 		F8DB47AD14E0A41400067048 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8DB47AC14E0A41400067048 /* MapKit.framework */; };
 		F8DB47B314E0A68E00067048 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8DB47B214E0A68E00067048 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F877591514E0AE340013C191 /* UIView+Screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Screenshot.h"; sourceTree = "<group>"; };
-		F877591614E0AE340013C191 /* UIView+Screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Screenshot.m"; sourceTree = "<group>"; };
-		F877591914E0F4E50013C191 /* TouchThroughUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchThroughUIView.h; sourceTree = "<group>"; };
-		F877591A14E0F4E50013C191 /* TouchThroughUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchThroughUIView.m; sourceTree = "<group>"; };
-		F8BEBB9814E01A7E005CE661 /* FoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldView.h; sourceTree = "<group>"; };
-		F8BEBB9914E01A7E005CE661 /* FoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoldView.m; sourceTree = "<group>"; };
-		F8BEBB9B14E01F39005CE661 /* MultiFoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiFoldView.h; sourceTree = "<group>"; };
-		F8BEBB9C14E01F39005CE661 /* MultiFoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiFoldView.m; sourceTree = "<group>"; };
+		F877BEF314E2B5F20076B1C6 /* FacingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacingView.h; sourceTree = "<group>"; };
+		F877BEF414E2B5F20076B1C6 /* FacingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacingView.m; sourceTree = "<group>"; };
+		F877BEF514E2B5F20076B1C6 /* FoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldView.h; sourceTree = "<group>"; };
+		F877BEF614E2B5F20076B1C6 /* FoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoldView.m; sourceTree = "<group>"; };
+		F877BEF714E2B5F20076B1C6 /* MultiFoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiFoldView.h; sourceTree = "<group>"; };
+		F877BEF814E2B5F20076B1C6 /* MultiFoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiFoldView.m; sourceTree = "<group>"; };
+		F877BEF914E2B5F20076B1C6 /* PaperFoldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperFoldViewController.h; sourceTree = "<group>"; };
+		F877BEFA14E2B5F20076B1C6 /* PaperFoldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperFoldViewController.m; sourceTree = "<group>"; };
+		F877BEFB14E2B5F20076B1C6 /* ShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowView.h; sourceTree = "<group>"; };
+		F877BEFC14E2B5F20076B1C6 /* ShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowView.m; sourceTree = "<group>"; };
+		F877BEFD14E2B5F20076B1C6 /* TouchThroughUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchThroughUIView.h; sourceTree = "<group>"; };
+		F877BEFE14E2B5F20076B1C6 /* TouchThroughUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchThroughUIView.m; sourceTree = "<group>"; };
+		F877BEFF14E2B5F20076B1C6 /* UIView+Screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Screenshot.h"; sourceTree = "<group>"; };
+		F877BF0014E2B5F20076B1C6 /* UIView+Screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Screenshot.m"; sourceTree = "<group>"; };
 		F8C45D8314DF822D00F12A1D /* PaperFold.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaperFold.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8C45D8714DF822D00F12A1D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F8C45D8914DF822D00F12A1D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -45,13 +51,7 @@
 		F8C45D9514DF822D00F12A1D /* PaperFold-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PaperFold-Prefix.pch"; sourceTree = "<group>"; };
 		F8C45D9614DF822D00F12A1D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F8C45D9714DF822D00F12A1D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F8C45D9E14DF823C00F12A1D /* PaperFoldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperFoldViewController.h; sourceTree = "<group>"; };
-		F8C45D9F14DF823C00F12A1D /* PaperFoldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperFoldViewController.m; sourceTree = "<group>"; };
 		F8C45DA114DF848700F12A1D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		F8C45DB514DFDD9400F12A1D /* ShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowView.h; sourceTree = "<group>"; };
-		F8C45DB614DFDD9400F12A1D /* ShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowView.m; sourceTree = "<group>"; };
-		F8C45DB914DFDDAB00F12A1D /* FacingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacingView.h; sourceTree = "<group>"; };
-		F8C45DBA14DFDDAB00F12A1D /* FacingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacingView.m; sourceTree = "<group>"; };
 		F8DB47A814E0A3E400067048 /* DemoRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoRootViewController.h; sourceTree = "<group>"; };
 		F8DB47A914E0A3E400067048 /* DemoRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoRootViewController.m; sourceTree = "<group>"; };
 		F8DB47AC14E0A41400067048 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -75,6 +75,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F877BEF214E2B5F20076B1C6 /* PaperFold */ = {
+			isa = PBXGroup;
+			children = (
+				F877BEF314E2B5F20076B1C6 /* FacingView.h */,
+				F877BEF414E2B5F20076B1C6 /* FacingView.m */,
+				F877BEF514E2B5F20076B1C6 /* FoldView.h */,
+				F877BEF614E2B5F20076B1C6 /* FoldView.m */,
+				F877BEF714E2B5F20076B1C6 /* MultiFoldView.h */,
+				F877BEF814E2B5F20076B1C6 /* MultiFoldView.m */,
+				F877BEF914E2B5F20076B1C6 /* PaperFoldViewController.h */,
+				F877BEFA14E2B5F20076B1C6 /* PaperFoldViewController.m */,
+				F877BEFB14E2B5F20076B1C6 /* ShadowView.h */,
+				F877BEFC14E2B5F20076B1C6 /* ShadowView.m */,
+				F877BEFD14E2B5F20076B1C6 /* TouchThroughUIView.h */,
+				F877BEFE14E2B5F20076B1C6 /* TouchThroughUIView.m */,
+				F877BEFF14E2B5F20076B1C6 /* UIView+Screenshot.h */,
+				F877BF0014E2B5F20076B1C6 /* UIView+Screenshot.m */,
+			);
+			path = PaperFold;
+			sourceTree = "<group>";
+		};
 		F8C45D7814DF822C00F12A1D = {
 			isa = PBXGroup;
 			children = (
@@ -112,20 +133,7 @@
 				F8C45D9714DF822D00F12A1D /* AppDelegate.m */,
 				F8DB47A814E0A3E400067048 /* DemoRootViewController.h */,
 				F8DB47A914E0A3E400067048 /* DemoRootViewController.m */,
-				F8C45D9E14DF823C00F12A1D /* PaperFoldViewController.h */,
-				F8C45D9F14DF823C00F12A1D /* PaperFoldViewController.m */,
-				F8BEBB9B14E01F39005CE661 /* MultiFoldView.h */,
-				F8BEBB9C14E01F39005CE661 /* MultiFoldView.m */,
-				F8BEBB9814E01A7E005CE661 /* FoldView.h */,
-				F8BEBB9914E01A7E005CE661 /* FoldView.m */,
-				F8C45DB914DFDDAB00F12A1D /* FacingView.h */,
-				F8C45DBA14DFDDAB00F12A1D /* FacingView.m */,
-				F8C45DB514DFDD9400F12A1D /* ShadowView.h */,
-				F8C45DB614DFDD9400F12A1D /* ShadowView.m */,
-				F877591514E0AE340013C191 /* UIView+Screenshot.h */,
-				F877591614E0AE340013C191 /* UIView+Screenshot.m */,
-				F877591914E0F4E50013C191 /* TouchThroughUIView.h */,
-				F877591A14E0F4E50013C191 /* TouchThroughUIView.m */,
+				F877BEF214E2B5F20076B1C6 /* PaperFold */,
 				F8C45D8E14DF822D00F12A1D /* Supporting Files */,
 			);
 			path = PaperFold;
@@ -206,14 +214,14 @@
 			files = (
 				F8C45D9414DF822D00F12A1D /* main.m in Sources */,
 				F8C45D9814DF822D00F12A1D /* AppDelegate.m in Sources */,
-				F8C45DA014DF823C00F12A1D /* PaperFoldViewController.m in Sources */,
-				F8C45DB714DFDD9400F12A1D /* ShadowView.m in Sources */,
-				F8C45DBB14DFDDAB00F12A1D /* FacingView.m in Sources */,
-				F8BEBB9A14E01A7E005CE661 /* FoldView.m in Sources */,
-				F8BEBB9D14E01F39005CE661 /* MultiFoldView.m in Sources */,
 				F8DB47AA14E0A3E400067048 /* DemoRootViewController.m in Sources */,
-				F877591714E0AE340013C191 /* UIView+Screenshot.m in Sources */,
-				F877591B14E0F4E50013C191 /* TouchThroughUIView.m in Sources */,
+				F877BF0114E2B5F20076B1C6 /* FacingView.m in Sources */,
+				F877BF0214E2B5F20076B1C6 /* FoldView.m in Sources */,
+				F877BF0314E2B5F20076B1C6 /* MultiFoldView.m in Sources */,
+				F877BF0414E2B5F20076B1C6 /* PaperFoldViewController.m in Sources */,
+				F877BF0514E2B5F20076B1C6 /* ShadowView.m in Sources */,
+				F877BF0614E2B5F20076B1C6 /* TouchThroughUIView.m in Sources */,
+				F877BF0714E2B5F20076B1C6 /* UIView+Screenshot.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

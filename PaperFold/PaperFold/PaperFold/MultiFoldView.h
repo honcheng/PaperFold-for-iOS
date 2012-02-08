@@ -22,8 +22,9 @@
 
 // init with the number of folds and pull factor
 - (id)initWithFrame:(CGRect)frame folds:(int)folds pullFactor:(float)pullFactor;
-
+// set the content of the view
 - (void)setContent:(UIView *)contentView;
+// get screenshot of content to overlay in folds
 - (void)drawScreenshotOnFolds;
 
 // set fold states based on offset value
@@ -45,6 +46,7 @@
 - (void)showFolds:(BOOL)show;
 
 #pragma mark states
+// states of folds
 - (void)foldDidOpened;
 - (void)foldDidClosed;
 - (void)foldWillOpen;

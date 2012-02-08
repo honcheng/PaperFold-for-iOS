@@ -39,19 +39,32 @@
 
 - (void)setContent:(UIView *)contentView
 {
+    // set the content view
     _contentView = contentView;
     [_contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
+    // place content view below folds
     [self insertSubview:_contentView atIndex:0];
+    // immediately take a screenshot of the content view to overlay in fold
+    // if content view is a map view, screenshot will be a blank grid
     [self drawScreenshotOnFolds];
 }
 
 - (void)drawScreenshotOnFolds
 {
-    // only take screenshot when fold is opened or closed
-    if (_state==FoldStateOpened || _state==FoldStateClosed || YES)
+
+    UIImage *image = [_contentView screenshot];
+    // get screenshot of content view, and splice the image to overlay in different folds
+    float foldWidth = image.size.width/self.numberOfFolds;
+    for (int i=0; i<self.numberOfFolds; i++)
     {
-        UIImage *image = [_contentView screenshot];
-        
+        CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(foldWidth*i*image.scale, 0, foldWidth*image.scale, image.size.height*image.scale));
+        UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+        CFRelease(imageRef);
+        FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
+        [foldView setImage:croppedImage];
+    }
+    /*
+    [self takeScreenshot:^(UIImage *image) {
         float foldWidth = image.size.width/self.numberOfFolds;
         for (int i=0; i<self.numberOfFolds; i++)
         {
@@ -61,8 +74,7 @@
             FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
             [foldView setImage:croppedImage];
         }
-    }
-    
+    }];*/
 }
 
 // set fold states based on offset value
@@ -158,6 +170,7 @@
     }
 }
 
+// hide fold (when content view is visible) and show fold (when content view is hidden
 - (void)showFolds:(BOOL)show
 {
     for (int i=0; i<self.numberOfFolds; i++)
@@ -169,32 +182,30 @@
 
 #pragma mark states
 
+// when fold is completely opened, hide fold and show content view
 - (void)foldDidOpened
 {
-    //NSLog(@"opened");
     [_contentView setHidden:NO];
-    [self drawScreenshotOnFolds];
     [self showFolds:NO];
 }
 
+// when fold is completely closed, hide content view and folds
 - (void)foldDidClosed
 {
-    //NSLog(@"closed");
-    [_contentView setHidden:NO];
-    [self showFolds:YES];
-}
-
-- (void)foldWillOpen
-{
-    //NSLog(@"transition - opening");
-    //[self drawScreenshotOnFolds];
     [_contentView setHidden:YES];
     [self showFolds:YES];
 }
 
+// when fold is about to be opened, make sure content view is hidden, and show fold
+- (void)foldWillOpen
+{
+    [_contentView setHidden:YES];
+    [self showFolds:YES];
+}
+
+// when fold is about to be closed, take a screenshot of the content view, hide it, and make sure fold is visible.
 - (void)foldWillClose
 {
-    //NSLog(@"transition - closing");
     [self drawScreenshotOnFolds];
     [_contentView setHidden:YES];
     [self showFolds:YES];
