@@ -37,6 +37,9 @@
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
+    // set any point within the bound, and on the right side of the bound, as touch area
+    // it is required to set the right side of the bound as touch area because the right fold, is a subview of this view
+    // the left fold is not required because it is on the same hierachy as this view, as a subview of this view's superview
     if (point.x<0) return NO;
     else return YES;
 }

@@ -22,6 +22,7 @@ typedef enum
 @property (strong) FacingView *leftView, *rightView;
 // indicate whether the fold is open or closed
 @property (assign) FoldState state;
+// wrapper of the visible view
 @property (retain) UIView *contentView;
 
 // unfold the 2 facing views using a fraction 0 to 1
@@ -36,10 +37,17 @@ typedef enum
 // unfold the 2 facing views based on parent offset
 - (void)unfoldWithParentOffset:(float)offset;
 
+// set the visible view, to be added as a subview
 - (void)setContent:(UIView *)contentView;
+
+// take screenshot of the wrapper view layer, containing the visible view
 - (void)drawScreenshotOnFolds;
+
+// show/hide folds
 - (void)showFolds:(BOOL)show;
 
+// set the screenshot overlay on the 2 folds
+// image gets spliced into 2, one for each folds
 - (void)setImage:(UIImage*)image;
 
 #pragma mark states

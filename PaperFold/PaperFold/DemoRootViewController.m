@@ -30,6 +30,14 @@
         _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
         [_leftTableView setRowHeight:100];
         [self.leftFoldView setContent:_leftTableView];
+        
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(-1,0,1,[self.view bounds].size.height)];
+        [self.contentView addSubview:line];
+        [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
+        
+        UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,1,[self.view bounds].size.height)];
+        [self.contentView addSubview:line2];
+        [line2 setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:1]];
     }
     return self;
 }
