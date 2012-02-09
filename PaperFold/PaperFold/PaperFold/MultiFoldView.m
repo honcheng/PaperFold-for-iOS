@@ -22,7 +22,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.numberOfFolds = folds;
-        self.pullFactor = factor;
+        if (self.numberOfFolds==1)
+        {
+            // no pull factor required if there is only one fold
+            self.pullFactor = 0;
+        }
+        else self.pullFactor = factor;
         
         float foldWidth = frame.size.width/self.numberOfFolds;
 
@@ -118,6 +123,7 @@
         offset = -1*(foldWidth+self.pullFactor*foldWidth);
     }
     CGFloat fraction = offset /(-1*(foldWidth+self.pullFactor*foldWidth));
+    
     
     if (fraction < 0) fraction = 0;
     if (fraction > 1) fraction = 1;
