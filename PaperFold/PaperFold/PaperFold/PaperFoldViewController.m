@@ -21,7 +21,7 @@ CGFloat const kLeftViewUnfoldThreshold = 0.3;
 @synthesize rightFoldView = _rightFoldView;
 CGFloat const kRightViewWidth = 240.0;
 CGFloat const kRightViewPullFactor = 0.9;
-NSInteger const kRightViewFoldCount = 2;
+NSInteger const kRightViewFoldCount = 3;
 CGFloat const kRightViewUnfoldThreshold = 0.3;
 
 - (id)init
@@ -36,10 +36,12 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [self.view addSubview:_contentView];
         [_contentView setBackgroundColor:[UIColor whiteColor]];
         
-        _leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,kLeftViewWidth,[self.view bounds].size.height)];
+        _leftFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,0,kLeftViewWidth,[self.view bounds].size.height) folds:2 pullFactor:0.5];
+        [_leftFoldView setUnfoldDirection:UnfoldDirectionLeftToRight];
         [self.view insertSubview:_leftFoldView belowSubview:_contentView];
         
         _rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,kRightViewWidth,[self.view bounds].size.height) folds:kRightViewFoldCount pullFactor:kRightViewPullFactor];
+        [_rightFoldView setUnfoldDirection:UnfoldDirectionRightToLeft];
         [_contentView addSubview:_rightFoldView];
         
         UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];

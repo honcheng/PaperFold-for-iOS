@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "FoldView.h"
 
+typedef enum
+{
+    UnfoldDirectionRightToLeft = 0,
+    UnfoldDirectionLeftToRight = 1
+} UnfoldDirection;
+
 @interface MultiFoldView : UIView
 // number of folds
 @property (assign) int numberOfFolds;
@@ -17,6 +23,8 @@
 @property (assign) float pullFactor;
 // indicate whether the fold is open or closed
 @property (assign) FoldState state;
+
+@property (assign) UnfoldDirection unfoldDirection;
 
 @property (assign) UIView *contentView;
 
@@ -41,6 +49,9 @@
 
 // unfold foldView using fraction
 - (void)unfoldView:(FoldView*)foldView toFraction:(CGFloat)fraction;
+
+// not complete
+- (void)unfoldLeftView:(FoldView*)foldView toFraction:(CGFloat)fraction;
 
 // show/hide all folds 
 - (void)showFolds:(BOOL)show;

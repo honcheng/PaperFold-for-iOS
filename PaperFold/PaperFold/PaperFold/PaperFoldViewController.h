@@ -28,7 +28,7 @@ typedef enum
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
 @property (strong) NSTimer *animationTimer;
 // the fold view on the left
-@property (strong, nonatomic) FoldView *leftFoldView;
+@property (strong, nonatomic) MultiFoldView *leftFoldView;
 // the multiple fold view on the right
 @property (strong, nonatomic) MultiFoldView *rightFoldView;
 // state of the current fold

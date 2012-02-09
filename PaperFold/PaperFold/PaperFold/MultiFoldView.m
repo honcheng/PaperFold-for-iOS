@@ -14,6 +14,7 @@
 @synthesize pullFactor;
 @synthesize contentView = _contentView;
 @synthesize state = _state;
+@synthesize unfoldDirection = _unfoldDirection;
 
 #define FOLDVIEW_TAG 1000
 
@@ -85,7 +86,8 @@
 // set fold states based on offset value
 - (void)calculateFoldStateFromOffset:(float)offset
 {
-    CGFloat fraction = -1*offset/self.frame.size.width;
+    CGFloat fraction = offset/self.frame.size.width;
+    if (fraction<0) fraction = -1*fraction;
     if (_state==FoldStateClosed && fraction>0)
     {
         _state = FoldStateTransition;
@@ -117,30 +119,70 @@
 {
     [self calculateFoldStateFromOffset:offset];
     
-    float foldWidth = self.frame.size.width/self.numberOfFolds;
-    if (offset<-1*(foldWidth+self.pullFactor*foldWidth))
+    if (_unfoldDirection==UnfoldDirectionRightToLeft)
     {
-        offset = -1*(foldWidth+self.pullFactor*foldWidth);
+        float foldWidth = self.frame.size.width/self.numberOfFolds;
+        if (offset>(foldWidth+self.pullFactor*foldWidth))
+        {
+            offset = foldWidth+self.pullFactor*foldWidth;
+        }
+        if (offset<0) offset = offset*-1;
+        CGFloat fraction = offset /(foldWidth+self.pullFactor*foldWidth);
+        
+        if (fraction < 0) fraction = 0;
+        if (fraction > 1) fraction = 1;
+        [self unfoldViewToFraction:fraction];
     }
-    CGFloat fraction = offset /(-1*(foldWidth+self.pullFactor*foldWidth));
+    else if (_unfoldDirection==UnfoldDirectionLeftToRight)
+    {
+        float foldWidth = self.frame.size.width/self.numberOfFolds;
+        if (offset>(foldWidth+self.pullFactor*foldWidth))
+        {
+            offset = foldWidth+self.pullFactor*foldWidth;
+        }
+        if (offset<0) offset = offset*-1;
+        CGFloat fraction = offset /(foldWidth+self.pullFactor*foldWidth);
+        NSLog(@"%f", fraction);
+        if (fraction < 0) fraction = 0;
+        if (fraction > 1) fraction = 1;
+        [self unfoldViewToFraction:fraction];
+    }
     
-    
-    if (fraction < 0) fraction = 0;
-    if (fraction > 1) fraction = 1;
-    [self unfoldViewToFraction:fraction];
 }
 
 - (void)unfoldViewToFraction:(CGFloat)fraction
 {
     // start the cascading effect of unfolding
     // with the first foldView with index FOLDVIEW_TAG+0
-    FoldView *firstFoldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG];
-    [self unfoldView:firstFoldView toFraction:fraction];
+    if (_unfoldDirection==UnfoldDirectionRightToLeft)
+    {
+        FoldView *firstFoldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG];
+        [self unfoldView:firstFoldView toFraction:fraction];
+    }
+    else if (_unfoldDirection==UnfoldDirectionLeftToRight)
+    {
+        FoldView *firstFoldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG];
+        [self unfoldLeftView:firstFoldView toFraction:fraction];
+    }
+    
+}
+
+- (void)unfoldLeftView:(FoldView*)foldView toFraction:(CGFloat)fraction
+{
+    CGFloat adjustedFraction = fraction*self.pullFactor;
+    //NSLog(@"...%f %f", adjustedFraction, fraction);
+    [foldView unfoldViewToFraction:adjustedFraction];
+    /*
+    if (index < self.numberOfFolds-1)
+    {
+        FoldView *nextFoldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+index+1];
+    }*/
 }
 
 - (void)unfoldView:(FoldView*)foldView toFraction:(CGFloat)fraction
 {
     // unfold the subfold
+    
     [foldView unfoldViewToFraction:fraction];
     
     // check if there is another subfold beside this fold
@@ -191,6 +233,7 @@
 // when fold is completely opened, hide fold and show content view
 - (void)foldDidOpened
 {
+    //NSLog(@"did opened");
     [_contentView setHidden:NO];
     [self showFolds:NO];
 }
@@ -198,6 +241,7 @@
 // when fold is completely closed, hide content view and folds
 - (void)foldDidClosed
 {
+    //NSLog(@"did closed");
     [_contentView setHidden:YES];
     [self showFolds:YES];
 }
@@ -205,6 +249,7 @@
 // when fold is about to be opened, make sure content view is hidden, and show fold
 - (void)foldWillOpen
 {
+    //NSLog(@"will open");
     [_contentView setHidden:YES];
     [self showFolds:YES];
 }
@@ -212,6 +257,7 @@
 // when fold is about to be closed, take a screenshot of the content view, hide it, and make sure fold is visible.
 - (void)foldWillClose
 {
+    //NSLog(@"will close");
     [self drawScreenshotOnFolds];
     [_contentView setHidden:YES];
     [self showFolds:YES];

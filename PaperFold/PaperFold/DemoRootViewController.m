@@ -27,9 +27,13 @@
         [_centerTableView setRowHeight:120];
         [self.contentView addSubview:_centerTableView];
         
+        /*
         _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
         [_leftTableView setRowHeight:100];
-        [self.leftFoldView setContent:_leftTableView];
+        [self.leftFoldView setContent:_leftTableView];*/
+        
+        MKMapView *mapView2 = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
+        [self.leftFoldView setContent:mapView2];
         
         UIView *line = [[UIView alloc] initWithFrame:CGRectMake(-1,0,1,[self.view bounds].size.height)];
         [self.contentView addSubview:line];
