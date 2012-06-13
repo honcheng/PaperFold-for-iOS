@@ -45,7 +45,7 @@
         [_rightView setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
         [_rightView.layer setAnchorPoint:CGPointMake(1.0, 0.5)];
         [self addSubview:_rightView];
-        [_rightView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.6],[UIColor colorWithWhite:0 alpha:0.05], nil]];
+        [_rightView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.9],[UIColor colorWithWhite:0 alpha:0.55], nil]];
         
         // set perspective of the transformation
         CATransform3D transform = CATransform3DIdentity;

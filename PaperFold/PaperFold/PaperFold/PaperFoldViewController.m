@@ -21,7 +21,7 @@ CGFloat const kLeftViewUnfoldThreshold = 0.3;
 @synthesize rightFoldView = _rightFoldView;
 CGFloat const kRightViewWidth = 240.0;
 CGFloat const kRightViewPullFactor = 0.9;
-NSInteger const kRightViewFoldCount = 2;
+NSInteger const kRightViewFoldCount = 3;
 CGFloat const kRightViewUnfoldThreshold = 0.3;
 
 - (id)init
