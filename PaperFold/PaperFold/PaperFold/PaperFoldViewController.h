@@ -38,4 +38,13 @@ typedef enum
 // offset are either sent from pan gesture recognizer, or manual animation done with NSTimer after gesture ended
 - (void)animateWhenPanned:(CGPoint)point;
 
+// set the right fold content view
+// and the right fold container view
+// with the number of folds and pull factor
+- (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor;
+
+// set the left fold content view
+// and set the left fold container view frame
+- (void)setLeftFoldContentView:(UIView*)view;
+
 @end

@@ -21,7 +21,7 @@
     if (self) {
         
         _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,240,[self.view bounds].size.height)];
-        [self.rightFoldView setContent:_mapView];
+        [self setRightFoldContentView:_mapView rightViewFoldCount:3 rightViewPullFactor:0.9];
         
         _centerTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,[self.view bounds].size.height)];
         [_centerTableView setRowHeight:120];
@@ -29,7 +29,7 @@
         
         _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
         [_leftTableView setRowHeight:100];
-        [self.leftFoldView setContent:_leftTableView];
+        [self setLeftFoldContentView:_leftTableView];
         
         UIView *line = [[UIView alloc] initWithFrame:CGRectMake(-1,0,1,[self.view bounds].size.height)];
         [self.contentView addSubview:line];

@@ -15,20 +15,16 @@
 @synthesize state = _state;
 
 @synthesize leftFoldView = _leftFoldView;
-CGFloat const kLeftViewWidth = 100.0;
 CGFloat const kLeftViewUnfoldThreshold = 0.3;
 
 @synthesize rightFoldView = _rightFoldView;
-CGFloat const kRightViewWidth = 240.0;
-CGFloat const kRightViewPullFactor = 0.9;
-NSInteger const kRightViewFoldCount = 3;
 CGFloat const kRightViewUnfoldThreshold = 0.3;
 
 - (id)init
 {
     self = [super init];
-    if (self) {
-        
+    if (self)
+    {
         [self.view setBackgroundColor:[UIColor darkGrayColor]];
         
         _contentView = [[TouchThroughUIView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,[self.view bounds].size.height)];
@@ -36,18 +32,29 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [self.view addSubview:_contentView];
         [_contentView setBackgroundColor:[UIColor whiteColor]];
         
-        _leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,kLeftViewWidth,[self.view bounds].size.height)];
-        [self.view insertSubview:_leftFoldView belowSubview:_contentView];
-        
-        _rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,kRightViewWidth,[self.view bounds].size.height) folds:kRightViewFoldCount pullFactor:kRightViewPullFactor];
-        [_contentView addSubview:_rightFoldView];
-        
         UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
         [_contentView addGestureRecognizer:panGestureRecognizer];
         
         _state = PaperFoldStateDefault;
     }
     return self;
+}
+
+- (void)setLeftFoldContentView:(UIView*)view
+{
+    if (_leftFoldView) [_leftFoldView removeFromSuperview];
+    
+    _leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,[self.view bounds].size.height)];
+    [self.view insertSubview:_leftFoldView belowSubview:_contentView];
+    [_leftFoldView setContent:view];
+}
+
+- (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
+{
+    _rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,view.frame.size.width,[self.view bounds].size.height) folds:rightViewFoldCount pullFactor:rightViewPullFactor];
+    [_contentView addSubview:_rightFoldView];
+    
+    [_rightFoldView setContent:view];
 }
 
 - (void)onContentViewPanned:(UIPanGestureRecognizer*)gesture
@@ -66,12 +73,12 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         }
         else if (_state==PaperFoldStateLeftUnfolded)
         {
-            CGPoint adjustedPoint = CGPointMake(point.x + kLeftViewWidth, point.y);
+            CGPoint adjustedPoint = CGPointMake(point.x + _leftFoldView.frame.size.width, point.y);
             [self animateWhenPanned:adjustedPoint];
         }
         else if (_state==PaperFoldStateRightUnfolded)
         {
-            CGPoint adjustedPoint = CGPointMake(point.x - kRightViewWidth, point.y);
+            CGPoint adjustedPoint = CGPointMake(point.x - _rightFoldView.frame.size.width, point.y);
             [self animateWhenPanned:adjustedPoint];
         }
         
@@ -81,7 +88,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         float x = point.x;
         if (x>=0.0) // offset to the right
         {
-            if ( (x>=kLeftViewUnfoldThreshold*kLeftViewWidth && _state==PaperFoldStateDefault) || [_contentView frame].origin.x==kLeftViewWidth) 
+            if ( (x>=kLeftViewUnfoldThreshold*_leftFoldView.frame.size.width && _state==PaperFoldStateDefault) || [_contentView frame].origin.x==_leftFoldView.frame.size.width) 
             {
                 
                 // if offset more than threshold, open fully
@@ -91,7 +98,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         }
         else if (x<0)
         {
-            if ((x<=-kRightViewUnfoldThreshold*kRightViewWidth && _state==PaperFoldStateDefault) || [_contentView frame].origin.x==-kRightViewWidth)
+            if ((x<=-kRightViewUnfoldThreshold*_rightFoldView.frame.size.width && _state==PaperFoldStateDefault) || [_contentView frame].origin.x==-_rightFoldView.frame.size.width)
             {
                 // if offset more than threshold, open fully
                 _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
@@ -116,10 +123,10 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     if (x>0.0)
     {
         // set the limit of the right offset
-        if (x>=kLeftViewWidth)
+        if (x>=_leftFoldView.frame.size.width)
         {
             _state = PaperFoldStateLeftUnfolded;
-            x = kLeftViewWidth;
+            x = _leftFoldView.frame.size.width;
         }
         [_contentView setTransform:CGAffineTransformMakeTranslation(x, 0)];
         [_leftFoldView unfoldWithParentOffset:x];
@@ -129,10 +136,10 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         // set the limit of the left offset
         // original x value not changed, to be sent to multi-fold view
         float x1 = x;
-        if (x1<=-kRightViewWidth)
+        if (x1<=-_rightFoldView.frame.size.width)
         {
             _state = PaperFoldStateRightUnfolded;
-            x1 = -kRightViewWidth;
+            x1 = -_rightFoldView.frame.size.width;
         }
         [_contentView setTransform:CGAffineTransformMakeTranslation(x1, 0)];
         [_rightFoldView unfoldWithParentOffset:x];
@@ -144,21 +151,19 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [_rightFoldView unfoldWithParentOffset:x];
         _state = PaperFoldStateDefault;
     }
-    
-    //[_rightFoldView setFrame:CGRectMake(_contentView.frame.origin.x+_contentView.frame.size.width,0,kRightViewWidth,[self.view bounds].size.height)];
 }
 
 // unfold the left view
 - (void)unfoldLeftView:(NSTimer*)timer
 {
     CGAffineTransform transform = [_contentView transform];
-    float x = transform.tx + (kLeftViewWidth-transform.tx)/4;
+    float x = transform.tx + (_leftFoldView.frame.size.width-transform.tx)/4;
     transform = CGAffineTransformMakeTranslation(x, 0);
     [_contentView setTransform:transform];
-    if (x>=kLeftViewWidth-2)
+    if (x>=_leftFoldView.frame.size.width-2)
     {
         [timer invalidate];
-        transform = CGAffineTransformMakeTranslation(kLeftViewWidth, 0);
+        transform = CGAffineTransformMakeTranslation(_leftFoldView.frame.size.width, 0);
         [_contentView setTransform:transform];
     }
     
@@ -170,14 +175,14 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 - (void)unfoldRightView:(NSTimer*)timer
 {
     CGAffineTransform transform = [_contentView transform];
-    float x = transform.tx - (transform.tx+kRightViewWidth)/8;
+    float x = transform.tx - (transform.tx+_rightFoldView.frame.size.width)/8;
     transform = CGAffineTransformMakeTranslation(x, 0);
     [_contentView setTransform:transform];
 
-    if (x<=-kRightViewWidth+5)
+    if (x<=-_rightFoldView.frame.size.width+5)
     {
         [timer invalidate];
-        transform = CGAffineTransformMakeTranslation(-kRightViewWidth, 0);
+        transform = CGAffineTransformMakeTranslation(-_rightFoldView.frame.size.width, 0);
         [_contentView setTransform:transform];
     }
     
