@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F81EB148158A6A740088A5B0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81EB147158A6A740088A5B0 /* OpenGLES.framework */; };
 		F877BF0114E2B5F20076B1C6 /* FacingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF414E2B5F20076B1C6 /* FacingView.m */; };
 		F877BF0214E2B5F20076B1C6 /* FoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF614E2B5F20076B1C6 /* FoldView.m */; };
 		F877BF0314E2B5F20076B1C6 /* MultiFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF814E2B5F20076B1C6 /* MultiFoldView.m */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F81EB147158A6A740088A5B0 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		F877BEF314E2B5F20076B1C6 /* FacingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacingView.h; sourceTree = "<group>"; };
 		F877BEF414E2B5F20076B1C6 /* FacingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacingView.m; sourceTree = "<group>"; };
 		F877BEF514E2B5F20076B1C6 /* FoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldView.h; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F81EB148158A6A740088A5B0 /* OpenGLES.framework in Frameworks */,
 				F8DB47B314E0A68E00067048 /* CoreLocation.framework in Frameworks */,
 				F8DB47AD14E0A41400067048 /* MapKit.framework in Frameworks */,
 				F8C45DA214DF848700F12A1D /* QuartzCore.framework in Frameworks */,
@@ -116,6 +119,7 @@
 		F8C45D8614DF822D00F12A1D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F81EB147158A6A740088A5B0 /* OpenGLES.framework */,
 				F8DB47B214E0A68E00067048 /* CoreLocation.framework */,
 				F8DB47AC14E0A41400067048 /* MapKit.framework */,
 				F8C45DA114DF848700F12A1D /* QuartzCore.framework */,

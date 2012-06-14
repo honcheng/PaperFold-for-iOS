@@ -12,5 +12,9 @@ typedef void (^CompletionBlock)(UIImage *image);
 
 @interface UIView (Screenshot)
 - (UIImage*)screenshot;
+- (UIImage*)openGLSnapshot;
 - (void)takeScreenshot:(CompletionBlock)block;
+
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
 @end
