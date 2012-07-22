@@ -176,7 +176,7 @@
 		F8C45D7A14DF822C00F12A1D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "honcheng@gmail.com";
 			};
 			buildConfigurationList = F8C45D7D14DF822C00F12A1D /* Build configuration list for PBXProject "PaperFold" */;
