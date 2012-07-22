@@ -11,14 +11,14 @@
 
 @interface MultiFoldView : UIView
 // number of folds
-@property (assign) int numberOfFolds;
+@property (assign, nonatomic) int numberOfFolds;
 // fraction of the view on the right to its immediate left
 // determines when the next fold on the right should open
-@property (assign) float pullFactor;
+@property (assign, nonatomic) float pullFactor;
 // indicate whether the fold is open or closed
-@property (assign) FoldState state;
+@property (assign, nonatomic) FoldState state;
 
-@property (assign) UIView *contentView;
+@property (assign, nonatomic) UIView *contentView;
 
 // init with the number of folds and pull factor
 - (id)initWithFrame:(CGRect)frame folds:(int)folds pullFactor:(float)pullFactor;

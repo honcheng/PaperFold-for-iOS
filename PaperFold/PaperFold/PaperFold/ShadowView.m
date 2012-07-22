@@ -10,18 +10,19 @@
 
 
 @implementation ShadowView
-@synthesize _colorsArray, gradient;
+@synthesize colorsArray = _colorsArray;
+@synthesize gradient = _gradient;
 
 - (id)initWithFrame:(CGRect)frame {
     
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code.
-		self.gradient = [CAGradientLayer layer];
-		[self.gradient setFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
-        [self.gradient setStartPoint:CGPointMake(0, 0)];
-        [self.gradient setEndPoint:CGPointMake(1, 0)];
-		[self.layer insertSublayer:self.gradient atIndex:0];
+		_gradient = [CAGradientLayer layer];
+		[_gradient setFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
+        [_gradient setStartPoint:CGPointMake(0, 0)];
+        [_gradient setEndPoint:CGPointMake(1, 0)];
+		[self.layer insertSublayer:_gradient atIndex:0];
 		[self setBackgroundColor:[UIColor clearColor]];
     }
     return self;
@@ -29,11 +30,10 @@
 
 - (void)setColorArrays:(NSMutableArray*)colors
 {
-	//[self._colorsArray release];
-	self._colorsArray = [NSMutableArray new];
+	_colorsArray = [NSMutableArray array];
 	for (UIColor *color in colors)
 	{
-		[self._colorsArray addObject:(id)[color CGColor]];
+		[self.colorsArray addObject:(id)[color CGColor]];
 	}
 	
 	[self setNeedsDisplay];
@@ -41,16 +41,10 @@
 
 - (void) drawRect:(CGRect)rect
 {
-	if ([self._colorsArray count]>0)
+	if ([self.colorsArray count]>0)
 	{
-		[self.gradient setColors:self._colorsArray];
+		[self.gradient setColors:self.colorsArray];
 	}
-}
-
-- (void)dealloc {
-	//[self.gradient release];
-	//[self._colorsArray release];
-    //[super dealloc];
 }
 
 @end

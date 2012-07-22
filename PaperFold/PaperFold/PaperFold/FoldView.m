@@ -64,19 +64,19 @@
     float delta = asinf(fraction);
     
     // rotate leftView on the left edge of the view
-	[_leftView.layer setTransform:CATransform3DMakeRotation((M_PI / 2) - delta, 0, 1, 0)];
+	[self.leftView.layer setTransform:CATransform3DMakeRotation((M_PI / 2) - delta, 0, 1, 0)];
 
     // rotate rightView on the right edge of the view
     // translate rotated view to the left to join to the edge of the leftView
-    CATransform3D transform1 = CATransform3DMakeTranslation(2*_leftView.frame.size.width, 0, 0);
+    CATransform3D transform1 = CATransform3DMakeTranslation(2*self.leftView.frame.size.width, 0, 0);
     CATransform3D transform2 = CATransform3DMakeRotation((M_PI / 2) - delta, 0, -1, 0);
     CATransform3D transform = CATransform3DConcat(transform2, transform1);
-    [_rightView.layer setTransform:transform];
+    [self.rightView.layer setTransform:transform];
 
     // fade in shadow when folding
     // fade out shadow when unfolding
-    [_leftView.shadowView setAlpha:1-fraction];
-    [_rightView.shadowView setAlpha:1-fraction];
+    [self.leftView.shadowView setAlpha:1-fraction];
+    [self.rightView.shadowView setAlpha:1-fraction];
 }
 
 // set fold states based on offset value
@@ -86,27 +86,27 @@
     if (fraction < 0) fraction = 0;
     if (fraction > 1) fraction = 1;
     
-    if (_state==FoldStateClosed && fraction>0)
+    if (self.state==FoldStateClosed && fraction>0)
     {
-        _state = FoldStateTransition;
+        self.state = FoldStateTransition;
         [self foldWillOpen];
     }
-    else if (_state==FoldStateOpened && fraction<1)
+    else if (self.state==FoldStateOpened && fraction<1)
     {
-        _state = FoldStateTransition;
+        self.state = FoldStateTransition;
         [self foldWillClose];
         
     }
-    else if (_state==FoldStateTransition)
+    else if (self.state==FoldStateTransition)
     {
         if (fraction==0)
         {
-            _state = FoldStateClosed;
+            self.state = FoldStateClosed;
             [self foldDidClosed];
         }
         else if (fraction==1)
         {
-            _state = FoldStateOpened;
+            self.state = FoldStateOpened;
             [self foldDidOpened];
         }
     }
@@ -128,11 +128,11 @@
     // split the image into 2, one for each folds
     
     CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, 0, image.size.width*image.scale/2, image.size.height*image.scale));
-    [_leftView.layer setContents:(__bridge id)imageRef];
+    [self.leftView.layer setContents:(__bridge id)imageRef];
     CFRelease(imageRef);
     
     CGImageRef imageRef2 = CGImageCreateWithImageInRect([image CGImage], CGRectMake(image.size.width*image.scale/2, 0, image.size.width*image.scale/2, image.size.height*image.scale));
-    [_rightView.layer setContents:(__bridge id)imageRef2];
+    [self.rightView.layer setContents:(__bridge id)imageRef2];
     CFRelease(imageRef2);
 }
 
@@ -140,21 +140,21 @@
 {
     // add the actual visible view, as a subview of _contentView
     [contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
-    [_contentView addSubview:contentView];
+    [self.contentView addSubview:contentView];
     [self drawScreenshotOnFolds];
 }
 
 
 - (void)drawScreenshotOnFolds
 {
-    UIImage *image = [_contentView screenshot];
+    UIImage *image = [self.contentView screenshot];
     [self setImage:image];
 }
 
 - (void)showFolds:(BOOL)show
 {
-    [_leftView setHidden:!show];
-    [_rightView setHidden:!show];
+    [self.leftView setHidden:!show];
+    [self.rightView setHidden:!show];
 }
 
 #pragma mark states
@@ -162,14 +162,14 @@
 - (void)foldDidOpened
 {
     //NSLog(@"opened");
-    [_contentView setHidden:NO];
+    [self.contentView setHidden:NO];
     [self showFolds:NO];
 }
 
 - (void)foldDidClosed
 {
     //NSLog(@"closed");
-    [_contentView setHidden:NO];
+    [self.contentView setHidden:NO];
     [self showFolds:YES];
 }
 
@@ -177,7 +177,7 @@
 {
     //NSLog(@"transition - opening");
     //[self drawScreenshotOnFolds];
-    [_contentView setHidden:YES];
+    [self.contentView setHidden:YES];
     [self showFolds:YES];
 }
 

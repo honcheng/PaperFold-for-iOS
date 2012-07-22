@@ -42,25 +42,25 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 
 - (void)setLeftFoldContentView:(UIView*)view
 {
-    if (_leftFoldView) [_leftFoldView removeFromSuperview];
+    if (self.leftFoldView) [self.leftFoldView removeFromSuperview];
     
-    _leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,[self.view bounds].size.height)];
-    [self.view insertSubview:_leftFoldView belowSubview:_contentView];
-    [_leftFoldView setContent:view];
+    self.leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,[self.view bounds].size.height)];
+    [self.view insertSubview:self.leftFoldView belowSubview:self.contentView];
+    [self.leftFoldView setContent:view];
 }
 
 - (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
 {
-    _rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,view.frame.size.width,[self.view bounds].size.height) folds:rightViewFoldCount pullFactor:rightViewPullFactor];
-    [_contentView addSubview:_rightFoldView];
+    self.rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,view.frame.size.width,[self.view bounds].size.height) folds:rightViewFoldCount pullFactor:rightViewPullFactor];
+    [self.contentView addSubview:self.rightFoldView];
     
-    [_rightFoldView setContent:view];
+    [self.rightFoldView setContent:view];
 }
 
 - (void)onContentViewPanned:(UIPanGestureRecognizer*)gesture
 {
     // cancel gesture if another animation has not finished yet
-    if ([_animationTimer isValid]) return;
+    if ([self.animationTimer isValid]) return;
     
     CGPoint point = [gesture translationInView:self.view];
     
@@ -73,12 +73,12 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         }
         else if (_state==PaperFoldStateLeftUnfolded)
         {
-            CGPoint adjustedPoint = CGPointMake(point.x + _leftFoldView.frame.size.width, point.y);
+            CGPoint adjustedPoint = CGPointMake(point.x + self.leftFoldView.frame.size.width, point.y);
             [self animateWhenPanned:adjustedPoint];
         }
         else if (_state==PaperFoldStateRightUnfolded)
         {
-            CGPoint adjustedPoint = CGPointMake(point.x - _rightFoldView.frame.size.width, point.y);
+            CGPoint adjustedPoint = CGPointMake(point.x - self.rightFoldView.frame.size.width, point.y);
             [self animateWhenPanned:adjustedPoint];
         }
         
@@ -88,20 +88,20 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         float x = point.x;
         if (x>=0.0) // offset to the right
         {
-            if ( (x>=kLeftViewUnfoldThreshold*_leftFoldView.frame.size.width && _state==PaperFoldStateDefault) || [_contentView frame].origin.x==_leftFoldView.frame.size.width) 
+            if ( (x>=kLeftViewUnfoldThreshold*self.leftFoldView.frame.size.width && _state==PaperFoldStateDefault) || [self.contentView frame].origin.x==self.leftFoldView.frame.size.width) 
             {
                 
                 // if offset more than threshold, open fully
-                _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
+                self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
                 return;
             }
         }
         else if (x<0)
         {
-            if ((x<=-kRightViewUnfoldThreshold*_rightFoldView.frame.size.width && _state==PaperFoldStateDefault) || [_contentView frame].origin.x==-_rightFoldView.frame.size.width)
+            if ((x<=-kRightViewUnfoldThreshold*self.rightFoldView.frame.size.width && _state==PaperFoldStateDefault) || [self.contentView frame].origin.x==-self.rightFoldView.frame.size.width)
             {
                 // if offset more than threshold, open fully
-                _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
+                self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
                 return;
             }
         }
@@ -109,7 +109,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         // after panning completes
         // if offset does not exceed threshold
         // use NSTimer to create manual animation to restore view
-        _animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
         
     }
 }
@@ -123,94 +123,94 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     if (x>0.0)
     {
         // set the limit of the right offset
-        if (x>=_leftFoldView.frame.size.width)
+        if (x>=self.leftFoldView.frame.size.width)
         {
-            _state = PaperFoldStateLeftUnfolded;
-            x = _leftFoldView.frame.size.width;
+            self.state = PaperFoldStateLeftUnfolded;
+            x = self.leftFoldView.frame.size.width;
         }
-        [_contentView setTransform:CGAffineTransformMakeTranslation(x, 0)];
-        [_leftFoldView unfoldWithParentOffset:x];
+        [self.contentView setTransform:CGAffineTransformMakeTranslation(x, 0)];
+        [self.leftFoldView unfoldWithParentOffset:x];
     }
     else if (x<0.0)
     {
         // set the limit of the left offset
         // original x value not changed, to be sent to multi-fold view
         float x1 = x;
-        if (x1<=-_rightFoldView.frame.size.width)
+        if (x1<=-self.rightFoldView.frame.size.width)
         {
-            _state = PaperFoldStateRightUnfolded;
-            x1 = -_rightFoldView.frame.size.width;
+            self.state = PaperFoldStateRightUnfolded;
+            x1 = -self.rightFoldView.frame.size.width;
         }
-        [_contentView setTransform:CGAffineTransformMakeTranslation(x1, 0)];
-        [_rightFoldView unfoldWithParentOffset:x];
+        [self.contentView setTransform:CGAffineTransformMakeTranslation(x1, 0)];
+        [self.rightFoldView unfoldWithParentOffset:x];
     }
     else 
     {
-        [_contentView setTransform:CGAffineTransformMakeTranslation(0, 0)];
-        [_leftFoldView unfoldWithParentOffset:x];
-        [_rightFoldView unfoldWithParentOffset:x];
-        _state = PaperFoldStateDefault;
+        [self.contentView setTransform:CGAffineTransformMakeTranslation(0, 0)];
+        [self.leftFoldView unfoldWithParentOffset:x];
+        [self.rightFoldView unfoldWithParentOffset:x];
+        self.state = PaperFoldStateDefault;
     }
 }
 
 // unfold the left view
 - (void)unfoldLeftView:(NSTimer*)timer
 {
-    CGAffineTransform transform = [_contentView transform];
-    float x = transform.tx + (_leftFoldView.frame.size.width-transform.tx)/4;
+    CGAffineTransform transform = [self.contentView transform];
+    float x = transform.tx + (self.leftFoldView.frame.size.width-transform.tx)/4;
     transform = CGAffineTransformMakeTranslation(x, 0);
-    [_contentView setTransform:transform];
-    if (x>=_leftFoldView.frame.size.width-2)
+    [self.contentView setTransform:transform];
+    if (x>=self.leftFoldView.frame.size.width-2)
     {
         [timer invalidate];
-        transform = CGAffineTransformMakeTranslation(_leftFoldView.frame.size.width, 0);
-        [_contentView setTransform:transform];
+        transform = CGAffineTransformMakeTranslation(self.leftFoldView.frame.size.width, 0);
+        [self.contentView setTransform:transform];
     }
     
     // use the x value to animate folding
-    [self animateWhenPanned:CGPointMake(_contentView.frame.origin.x, 0)];
+    [self animateWhenPanned:CGPointMake(self.contentView.frame.origin.x, 0)];
 }
 
 // unfold the right view
 - (void)unfoldRightView:(NSTimer*)timer
 {
-    CGAffineTransform transform = [_contentView transform];
-    float x = transform.tx - (transform.tx+_rightFoldView.frame.size.width)/8;
+    CGAffineTransform transform = [self.contentView transform];
+    float x = transform.tx - (transform.tx+self.rightFoldView.frame.size.width)/8;
     transform = CGAffineTransformMakeTranslation(x, 0);
-    [_contentView setTransform:transform];
+    [self.contentView setTransform:transform];
 
-    if (x<=-_rightFoldView.frame.size.width+5)
+    if (x<=-self.rightFoldView.frame.size.width+5)
     {
         [timer invalidate];
-        transform = CGAffineTransformMakeTranslation(-_rightFoldView.frame.size.width, 0);
-        [_contentView setTransform:transform];
+        transform = CGAffineTransformMakeTranslation(-self.rightFoldView.frame.size.width, 0);
+        [self.contentView setTransform:transform];
     }
     
     // use the x value to animate folding
-    [self animateWhenPanned:CGPointMake(_contentView.frame.origin.x, 0)];
+    [self animateWhenPanned:CGPointMake(self.contentView.frame.origin.x, 0)];
 }
 
 // restore contentView back to original position
 - (void)restoreView:(NSTimer*)timer
 {
-    CGAffineTransform transform = [_contentView transform];
+    CGAffineTransform transform = [self.contentView transform];
     // restoring the x position 3/4 of the last x translation
     float x = transform.tx/4*3;
     transform = CGAffineTransformMakeTranslation(x, 0);
-    [_contentView setTransform:transform];
+    [self.contentView setTransform:transform];
     
     // if -5<x<5, stop timer animation
     if ((x>=0 && x<5) || (x<=0 && x>-5))
     {
         [timer invalidate];
         transform = CGAffineTransformMakeTranslation(0, 0);
-        [_contentView setTransform:transform];
+        [self.contentView setTransform:transform];
         [self animateWhenPanned:CGPointMake(0, 0)];
     }
     else
     {
         // use the x value to animate folding
-        [self animateWhenPanned:CGPointMake(_contentView.frame.origin.x, 0)];
+        [self animateWhenPanned:CGPointMake(self.contentView.frame.origin.x, 0)];
     }
     
 }

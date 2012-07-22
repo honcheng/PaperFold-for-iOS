@@ -9,12 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface ShadowView : UIView {
-	CAGradientLayer *gradient;
-	NSMutableArray *_colorsArray;
-}
-@property (nonatomic, retain) NSMutableArray *_colorsArray;
-@property (nonatomic, retain) CAGradientLayer *gradient;
+@interface ShadowView : UIView
+@property (nonatomic, strong) NSMutableArray *colorsArray;
+@property (nonatomic, strong) CAGradientLayer *gradient;
 
 - (void)setColorArrays:(NSMutableArray*)colors;
 

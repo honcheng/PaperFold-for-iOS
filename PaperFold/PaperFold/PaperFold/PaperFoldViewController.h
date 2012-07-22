@@ -26,13 +26,13 @@ typedef enum
 @property (strong, nonatomic) TouchThroughUIView *contentView;
 // timer to animate folds after gesture ended
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
-@property (strong) NSTimer *animationTimer;
+@property (strong, nonatomic) NSTimer *animationTimer;
 // the fold view on the left
 @property (strong, nonatomic) FoldView *leftFoldView;
 // the multiple fold view on the right
 @property (strong, nonatomic) MultiFoldView *rightFoldView;
 // state of the current fold
-@property (assign) PaperFoldState state;
+@property (assign, nonatomic) PaperFoldState state;
 
 // animate folding and unfolding when sent the offset of contentView
 // offset are either sent from pan gesture recognizer, or manual animation done with NSTimer after gesture ended

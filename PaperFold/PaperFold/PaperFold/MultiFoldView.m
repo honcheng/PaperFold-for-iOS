@@ -45,10 +45,10 @@
 - (void)setContent:(UIView *)contentView
 {
     // set the content view
-    _contentView = contentView;
-    [_contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
+    self.contentView = contentView;
+    [self.contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
     // place content view below folds
-    [self insertSubview:_contentView atIndex:0];
+    [self insertSubview:self.contentView atIndex:0];
     // immediately take a screenshot of the content view to overlay in fold
     // if content view is a map view, screenshot will be a blank grid
     [self drawScreenshotOnFolds];
@@ -57,7 +57,7 @@
 - (void)drawScreenshotOnFolds
 {
 
-    UIImage *image = [_contentView screenshot];
+    UIImage *image = [self.contentView screenshot];
     // get screenshot of content view, and splice the image to overlay in different folds
     float foldWidth = image.size.width/self.numberOfFolds;
     for (int i=0; i<self.numberOfFolds; i++)
@@ -191,21 +191,21 @@
 // when fold is completely opened, hide fold and show content view
 - (void)foldDidOpened
 {
-    [_contentView setHidden:NO];
+    [self.contentView setHidden:NO];
     [self showFolds:NO];
 }
 
 // when fold is completely closed, hide content view and folds
 - (void)foldDidClosed
 {
-    [_contentView setHidden:YES];
+    [self.contentView setHidden:YES];
     [self showFolds:YES];
 }
 
 // when fold is about to be opened, make sure content view is hidden, and show fold
 - (void)foldWillOpen
 {
-    [_contentView setHidden:YES];
+    [self.contentView setHidden:YES];
     [self showFolds:YES];
 }
 
@@ -213,7 +213,7 @@
 - (void)foldWillClose
 {
     [self drawScreenshotOnFolds];
-    [_contentView setHidden:YES];
+    [self.contentView setHidden:YES];
     [self showFolds:YES];
 }
 

@@ -10,5 +10,5 @@
 #import "ShadowView.h"
 
 @interface FacingView : UIView
-@property (strong) ShadowView *shadowView;
+@property (strong, nonatomic) ShadowView *shadowView;
 @end
