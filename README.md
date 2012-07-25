@@ -16,8 +16,8 @@ Example
 
 Refer to this [link](http://www.honcheng.com/2012/02/Playing-with-folding-navigations) for a video showing the prototype of an app that I was working on. In the end, the proposed project was never completed because I could not obtained reliable data for the app, but I intend to use it for another app. 
 
-<img src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/leftfold.gif"/>
-<img src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/rightfold.gif"/>
+<img width=300 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/leftfold.gif"/>
+<img width=300 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/rightfold.gif"/>
 
 The animation here looks a bit laggy, but that's because of the low frame rates in GIF.
 
