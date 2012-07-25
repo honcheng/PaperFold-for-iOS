@@ -27,16 +27,23 @@ Usage
 1) Subclass PaperFoldViewController in the view controller that will be using the left/right fold views.
 
 2) To set left view, use setLeftFoldContentView:. Example below uses a UITableView, but it can any UIView.
-	_leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
-	[self setLeftFoldContentView:_leftTableView];
+	
+    _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
+    [self setLeftFoldContentView:_leftTableView];
 
 3) To set the right view, use setRightFoldContentView:rightViewFoldCount:rightViewPullFactor:. Example below uses a MKMapView, but it can any UIView. The fold count is the number of folds in the right view. The pull factor controls the ratio of folding/unfolding of the different folds away from the center.
-	_mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,240,[self.view bounds].size.height)];
-	[self setRightFoldContentView:_mapView rightViewFoldCount:3 rightViewPullFactor:0.9];
+	
+    _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,240,[self.view bounds].size.height)];
+    [self setRightFoldContentView:_mapView rightViewFoldCount:3 rightViewPullFactor:0.9];
 
 ARC
 ---
 
 This project uses ARC. If you are not using ARC in your project, add '-fobjc-arc' as a compiler flag for all the files in this project.
+
+Known Problem
+-------------
+
+Screen capture of MKMapView is iOS6 is not taken properly. I approached a few Apple engineers at WWDC, and was told that it is most likely a bug that need to fix. I have already filed a bug report. Hopefully it will be fixed soon. 
 
 [twitter.com/honcheng](http://twitter.com/honcheng)
