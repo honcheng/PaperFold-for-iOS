@@ -59,10 +59,12 @@ typedef enum
 @property (strong, nonatomic) MultiFoldView *rightFoldView;
 // state of the current fold
 @property (assign, nonatomic) PaperFoldState state;
+// enable and disable dragging
+@property (assign, nonatomic) BOOL enableLeftFoldDragging, enableRightFoldDragging;
 
 // animate folding and unfolding when sent the offset of contentView
 // offset are either sent from pan gesture recognizer, or manual animation done with NSTimer after gesture ended
-- (void)animateWhenPanned:(CGPoint)point;
+- (void)animateWithContentOffset:(CGPoint)point panned:(BOOL)panned;
 
 // set the right fold content view
 // and the right fold container view
@@ -72,5 +74,11 @@ typedef enum
 // set the left fold content view
 // and set the left fold container view frame
 - (void)setLeftFoldContentView:(UIView*)view;
+
+// unfold the left and right view
+- (void)unfoldLeftView;
+- (void)unfoldRightView;
+// restore to center
+- (void)restoreToCenter;
 
 @end

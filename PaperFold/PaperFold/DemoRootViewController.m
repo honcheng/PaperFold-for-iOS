@@ -51,6 +51,8 @@
         _centerTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,[self.view bounds].size.height)];
         [_centerTableView setRowHeight:120];
         [self.contentView addSubview:_centerTableView];
+        [_centerTableView setDelegate:self];
+        [_centerTableView setDataSource:self];
         
         _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
         [_leftTableView setRowHeight:100];
@@ -63,8 +65,57 @@
         UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,1,[self.view bounds].size.height)];
         [self.contentView addSubview:line2];
         [line2 setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:1]];
+        
+        // you may want to disable dragging to preserve tableview swipe functionality
+        
+        // disable left fold
+        //[self setEnableLeftFoldDragging:NO];
+        
+        // disable right fold
+        //[self setEnableRightFoldDragging:NO];
     }
     return self;
+}
+
+#pragma table view
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 0;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"UITableViewCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    if (indexPath.row==0) [cell.textLabel setText:@"<-- unfold left view"];
+    else if (indexPath.row==1)[cell.textLabel setText:@"unfold right view -->"];
+    else if (indexPath.row==2)[cell.textLabel setText:@"--> restore <--"];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==0)
+    {
+        // unfold left view
+        [self unfoldLeftView];
+    }
+    else if (indexPath.row==1)
+    {
+        // unfold right view
+        [self unfoldRightView];
+    }
+    else if (indexPath.row==2)
+    {
+        // restore to center
+        [self restoreToCenter];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

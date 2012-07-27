@@ -38,14 +38,52 @@ Usage
     _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,240,[self.view bounds].size.height)];
     [self setRightFoldContentView:_mapView rightViewFoldCount:3 rightViewPullFactor:0.9];
 
+4) Sometimes you may want to disable drag-to-unfold if you have a table view in the center view and wish to preserve the swipe gesture functions e.g. to delete cells. 
+
+    // this disables dragging to unfold the left view
+    [self setEnableLeftFoldDragging:NO];
+
+    // this disables dragging to unfold the right view
+    [self setEnableRightFoldDragging:NO];
+
+
+5) To unfold left view without dragging
+
+    [self unfoldLeftView];
+
+6) To unfold right view without dragging
+
+    [self unfoldRightView];
+
+7) To restore view to center without dragging
+
+    [self restoreToCenter];
+
 ARC
 ---
 
 This project uses ARC. If you are not using ARC in your project, add '-fobjc-arc' as a compiler flag for all the files in this project.
 
+To-do
+-----
+
+Isolate the left-center-middle view from the UIViewController
+Add folds to top and bottom view
+
 Known Problem
 -------------
 
-Screen capture of MKMapView is iOS6 is not taken properly. I approached a few Apple engineers at WWDC, and was told that it is most likely a bug that need to fix. I have already filed a bug report. Hopefully it will be fixed soon. 
+Screen capture of MKMapView is iOS6 is not taken properly. I approached a few Apple engineers at WWDC, and was told that it is most likely a bug that need to fix. I have already filed a bug report (filed as rdar://11813051, closed by Apple because it is a duplicate of rdar://11650331). Hopefully it will be fixed soon. 
+
+Credits
+------
+
+Special thanks to [@dilliontan](http://twitter.com/dilliontan), my colleague in [buUuk](http://buuuk.com) for explaining CAAffineTransform. He's a master at that :p. I'm still a noob. 
+You can check out his [iOS-Flip-Transform project here](https://github.com/Dillion/iOS-Flip-Transform).
+
+Contact
+------
 
 [twitter.com/honcheng](http://twitter.com/honcheng)
+[honcheng.com](http://honcheng.com)
+

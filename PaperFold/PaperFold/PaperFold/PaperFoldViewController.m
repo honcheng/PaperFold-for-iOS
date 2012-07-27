@@ -39,6 +39,8 @@
 @synthesize contentView = _contentView;
 @synthesize animationTimer = _animationTimer;
 @synthesize state = _state;
+@synthesize enableLeftFoldDragging = _enableLeftFoldDragging;
+@synthesize enableRightFoldDragging = _enableRightFoldDragging;
 
 @synthesize leftFoldView = _leftFoldView;
 CGFloat const kLeftViewUnfoldThreshold = 0.3;
@@ -62,6 +64,8 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [_contentView addGestureRecognizer:panGestureRecognizer];
         
         _state = PaperFoldStateDefault;
+        _enableRightFoldDragging = YES;
+        _enableLeftFoldDragging = YES;
     }
     return self;
 }
@@ -95,17 +99,17 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         if (_state==PaperFoldStateDefault)
         {
             // animate folding when panned
-            [self animateWhenPanned:point];
+            [self animateWithContentOffset:point panned:YES];
         }
         else if (_state==PaperFoldStateLeftUnfolded)
         {
             CGPoint adjustedPoint = CGPointMake(point.x + self.leftFoldView.frame.size.width, point.y);
-            [self animateWhenPanned:adjustedPoint];
+            [self animateWithContentOffset:adjustedPoint panned:YES];
         }
         else if (_state==PaperFoldStateRightUnfolded)
         {
             CGPoint adjustedPoint = CGPointMake(point.x - self.rightFoldView.frame.size.width, point.y);
-            [self animateWhenPanned:adjustedPoint];
+            [self animateWithContentOffset:adjustedPoint panned:YES];
         }
         
     }
@@ -114,21 +118,26 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         float x = point.x;
         if (x>=0.0) // offset to the right
         {
-            if ( (x>=kLeftViewUnfoldThreshold*self.leftFoldView.frame.size.width && _state==PaperFoldStateDefault) || [self.contentView frame].origin.x==self.leftFoldView.frame.size.width) 
+            if ( (x>=kLeftViewUnfoldThreshold*self.leftFoldView.frame.size.width && _state==PaperFoldStateDefault) || [self.contentView frame].origin.x==self.leftFoldView.frame.size.width)
             {
-                
-                // if offset more than threshold, open fully
-                self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
-                return;
+                if (self.enableLeftFoldDragging)
+                {
+                    // if offset more than threshold, open fully
+                    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
+                    return;
+                }
             }
         }
         else if (x<0)
         {
             if ((x<=-kRightViewUnfoldThreshold*self.rightFoldView.frame.size.width && _state==PaperFoldStateDefault) || [self.contentView frame].origin.x==-self.rightFoldView.frame.size.width)
             {
-                // if offset more than threshold, open fully
-                self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
-                return;
+                if (self.enableRightFoldDragging)
+                {
+                    // if offset more than threshold, open fully
+                    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
+                    return;
+                }
             }
         }
         
@@ -140,7 +149,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     }
 }
 
-- (void)animateWhenPanned:(CGPoint)point
+- (void)animateWithContentOffset:(CGPoint)point panned:(BOOL)panned
 {
     float x = point.x;
     // if offset to the right, show the left view
@@ -148,27 +157,33 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 
     if (x>0.0)
     {
-        // set the limit of the right offset
-        if (x>=self.leftFoldView.frame.size.width)
+        if (self.enableLeftFoldDragging || !panned)
         {
-            self.state = PaperFoldStateLeftUnfolded;
-            x = self.leftFoldView.frame.size.width;
+            // set the limit of the right offset
+            if (x>=self.leftFoldView.frame.size.width)
+            {
+                self.state = PaperFoldStateLeftUnfolded;
+                x = self.leftFoldView.frame.size.width;
+            }
+            [self.contentView setTransform:CGAffineTransformMakeTranslation(x, 0)];
+            [self.leftFoldView unfoldWithParentOffset:x];
         }
-        [self.contentView setTransform:CGAffineTransformMakeTranslation(x, 0)];
-        [self.leftFoldView unfoldWithParentOffset:x];
     }
     else if (x<0.0)
     {
-        // set the limit of the left offset
-        // original x value not changed, to be sent to multi-fold view
-        float x1 = x;
-        if (x1<=-self.rightFoldView.frame.size.width)
+        if (self.enableRightFoldDragging || !panned)
         {
-            self.state = PaperFoldStateRightUnfolded;
-            x1 = -self.rightFoldView.frame.size.width;
+            // set the limit of the left offset
+            // original x value not changed, to be sent to multi-fold view
+            float x1 = x;
+            if (x1<=-self.rightFoldView.frame.size.width)
+            {
+                self.state = PaperFoldStateRightUnfolded;
+                x1 = -self.rightFoldView.frame.size.width;
+            }
+            [self.contentView setTransform:CGAffineTransformMakeTranslation(x1, 0)];
+            [self.rightFoldView unfoldWithParentOffset:x];
         }
-        [self.contentView setTransform:CGAffineTransformMakeTranslation(x1, 0)];
-        [self.rightFoldView unfoldWithParentOffset:x];
     }
     else 
     {
@@ -194,7 +209,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     }
     
     // use the x value to animate folding
-    [self animateWhenPanned:CGPointMake(self.contentView.frame.origin.x, 0)];
+    [self animateWithContentOffset:CGPointMake(self.contentView.frame.origin.x, 0) panned:NO];
 }
 
 // unfold the right view
@@ -213,7 +228,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     }
     
     // use the x value to animate folding
-    [self animateWhenPanned:CGPointMake(self.contentView.frame.origin.x, 0)];
+    [self animateWithContentOffset:CGPointMake(self.contentView.frame.origin.x, 0) panned:NO];
 }
 
 // restore contentView back to original position
@@ -231,14 +246,28 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [timer invalidate];
         transform = CGAffineTransformMakeTranslation(0, 0);
         [self.contentView setTransform:transform];
-        [self animateWhenPanned:CGPointMake(0, 0)];
+        [self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
     }
     else
     {
         // use the x value to animate folding
-        [self animateWhenPanned:CGPointMake(self.contentView.frame.origin.x, 0)];
+        [self animateWithContentOffset:CGPointMake(self.contentView.frame.origin.x, 0) panned:NO];
     }
-    
+}
+
+- (void)unfoldLeftView
+{
+    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
+}
+
+- (void)unfoldRightView
+{
+    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
+}
+
+- (void)restoreToCenter
+{
+    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
 }
 
 - (void)didReceiveMemoryWarning

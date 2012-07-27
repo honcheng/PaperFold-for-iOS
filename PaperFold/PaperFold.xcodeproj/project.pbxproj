@@ -291,6 +291,7 @@
 				GCC_PREFIX_HEADER = "PaperFold/PaperFold-Prefix.pch";
 				INFOPLIST_FILE = "PaperFold/PaperFold-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -304,6 +305,7 @@
 				INFOPLIST_FILE = "PaperFold/PaperFold-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9806D7FE-4AB9-493C-AD7B-ED64E700C58C";
+				RUN_CLANG_STATIC_ANALYZER = NO;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
