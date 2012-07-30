@@ -62,15 +62,10 @@
 		[self.colorsArray addObject:(id)[color CGColor]];
 	}
 	
-	[self setNeedsDisplay];
-}
-
-- (void) drawRect:(CGRect)rect
-{
 	if ([self.colorsArray count]>0)
-	{
-		[self.gradient setColors:self.colorsArray];
-	}
+  {
+    [self.gradient setColors:self.colorsArray];
+  }
 }
 
 @end
