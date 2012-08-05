@@ -68,6 +68,8 @@
         [line2 setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
         [line2 setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:1]];
         
+        [self setDelegate:self];
+        
         // you may want to disable dragging to preserve tableview swipe functionality
         
         // disable left fold
@@ -118,6 +120,13 @@
         [self setPaperFoldState:PaperFoldStateDefault];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark paper fold delegate
+
+- (void)paperFoldViewController:(id)paperFoldViewController didTransitionToState:(PaperFoldState)paperFoldState
+{
+    NSLog(@"did transition to state %i", paperFoldState);
 }
 
 @end

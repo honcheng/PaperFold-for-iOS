@@ -36,7 +36,7 @@
 #import "PaperFoldViewController.h"
 #import <MapKit/MapKit.h>
 
-@interface DemoRootViewController : PaperFoldViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface DemoRootViewController : PaperFoldViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, PaperFoldViewControllerDelegate>
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) UITableView *leftTableView, *centerTableView;
 @end

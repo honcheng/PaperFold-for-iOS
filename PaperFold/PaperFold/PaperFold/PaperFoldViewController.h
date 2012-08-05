@@ -46,21 +46,28 @@ typedef enum
     PaperFoldStateTransition = 3
 } PaperFoldState;
 
+@protocol PaperFoldViewControllerDelegate <NSObject>
+// callback when paper fold transition state changes
+// does not callback when action is cancelled
+- (void)paperFoldViewController:(id)paperFoldViewController didTransitionToState:(PaperFoldState)paperFoldState;
+@end
+
 @interface PaperFoldViewController : UIViewController
 
 // main content view
-@property (strong, nonatomic) TouchThroughUIView *contentView;
+@property (nonatomic) TouchThroughUIView *contentView;
 // timer to animate folds after gesture ended
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
-@property (strong, nonatomic) NSTimer *animationTimer;
+@property (nonatomic) NSTimer *animationTimer;
 // the fold view on the left
-@property (strong, nonatomic) FoldView *leftFoldView;
+@property (nonatomic) FoldView *leftFoldView;
 // the multiple fold view on the right
-@property (strong, nonatomic) MultiFoldView *rightFoldView;
+@property (nonatomic) MultiFoldView *rightFoldView;
 // state of the current fold
-@property (assign, nonatomic) PaperFoldState state;
+@property (nonatomic, assign) PaperFoldState state, lastState;
 // enable and disable dragging
-@property (assign, nonatomic) BOOL enableLeftFoldDragging, enableRightFoldDragging;
+@property (nonatomic, assign) BOOL enableLeftFoldDragging, enableRightFoldDragging;
+@property (nonatomic, assign) id<PaperFoldViewControllerDelegate> delegate;
 
 // animate folding and unfolding when sent the offset of contentView
 // offset are either sent from pan gesture recognizer, or manual animation done with NSTimer after gesture ended

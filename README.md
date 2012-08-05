@@ -59,6 +59,14 @@ Usage
 
     [self setPaperFoldState:PaperFoldStateDefault];
 
+8) To receive callbacks when fold state changes
+
+    // register callback delegate
+    [self setDelegate:self];
+
+    // callback comes from the following delegate method 
+    - (void)paperFoldViewController:(id)paperFoldViewController didTransitionToState:(PaperFoldState)paperFoldState
+
 ARC
 ---
 
