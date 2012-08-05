@@ -49,15 +49,15 @@ Usage
 
 5) To unfold left view without dragging
 
-    [self unfoldLeftView];
+    [self setPaperFoldState:PaperFoldStateLeftUnfolded];
 
 6) To unfold right view without dragging
 
-    [self unfoldRightView];
+    [self setPaperFoldState:PaperFoldStateRightUnfolded];
 
 7) To restore view to center without dragging
 
-    [self restoreToCenter];
+    [self setPaperFoldState:PaperFoldStateDefault];
 
 ARC
 ---

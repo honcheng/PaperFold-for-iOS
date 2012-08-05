@@ -261,19 +261,35 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     }
 }
 
+- (void)setPaperFoldState:(PaperFoldState)state
+{
+    if (state==PaperFoldStateDefault)
+    {
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
+    }
+    else if (state==PaperFoldStateLeftUnfolded)
+    {
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
+    }
+    else if (state==PaperFoldStateRightUnfolded)
+    {
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
+    }
+}
+
 - (void)unfoldLeftView
 {
-    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
+    [self setPaperFoldState:PaperFoldStateLeftUnfolded];
 }
 
 - (void)unfoldRightView
 {
-    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
+    [self setPaperFoldState:PaperFoldStateRightUnfolded];
 }
 
 - (void)restoreToCenter
 {
-    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
+    [self setPaperFoldState:PaperFoldStateDefault];
 }
 
 - (void)didReceiveMemoryWarning

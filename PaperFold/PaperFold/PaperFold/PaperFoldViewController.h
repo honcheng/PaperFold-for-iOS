@@ -76,9 +76,12 @@ typedef enum
 - (void)setLeftFoldContentView:(UIView*)view;
 
 // unfold the left and right view
-- (void)unfoldLeftView;
-- (void)unfoldRightView;
-// restore to center
-- (void)restoreToCenter;
+- (void)setPaperFoldState:(PaperFoldState)state;
+
+// deprecate methods
+// use setPaperFoldState: instead
+- (void)unfoldLeftView __attribute__((deprecated));
+- (void)unfoldRightView __attribute__((deprecated));
+- (void)restoreToCenter __attribute__((deprecated));
 
 @end

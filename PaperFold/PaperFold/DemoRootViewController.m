@@ -105,17 +105,17 @@
     if (indexPath.row==0)
     {
         // unfold left view
-        [self unfoldLeftView];
+        [self setPaperFoldState:PaperFoldStateLeftUnfolded];
     }
     else if (indexPath.row==1)
     {
         // unfold right view
-        [self unfoldRightView];
+        [self setPaperFoldState:PaperFoldStateRightUnfolded];
     }
     else if (indexPath.row==2)
     {
         // restore to center
-        [self restoreToCenter];
+        [self setPaperFoldState:PaperFoldStateDefault];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
