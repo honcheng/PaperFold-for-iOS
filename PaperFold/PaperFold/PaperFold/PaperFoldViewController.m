@@ -59,6 +59,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [_contentView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
         [self.view addSubview:_contentView];
         [_contentView setBackgroundColor:[UIColor whiteColor]];
+        [_contentView setAutoresizesSubviews:YES];
         
         UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
         [_contentView addGestureRecognizer:panGestureRecognizer];
@@ -77,13 +78,18 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     self.leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,[self.view bounds].size.height)];
     [self.view insertSubview:self.leftFoldView belowSubview:self.contentView];
     [self.leftFoldView setContent:view];
+    [self.leftFoldView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+    [self.leftFoldView setAutoresizesSubviews:YES];
 }
 
 - (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
 {
     self.rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,view.frame.size.width,[self.view bounds].size.height) folds:rightViewFoldCount pullFactor:rightViewPullFactor];
     [self.contentView addSubview:self.rightFoldView];
+    [self.rightFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
+    [self.rightFoldView setAutoresizesSubviews:YES];
     
+    [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.rightFoldView setContent:view];
 }
 
@@ -289,7 +295,8 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
+    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end
