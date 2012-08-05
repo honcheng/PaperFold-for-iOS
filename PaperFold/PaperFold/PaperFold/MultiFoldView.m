@@ -73,6 +73,7 @@
     // set the content view
     self.contentView = contentView;
     [self.contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
+    [self.contentView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleWidth];
     // place content view below folds
     [self insertSubview:self.contentView atIndex:0];
     // immediately take a screenshot of the content view to overlay in fold

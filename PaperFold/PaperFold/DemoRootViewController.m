@@ -53,6 +53,7 @@
         [self.contentView addSubview:_centerTableView];
         [_centerTableView setDelegate:self];
         [_centerTableView setDataSource:self];
+        [_centerTableView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
         
         _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
         [_leftTableView setRowHeight:100];
@@ -64,6 +65,7 @@
         
         UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,1,[self.view bounds].size.height)];
         [self.contentView addSubview:line2];
+        [line2 setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
         [line2 setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:1]];
         
         // you may want to disable dragging to preserve tableview swipe functionality
