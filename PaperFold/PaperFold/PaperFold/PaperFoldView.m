@@ -81,6 +81,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     [self insertSubview:self.leftFoldView belowSubview:self.contentView];
     [self.leftFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+    [self setPaperFoldState:PaperFoldStateDefault];
 }
 
 - (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
@@ -90,6 +91,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     [self.contentView addSubview:self.rightFoldView];
     [self.rightFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+    [self setPaperFoldState:PaperFoldStateDefault];
 }
 
 - (void)onContentViewPanned:(UIPanGestureRecognizer*)gesture
