@@ -10,7 +10,7 @@
 		F877BF0114E2B5F20076B1C6 /* FacingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF414E2B5F20076B1C6 /* FacingView.m */; };
 		F877BF0214E2B5F20076B1C6 /* FoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF614E2B5F20076B1C6 /* FoldView.m */; };
 		F877BF0314E2B5F20076B1C6 /* MultiFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF814E2B5F20076B1C6 /* MultiFoldView.m */; };
-		F877BF0414E2B5F20076B1C6 /* PaperFoldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFA14E2B5F20076B1C6 /* PaperFoldViewController.m */; };
+		F877BF0414E2B5F20076B1C6 /* PaperFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFA14E2B5F20076B1C6 /* PaperFoldView.m */; };
 		F877BF0514E2B5F20076B1C6 /* ShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFC14E2B5F20076B1C6 /* ShadowView.m */; };
 		F877BF0614E2B5F20076B1C6 /* TouchThroughUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFE14E2B5F20076B1C6 /* TouchThroughUIView.m */; };
 		F877BF0714E2B5F20076B1C6 /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BF0014E2B5F20076B1C6 /* UIView+Screenshot.m */; };
@@ -33,8 +33,8 @@
 		F877BEF614E2B5F20076B1C6 /* FoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoldView.m; sourceTree = "<group>"; };
 		F877BEF714E2B5F20076B1C6 /* MultiFoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiFoldView.h; sourceTree = "<group>"; };
 		F877BEF814E2B5F20076B1C6 /* MultiFoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiFoldView.m; sourceTree = "<group>"; };
-		F877BEF914E2B5F20076B1C6 /* PaperFoldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperFoldViewController.h; sourceTree = "<group>"; };
-		F877BEFA14E2B5F20076B1C6 /* PaperFoldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperFoldViewController.m; sourceTree = "<group>"; };
+		F877BEF914E2B5F20076B1C6 /* PaperFoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperFoldView.h; sourceTree = "<group>"; };
+		F877BEFA14E2B5F20076B1C6 /* PaperFoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperFoldView.m; sourceTree = "<group>"; };
 		F877BEFB14E2B5F20076B1C6 /* ShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowView.h; sourceTree = "<group>"; };
 		F877BEFC14E2B5F20076B1C6 /* ShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowView.m; sourceTree = "<group>"; };
 		F877BEFD14E2B5F20076B1C6 /* TouchThroughUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchThroughUIView.h; sourceTree = "<group>"; };
@@ -84,8 +84,8 @@
 				F877BEF614E2B5F20076B1C6 /* FoldView.m */,
 				F877BEF714E2B5F20076B1C6 /* MultiFoldView.h */,
 				F877BEF814E2B5F20076B1C6 /* MultiFoldView.m */,
-				F877BEF914E2B5F20076B1C6 /* PaperFoldViewController.h */,
-				F877BEFA14E2B5F20076B1C6 /* PaperFoldViewController.m */,
+				F877BEF914E2B5F20076B1C6 /* PaperFoldView.h */,
+				F877BEFA14E2B5F20076B1C6 /* PaperFoldView.m */,
 				F877BEFB14E2B5F20076B1C6 /* ShadowView.h */,
 				F877BEFC14E2B5F20076B1C6 /* ShadowView.m */,
 				F877BEFD14E2B5F20076B1C6 /* TouchThroughUIView.h */,
@@ -218,7 +218,7 @@
 				F877BF0114E2B5F20076B1C6 /* FacingView.m in Sources */,
 				F877BF0214E2B5F20076B1C6 /* FoldView.m in Sources */,
 				F877BF0314E2B5F20076B1C6 /* MultiFoldView.m in Sources */,
-				F877BF0414E2B5F20076B1C6 /* PaperFoldViewController.m in Sources */,
+				F877BF0414E2B5F20076B1C6 /* PaperFoldView.m in Sources */,
 				F877BF0514E2B5F20076B1C6 /* ShadowView.m in Sources */,
 				F877BF0614E2B5F20076B1C6 /* TouchThroughUIView.m in Sources */,
 				F877BF0714E2B5F20076B1C6 /* UIView+Screenshot.m in Sources */,

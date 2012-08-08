@@ -64,6 +64,7 @@
             [foldView setTag:FOLDVIEW_TAG+i];
             [self addSubview:foldView];
         }
+        [self setAutoresizesSubviews:YES];
     }
     return self;
 }

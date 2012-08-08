@@ -81,6 +81,10 @@
         // make sure the views are closed properly when initialized
         [_leftView.layer setTransform:CATransform3DMakeRotation((M_PI / 2), 0, 1, 0)];
         [_rightView.layer setTransform:CATransform3DMakeRotation((M_PI / 2), 0, 1, 0)];
+        
+        [self setAutoresizesSubviews:YES];
+        [_contentView setAutoresizesSubviews:YES];
+        [_contentView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     }
     return self;
 }

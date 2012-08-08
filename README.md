@@ -26,56 +26,64 @@ The animation here looks a bit laggy, but that's because of the low frame rates 
 Usage
 -----
 
-1) Subclass PaperFoldViewController in the view controller that will be using the left/right fold views.
+1) Add PaperFoldView as a subview into your view controller. 
+
+    _paperFoldView = [[PaperFoldView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
+    [self.view addSubview:_paperFoldView];
 
 2) To set left view, use setLeftFoldContentView:. Example below uses a UITableView, but it can any UIView.
 
     _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
-    [self setLeftFoldContentView:_leftTableView];
+    [_paperFoldView setLeftFoldContentView:_leftTableView];
 
 3) To set the right view, use setRightFoldContentView:rightViewFoldCount:rightViewPullFactor:. Example below uses a MKMapView, but it can any UIView. The fold count is the number of folds in the right view. The pull factor controls the ratio of folding/unfolding of the different folds away from the center.
 
     _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,240,[self.view bounds].size.height)];
-    [self setRightFoldContentView:_mapView rightViewFoldCount:3 rightViewPullFactor:0.9];
+    [_paperFoldView setRightFoldContentView:_mapView rightViewFoldCount:3 rightViewPullFactor:0.9];
+
+4) To set the center view
+
+	_centerTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.height,[self.view bounds].size.height)];
+    [_paperFoldView setCenterContentView:_centerTableView];
 
 4) Sometimes you may want to disable drag-to-unfold if you have a table view in the center view and wish to preserve the swipe gesture functions e.g. to delete cells. 
 
     // this disables dragging to unfold the left view
-    [self setEnableLeftFoldDragging:NO];
+    [self.paperFoldView setEnableLeftFoldDragging:NO];
 
     // this disables dragging to unfold the right view
-    [self setEnableRightFoldDragging:NO];
+    [self.paperFoldView setEnableRightFoldDragging:NO];
 
 
 5) To unfold left view without dragging
 
-    [self setPaperFoldState:PaperFoldStateLeftUnfolded];
+    [self.paperFoldView setPaperFoldState:PaperFoldStateLeftUnfolded];
 
 6) To unfold right view without dragging
 
-    [self setPaperFoldState:PaperFoldStateRightUnfolded];
+    [self.paperFoldView setPaperFoldState:PaperFoldStateRightUnfolded];
 
 7) To restore view to center without dragging
 
-    [self setPaperFoldState:PaperFoldStateDefault];
+    [self.paperFoldView setPaperFoldState:PaperFoldStateDefault];
 
 8) To receive callbacks when fold state changes
 
     // register callback delegate
-    [self setDelegate:self];
+    [self.paperFoldView setDelegate:self];
 
     // callback comes from the following delegate method 
-    - (void)paperFoldViewController:(id)paperFoldViewController didTransitionToState:(PaperFoldState)paperFoldState
+    - (void)paperFoldView:(id)paperFoldView didTransitionToState:(PaperFoldState)paperFoldState
 
-ARC
+Requirements
 ---
 
 This project uses ARC. If you are not using ARC in your project, add '-fobjc-arc' as a compiler flag for all the files in this project.
+XCode 4.4 is required for auto-synthesis.
 
 To-do
 -----
 
-Isolate the left-center-middle view from the UIViewController
 Add folds to top and bottom view
 
 Known Problem

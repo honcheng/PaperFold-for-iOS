@@ -32,34 +32,26 @@
  */
 
 
-#import "PaperFoldViewController.h"
+#import "PaperFoldView.h"
 #import <QuartzCore/QuartzCore.h>
 
-@implementation PaperFoldViewController
-@synthesize contentView = _contentView;
-@synthesize animationTimer = _animationTimer;
-@synthesize state = _state;
-@synthesize lastState = _lastState;
-@synthesize enableLeftFoldDragging = _enableLeftFoldDragging;
-@synthesize enableRightFoldDragging = _enableRightFoldDragging;
-@synthesize delegate;
+@implementation PaperFoldView
 
-@synthesize leftFoldView = _leftFoldView;
 CGFloat const kLeftViewUnfoldThreshold = 0.3;
-
-@synthesize rightFoldView = _rightFoldView;
 CGFloat const kRightViewUnfoldThreshold = 0.3;
 
-- (id)init
+- (id)initWithFrame:(CGRect)frame
 {
-    self = [super init];
+    self = [super initWithFrame:frame];
     if (self)
     {
-        [self.view setBackgroundColor:[UIColor darkGrayColor]];
+        [self setBackgroundColor:[UIColor darkGrayColor]];
+        [self setAutoresizesSubviews:YES];
+        [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
         
-        _contentView = [[TouchThroughUIView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,[self.view bounds].size.height)];
+        _contentView = [[TouchThroughUIView alloc] initWithFrame:CGRectMake(0,0,self.frame.size.width,self.frame.size.height)];
         [_contentView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-        [self.view addSubview:_contentView];
+        [self addSubview:_contentView];
         [_contentView setBackgroundColor:[UIColor whiteColor]];
         [_contentView setAutoresizesSubviews:YES];
         
@@ -74,26 +66,30 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     return self;
 }
 
+- (void)setCenterContentView:(UIView*)view
+{
+    [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+    [self.contentView addSubview:view];
+}
+
 - (void)setLeftFoldContentView:(UIView*)view
 {
     if (self.leftFoldView) [self.leftFoldView removeFromSuperview];
-    
-    self.leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,[self.view bounds].size.height)];
-    [self.view insertSubview:self.leftFoldView belowSubview:self.contentView];
-    [self.leftFoldView setContent:view];
+
+    self.leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,self.frame.size.height)];
     [self.leftFoldView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
-    [self.leftFoldView setAutoresizesSubviews:YES];
+    [self insertSubview:self.leftFoldView belowSubview:self.contentView];
+    [self.leftFoldView setContent:view];
+    [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
 }
 
 - (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
 {
-    self.rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake([self.view bounds].size.width,0,view.frame.size.width,[self.view bounds].size.height) folds:rightViewFoldCount pullFactor:rightViewPullFactor];
-    [self.contentView addSubview:self.rightFoldView];
+    self.rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(self.frame.size.width,0,view.frame.size.width,self.frame.size.height) folds:rightViewFoldCount pullFactor:rightViewPullFactor];
     [self.rightFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
-    [self.rightFoldView setAutoresizesSubviews:YES];
-    
-    [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+    [self.contentView addSubview:self.rightFoldView];
     [self.rightFoldView setContent:view];
+    [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
 }
 
 - (void)onContentViewPanned:(UIPanGestureRecognizer*)gesture
@@ -101,7 +97,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     // cancel gesture if another animation has not finished yet
     if ([self.animationTimer isValid]) return;
     
-    CGPoint point = [gesture translationInView:self.view];
+    CGPoint point = [gesture translationInView:self];
     
     if ([gesture state]==UIGestureRecognizerStateChanged)
     {
@@ -220,9 +216,9 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         transform = CGAffineTransformMakeTranslation(self.leftFoldView.frame.size.width, 0);
         [self.contentView setTransform:transform];
         
-        if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldViewController:didTransitionToState:)])
+        if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didTransitionToState:)])
         {
-            [self.delegate paperFoldViewController:self didTransitionToState:PaperFoldStateLeftUnfolded];
+            [self.delegate paperFoldView:self didTransitionToState:PaperFoldStateLeftUnfolded];
         }
     }
     
@@ -244,9 +240,9 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         transform = CGAffineTransformMakeTranslation(-self.rightFoldView.frame.size.width, 0);
         [self.contentView setTransform:transform];
         
-        if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldViewController:didTransitionToState:)])
+        if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didTransitionToState:)])
         {
-            [self.delegate paperFoldViewController:self didTransitionToState:PaperFoldStateRightUnfolded];
+            [self.delegate paperFoldView:self didTransitionToState:PaperFoldStateRightUnfolded];
         }
     }
     
@@ -271,9 +267,9 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [self.contentView setTransform:transform];
         [self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
         
-        if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldViewController:didTransitionToState:)])
+        if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didTransitionToState:)])
         {
-            [self.delegate paperFoldViewController:self didTransitionToState:PaperFoldStateDefault];
+            [self.delegate paperFoldView:self didTransitionToState:PaperFoldStateDefault];
         }
     }
     else
@@ -312,29 +308,6 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 - (void)restoreToCenter
 {
     [self setPaperFoldState:PaperFoldStateDefault];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return YES;
-    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

@@ -33,10 +33,11 @@
 
 
 #import <UIKit/UIKit.h>
-#import "PaperFoldViewController.h"
+#import "PaperFoldView.h"
 #import <MapKit/MapKit.h>
 
-@interface DemoRootViewController : PaperFoldViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, PaperFoldViewControllerDelegate>
+@interface DemoRootViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, PaperFoldViewDelegate>
+@property (nonatomic, strong) PaperFoldView *paperFoldView;
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) UITableView *leftTableView, *centerTableView;
 @end
