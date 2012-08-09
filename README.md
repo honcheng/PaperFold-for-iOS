@@ -67,13 +67,13 @@ Usage
 
     [self.paperFoldView setPaperFoldState:PaperFoldStateDefault];
 
-8) To receive callbacks when fold state changes
+8) To receive callbacks when fold state changes, and if the fold was activated manually by finger gesture, or automatically by calling setPaperFoldState:
 
     // register callback delegate
     [self.paperFoldView setDelegate:self];
 
     // callback comes from the following delegate method 
-    - (void)paperFoldView:(id)paperFoldView didTransitionToState:(PaperFoldState)paperFoldState
+    - (void)paperFoldView:(id)paperFoldView didFoldAutomatically:(BOOL)automatic toState:(PaperFoldState)paperFoldState
 
 Requirements
 ---
