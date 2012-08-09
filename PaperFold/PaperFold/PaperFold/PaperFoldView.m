@@ -212,6 +212,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [self.leftFoldView unfoldWithParentOffset:x];
         [self.rightFoldView unfoldWithParentOffset:x];
         self.state = PaperFoldStateDefault;
+        
+        if ([self.delegate respondsToSelector:@selector(paperFoldView:viewDidOffset:)])
+        {
+            [self.delegate paperFoldView:self viewDidOffset:CGPointMake(x,0)];
+        }
     }
 }
 
