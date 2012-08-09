@@ -50,7 +50,7 @@ typedef enum
 @optional
 // callback when paper fold transition state changes
 // does not callback when action is cancelled
-- (void)paperFoldView:(id)paperFoldView didTransitionToState:(PaperFoldState)paperFoldState;
+- (void)paperFoldView:(id)paperFoldView didFoldAutomatically:(BOOL)automated toState:(PaperFoldState)paperFoldState;
 // callback when paper fold view is offset
 - (void)paperFoldView:(id)paperFoldView viewDidOffset:(CGPoint)offset;
 @end
@@ -70,6 +70,8 @@ typedef enum
 @property (nonatomic, assign) PaperFoldState state, lastState;
 // enable and disable dragging
 @property (nonatomic, assign) BOOL enableLeftFoldDragging, enableRightFoldDragging;
+// indicate if the fold was triggered by finger panning, or set state
+@property (nonatomic, assign) BOOL isAutomatedFolding;
 @property (nonatomic, assign) id<PaperFoldViewDelegate> delegate;
 
 // animate folding and unfolding when sent the offset of contentView

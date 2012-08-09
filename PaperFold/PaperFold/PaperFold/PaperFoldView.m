@@ -233,10 +233,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         transform = CGAffineTransformMakeTranslation(self.leftFoldView.frame.size.width, 0);
         [self.contentView setTransform:transform];
         
-        if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didTransitionToState:)])
+        if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
         {
-            [self.delegate paperFoldView:self didTransitionToState:PaperFoldStateLeftUnfolded];
+            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
         }
+        [self setIsAutomatedFolding:NO];
     }
     
     // use the x value to animate folding
@@ -257,10 +258,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         transform = CGAffineTransformMakeTranslation(-self.rightFoldView.frame.size.width, 0);
         [self.contentView setTransform:transform];
         
-        if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didTransitionToState:)])
+        if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
         {
-            [self.delegate paperFoldView:self didTransitionToState:PaperFoldStateRightUnfolded];
+            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
         }
+        [self setIsAutomatedFolding:NO];
     }
     
     // use the x value to animate folding
@@ -284,10 +286,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [self.contentView setTransform:transform];
         [self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
         
-        if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didTransitionToState:)])
+        if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
         {
-            [self.delegate paperFoldView:self didTransitionToState:PaperFoldStateDefault];
+            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
         }
+        [self setIsAutomatedFolding:NO];
     }
     else
     {
@@ -298,6 +301,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 
 - (void)setPaperFoldState:(PaperFoldState)state
 {
+    [self setIsAutomatedFolding:YES];
     if (state==PaperFoldStateDefault)
     {
         self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
