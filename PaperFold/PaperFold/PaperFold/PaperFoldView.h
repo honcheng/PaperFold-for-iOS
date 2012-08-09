@@ -47,22 +47,25 @@ typedef enum
 } PaperFoldState;
 
 @protocol PaperFoldViewDelegate <NSObject>
+@optional
 // callback when paper fold transition state changes
 // does not callback when action is cancelled
 - (void)paperFoldView:(id)paperFoldView didTransitionToState:(PaperFoldState)paperFoldState;
+// callback when paper fold view is offset
+- (void)paperFoldView:(id)paperFoldView viewDidOffset:(CGPoint)offset;
 @end
 
 @interface PaperFoldView : UIView
 
 // main content view
-@property (nonatomic) TouchThroughUIView *contentView;
+@property (nonatomic, strong) TouchThroughUIView *contentView;
 // timer to animate folds after gesture ended
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
-@property (nonatomic) NSTimer *animationTimer;
+@property (nonatomic, strong) NSTimer *animationTimer;
 // the fold view on the left
-@property (nonatomic) FoldView *leftFoldView;
+@property (nonatomic, strong) FoldView *leftFoldView;
 // the multiple fold view on the right
-@property (nonatomic) MultiFoldView *rightFoldView;
+@property (nonatomic, strong) MultiFoldView *rightFoldView;
 // state of the current fold
 @property (nonatomic, assign) PaperFoldState state, lastState;
 // enable and disable dragging

@@ -98,7 +98,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 {
     // cancel gesture if another animation has not finished yet
     if ([self.animationTimer isValid]) return;
-    
+
     CGPoint point = [gesture translationInView:self];
     
     if ([gesture state]==UIGestureRecognizerStateChanged)
@@ -163,7 +163,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     // if offset to the left, show the right multi-fold view
 
     if (self.state!=self.lastState) self.lastState = self.state;
-    
+
     if (x>0.0)
     {
         if (self.enableLeftFoldDragging || !panned)
@@ -177,6 +177,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
             }
             [self.contentView setTransform:CGAffineTransformMakeTranslation(x, 0)];
             [self.leftFoldView unfoldWithParentOffset:x];
+            
+            if ([self.delegate respondsToSelector:@selector(paperFoldView:viewDidOffset:)])
+            {
+                [self.delegate paperFoldView:self viewDidOffset:CGPointMake(x,0)];
+            }
         }
     }
     else if (x<0.0)
@@ -194,6 +199,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
             }
             [self.contentView setTransform:CGAffineTransformMakeTranslation(x1, 0)];
             [self.rightFoldView unfoldWithParentOffset:x];
+            
+            if ([self.delegate respondsToSelector:@selector(paperFoldView:viewDidOffset:)])
+            {
+                [self.delegate paperFoldView:self viewDidOffset:CGPointMake(x,0)];
+            }
         }
     }
     else 
