@@ -82,6 +82,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     [self.leftFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self setPaperFoldState:PaperFoldStateDefault];
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(-1,0,1,self.frame.size.height)];
+    [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+    [self.contentView addSubview:line];
+    [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
 }
 
 - (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
@@ -92,6 +97,12 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     [self.rightFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     [self setPaperFoldState:PaperFoldStateDefault];
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width,0,1,self.frame.size.height)];
+    [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+    [self.contentView addSubview:line];
+    [line setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
+    [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
 }
 
 - (void)onContentViewPanned:(UIPanGestureRecognizer*)gesture
