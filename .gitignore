@@ -1,6 +1,19 @@
-PaperFold/PaperFold.xcodeproj/project.xcworkspace/xcuserdata/honcheng.xcuserdatad/UserInterfaceState (honcheng's iMac's conflicted copy 2012-07-26).xcuserstate
-PaperFold/PaperFold.xcodeproj/project.xcworkspace/xcuserdata/honcheng.xcuserdatad/UserInterfaceState.xcuserstate
-PaperFold/PaperFold.xcodeproj/project.xcworkspace/xcuserdata/honcheng.xcuserdatad/WorkspaceSettings.xcsettings
-PaperFold/PaperFold.xcodeproj/xcuserdata/honcheng.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist
-PaperFold/PaperFold.xcodeproj/xcuserdata/honcheng.xcuserdatad/xcschemes/PaperFold.xcscheme
-PaperFold/PaperFold.xcodeproj/xcuserdata/honcheng.xcuserdatad/xcschemes/xcschememanagement.plist
+# Exclude the build directory
+build/*
+
+# Exclude temp nibs and swap files
+*~.nib
+*.swp
+
+# Exclude OS X folder attributes
+.DS_Store
+
+# Exclude user-specific XCode 3 and 4 files
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspective
+*.perspectivev3
+*.pbxuser
+*.xcworkspace
+xcuserdata
