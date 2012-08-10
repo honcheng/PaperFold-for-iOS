@@ -74,10 +74,10 @@
         // you may want to disable dragging to preserve tableview swipe functionality
         
         // disable left fold
-        //[self setEnableLeftFoldDragging:NO];
+        //[_paperFoldView setEnableLeftFoldDragging:NO];
         
         // disable right fold
-        //[self setEnableRightFoldDragging:NO];
+        //[_paperFoldView setEnableRightFoldDragging:NO];
     }
     return self;
 }
@@ -130,7 +130,7 @@
 
 #pragma mark paper fold delegate
 
-- (void)paperFoldView:(id)paperFoldView didTransitionToState:(PaperFoldState)paperFoldState
+- (void)paperFoldView:(id)paperFoldView didFoldAutomatically:(BOOL)automated toState:(PaperFoldState)paperFoldState
 {
     NSLog(@"did transition to state %i", paperFoldState);
 }
