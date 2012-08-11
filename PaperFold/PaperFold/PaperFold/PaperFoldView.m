@@ -81,6 +81,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     [self insertSubview:self.leftFoldView belowSubview:self.contentView];
     [self.leftFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+    [self setPaperFoldState:PaperFoldStateDefault];
 }
 
 - (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
@@ -90,13 +91,14 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     [self.contentView addSubview:self.rightFoldView];
     [self.rightFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+    [self setPaperFoldState:PaperFoldStateDefault];
 }
 
 - (void)onContentViewPanned:(UIPanGestureRecognizer*)gesture
 {
     // cancel gesture if another animation has not finished yet
     if ([self.animationTimer isValid]) return;
-    
+
     CGPoint point = [gesture translationInView:self];
     
     if ([gesture state]==UIGestureRecognizerStateChanged)
@@ -161,7 +163,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     // if offset to the left, show the right multi-fold view
 
     if (self.state!=self.lastState) self.lastState = self.state;
-    
+
     if (x>0.0)
     {
         if (self.enableLeftFoldDragging || !panned)
@@ -175,6 +177,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
             }
             [self.contentView setTransform:CGAffineTransformMakeTranslation(x, 0)];
             [self.leftFoldView unfoldWithParentOffset:x];
+            
+            if ([self.delegate respondsToSelector:@selector(paperFoldView:viewDidOffset:)])
+            {
+                [self.delegate paperFoldView:self viewDidOffset:CGPointMake(x,0)];
+            }
         }
     }
     else if (x<0.0)
@@ -192,6 +199,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
             }
             [self.contentView setTransform:CGAffineTransformMakeTranslation(x1, 0)];
             [self.rightFoldView unfoldWithParentOffset:x];
+            
+            if ([self.delegate respondsToSelector:@selector(paperFoldView:viewDidOffset:)])
+            {
+                [self.delegate paperFoldView:self viewDidOffset:CGPointMake(x,0)];
+            }
         }
     }
     else 
@@ -200,6 +212,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [self.leftFoldView unfoldWithParentOffset:x];
         [self.rightFoldView unfoldWithParentOffset:x];
         self.state = PaperFoldStateDefault;
+        
+        if ([self.delegate respondsToSelector:@selector(paperFoldView:viewDidOffset:)])
+        {
+            [self.delegate paperFoldView:self viewDidOffset:CGPointMake(x,0)];
+        }
     }
 }
 
@@ -216,10 +233,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         transform = CGAffineTransformMakeTranslation(self.leftFoldView.frame.size.width, 0);
         [self.contentView setTransform:transform];
         
-        if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didTransitionToState:)])
+        if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
         {
-            [self.delegate paperFoldView:self didTransitionToState:PaperFoldStateLeftUnfolded];
+            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
         }
+        [self setIsAutomatedFolding:NO];
     }
     
     // use the x value to animate folding
@@ -240,10 +258,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         transform = CGAffineTransformMakeTranslation(-self.rightFoldView.frame.size.width, 0);
         [self.contentView setTransform:transform];
         
-        if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didTransitionToState:)])
+        if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
         {
-            [self.delegate paperFoldView:self didTransitionToState:PaperFoldStateRightUnfolded];
+            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
         }
+        [self setIsAutomatedFolding:NO];
     }
     
     // use the x value to animate folding
@@ -267,10 +286,11 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
         [self.contentView setTransform:transform];
         [self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
         
-        if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didTransitionToState:)])
+        if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
         {
-            [self.delegate paperFoldView:self didTransitionToState:PaperFoldStateDefault];
+            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
         }
+        [self setIsAutomatedFolding:NO];
     }
     else
     {
@@ -281,6 +301,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 
 - (void)setPaperFoldState:(PaperFoldState)state
 {
+    [self setIsAutomatedFolding:YES];
     if (state==PaperFoldStateDefault)
     {
         self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
