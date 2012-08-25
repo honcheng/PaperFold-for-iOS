@@ -37,7 +37,6 @@
 #import "FoldView.h"
 #import "MultiFoldView.h"
 #import "TouchThroughUIView.h"
-#import "VerticalFoldView.h"
 
 typedef enum
 {
@@ -71,9 +70,8 @@ typedef enum
 // timer to animate folds after gesture ended
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
 @property (nonatomic, strong) NSTimer *animationTimer;
-// the fold view on the left
-@property (nonatomic, strong) FoldView *leftFoldView;
-@property (nonatomic, strong) VerticalFoldView *bottomFoldView;
+// the fold view on the left and bottom
+@property (nonatomic, strong) FoldView *leftFoldView, *bottomFoldView;
 // the multiple fold view on the right
 @property (nonatomic, strong) MultiFoldView *rightFoldView;
 // the multiple fold view on the top

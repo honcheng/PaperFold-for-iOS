@@ -14,7 +14,6 @@
 		F877BF0514E2B5F20076B1C6 /* ShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFC14E2B5F20076B1C6 /* ShadowView.m */; };
 		F877BF0614E2B5F20076B1C6 /* TouchThroughUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFE14E2B5F20076B1C6 /* TouchThroughUIView.m */; };
 		F877BF0714E2B5F20076B1C6 /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BF0014E2B5F20076B1C6 /* UIView+Screenshot.m */; };
-		F88D9D3715E8B96E008FC7B6 /* VerticalFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F88D9D3615E8B96E008FC7B6 /* VerticalFoldView.m */; };
 		F8C45D8814DF822D00F12A1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8714DF822D00F12A1D /* UIKit.framework */; };
 		F8C45D8A14DF822D00F12A1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8914DF822D00F12A1D /* Foundation.framework */; };
 		F8C45D8C14DF822D00F12A1D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8B14DF822D00F12A1D /* CoreGraphics.framework */; };
@@ -42,8 +41,6 @@
 		F877BEFE14E2B5F20076B1C6 /* TouchThroughUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchThroughUIView.m; sourceTree = "<group>"; };
 		F877BEFF14E2B5F20076B1C6 /* UIView+Screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Screenshot.h"; sourceTree = "<group>"; };
 		F877BF0014E2B5F20076B1C6 /* UIView+Screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Screenshot.m"; sourceTree = "<group>"; };
-		F88D9D3515E8B96E008FC7B6 /* VerticalFoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalFoldView.h; sourceTree = "<group>"; };
-		F88D9D3615E8B96E008FC7B6 /* VerticalFoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerticalFoldView.m; sourceTree = "<group>"; };
 		F8C45D8314DF822D00F12A1D /* PaperFold.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaperFold.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8C45D8714DF822D00F12A1D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F8C45D8914DF822D00F12A1D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -83,8 +80,6 @@
 			children = (
 				F877BEF314E2B5F20076B1C6 /* FacingView.h */,
 				F877BEF414E2B5F20076B1C6 /* FacingView.m */,
-				F88D9D3515E8B96E008FC7B6 /* VerticalFoldView.h */,
-				F88D9D3615E8B96E008FC7B6 /* VerticalFoldView.m */,
 				F877BEF514E2B5F20076B1C6 /* FoldView.h */,
 				F877BEF614E2B5F20076B1C6 /* FoldView.m */,
 				F877BEF714E2B5F20076B1C6 /* MultiFoldView.h */,
@@ -227,7 +222,6 @@
 				F877BF0514E2B5F20076B1C6 /* ShadowView.m in Sources */,
 				F877BF0614E2B5F20076B1C6 /* TouchThroughUIView.m in Sources */,
 				F877BF0714E2B5F20076B1C6 /* UIView+Screenshot.m in Sources */,
-				F88D9D3715E8B96E008FC7B6 /* VerticalFoldView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

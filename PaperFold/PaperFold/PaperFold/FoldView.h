@@ -50,12 +50,21 @@ typedef enum
 
 @interface FoldView : UIView
 
+
 // each folderView consists of 2 facing views: leftView and rightView
-@property (strong, nonatomic) FacingView *leftView, *rightView;
+@property (nonatomic) FacingView *leftView, *rightView;
+// or topView and bottomView
+@property (nonatomic) FacingView *topView, *bottomView;
+
+
 // indicate whether the fold is open or closed
-@property (assign, nonatomic) FoldState state;
+@property (nonatomic, assign) FoldState state;
 // wrapper of the visible view
-@property (strong, nonatomic) UIView *contentView;
+@property (nonatomic) UIView *contentView;
+@property (nonatomic, assign) FoldDirection foldDirection;
+
+
+- (id)initWithFrame:(CGRect)frame foldDirection:(FoldDirection)foldDirection;
 
 // unfold the 2 facing views using a fraction 0 to 1
 // 0 when it's completely folded
