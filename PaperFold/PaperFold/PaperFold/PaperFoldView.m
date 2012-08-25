@@ -135,7 +135,7 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
 {
     self.topFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,-1*view.frame.size.height,view.frame.size.width,view.frame.size.height) foldDirection:FoldDirectionVertical folds:topViewFoldCount pullFactor:topViewPullFactor];
     [self.topFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
-    [self.contentView addSubview:self.topFoldView];
+    [self.contentView insertSubview:self.topFoldView atIndex:0];
     [self.topFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     [self setPaperFoldState:PaperFoldStateDefault];
@@ -547,7 +547,6 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
 {
     if (self.paperFoldInitialPanDirection==PaperFoldInitialPanDirectionHorizontal)
     {
-        
         CGAffineTransform transform = [self.contentView transform];
         // restoring the x position 3/4 of the last x translation
         float x = transform.tx/4*3;
@@ -618,6 +617,14 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
     else if (state==PaperFoldStateRightUnfolded)
     {
         self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
+    }
+    else if (state==PaperFoldStateTopUnfolded)
+    {
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldTopView:) userInfo:nil repeats:YES];
+    }
+    else if (state==PaperFoldStateBottomUnfolded)
+    {
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldBottomView:) userInfo:nil repeats:YES];
     }
 }
 
