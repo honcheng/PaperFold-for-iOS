@@ -133,7 +133,7 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
 
 - (void)setTopFoldContentView:(UIView*)view topViewFoldCount:(int)topViewFoldCount topViewPullFactor:(float)topViewPullFactor
 {
-    self.topFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,-1*view.frame.size.height,view.frame.size.width,self.frame.size.height) folds:topViewFoldCount pullFactor:topViewPullFactor];
+    self.topFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,-1*view.frame.size.height,view.frame.size.width,view.frame.size.height) foldDirection:FoldDirectionVertical folds:topViewFoldCount pullFactor:topViewPullFactor];
     [self.topFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:self.topFoldView];
     [self.topFoldView setContent:view];
@@ -205,8 +205,8 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
         }
         else if (_state==PaperFoldStateTopUnfolded)
         {
-//            CGPoint adjustedPoint = CGPointMake(point.x - self.topFoldView.frame.size.width, point.y);
-//            [self animateWithContentOffset:adjustedPoint panned:YES];
+            CGPoint adjustedPoint = CGPointMake(point.x, point.y + self.topFoldView.frame.size.height);
+            [self animateWithContentOffset:adjustedPoint panned:YES];
         }
         
     }
@@ -226,18 +226,18 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
             }
             
         }
-//        else if (x<0)
-//        {
-//            if ((x<=-kRightViewUnfoldThreshold*self.rightFoldView.frame.size.width && _state==PaperFoldStateDefault) || [self.contentView frame].origin.x==-self.rightFoldView.frame.size.width)
-//            {
-//                if (self.enableRightFoldDragging)
-//                {
-//                    // if offset more than threshold, open fully
-//                    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
-//                    return;
-//                }
-//            }
-//        }
+        else if (y>0)
+        {
+            if ((y>=kTopViewUnfoldThreshold*self.topFoldView.frame.size.height && _state==PaperFoldStateDefault) || [self.contentView frame].origin.y==self.topFoldView.frame.size.height)
+            {
+                if (self.enableTopFoldDragging)
+                {
+                    // if offset more than threshold, open fully
+                    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldTopView:) userInfo:nil repeats:YES];
+                    return;
+                }
+            }
+        }
         
         // after panning completes
         // if offset does not exceed threshold
@@ -409,22 +409,22 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
         {
             if (self.enableTopFoldDragging || !panned)
             {
-//                // set the limit of the left offset
-//                // original x value not changed, to be sent to multi-fold view
-//                float x1 = x;
-//                if (x1<=-self.rightFoldView.frame.size.width)
-//                {
-//                    self.lastState = self.state;
-//                    self.state = PaperFoldStateRightUnfolded;
-//                    x1 = -self.rightFoldView.frame.size.width;
-//                }
-//                [self.contentView setTransform:CGAffineTransformMakeTranslation(x1, 0)];
-//                [self.rightFoldView unfoldWithParentOffset:x];
-//                
-//                if ([self.delegate respondsToSelector:@selector(paperFoldView:viewDidOffset:)])
-//                {
-//                    [self.delegate paperFoldView:self viewDidOffset:CGPointMake(x,0)];
-//                }
+                // set the limit of the bottom offset
+                // original y value not changed, to be sent to multi-fold view
+                float y1 = y;
+                if (y1>=self.topFoldView.frame.size.height)
+                {
+                    self.lastState = self.state;
+                    self.state = PaperFoldStateTopUnfolded;
+                    y1 = self.topFoldView.frame.size.height;
+                }
+                [self.contentView setTransform:CGAffineTransformMakeTranslation(0, y1)];
+                [self.topFoldView unfoldWithParentOffset:y];
+                
+                if ([self.delegate respondsToSelector:@selector(paperFoldView:viewDidOffset:)])
+                {
+                    [self.delegate paperFoldView:self viewDidOffset:CGPointMake(0,y)];
+                }
             }
         }
         else
@@ -490,6 +490,31 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
     
     // use the x value to animate folding
     [self animateWithContentOffset:CGPointMake(self.contentView.frame.origin.x, 0) panned:NO];
+}
+
+// unfold the top view
+- (void)unfoldTopView:(NSTimer*)timer
+{
+    CGAffineTransform transform = [self.contentView transform];
+    float y = transform.ty + (self.topFoldView.frame.size.height-transform.ty)/8;
+    transform = CGAffineTransformMakeTranslation(0, y);
+    [self.contentView setTransform:transform];
+    
+    if (y>=self.topFoldView.frame.size.height-5)
+    {
+        [timer invalidate];
+        transform = CGAffineTransformMakeTranslation(0,self.topFoldView.frame.size.height);
+        [self.contentView setTransform:transform];
+        
+        if (self.lastState!=PaperFoldStateTopUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+        {
+            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateTopUnfolded];
+        }
+        [self setIsAutomatedFolding:NO];
+    }
+    
+    // use the x value to animate folding
+    [self animateWithContentOffset:CGPointMake(0,self.contentView.frame.origin.y) panned:NO];
 }
 
 // unfold the right view
