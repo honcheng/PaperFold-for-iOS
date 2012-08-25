@@ -267,11 +267,15 @@
             float foldHeight = self.frame.size.height/self.numberOfFolds;
             // calculate the offset between the right edge of the last subfold, and the edge of the screen
             // use this offset to readjust the fraction
-            //float y = self.superview.frame.origin.y+foldView.frame.origin.y+2*foldView.bottomView.frame.size.height;
-            //float y = 2*foldView.bottomView.frame.size.height + self.superview.frame.origin.y - (self.numberOfFolds-index-1)*foldHeight;
-            //// 0 //float y = nextFoldView.frame.origin.y + self.superview.frame.origin.y  - (2+index)*foldHeight;
-            float y = nextFoldView.frame.origin.y + self.superview.frame.origin.y - 2*foldView.frame.size.height;//  - (self.numberOfFolds-index)*foldHeight;
-            
+            float y = self.superview.frame.origin.y - 2*foldView.bottomView.frame.size.height;
+            int _index = index - 1;
+            while (_index>=0)
+            {
+                FoldView *prevFoldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+_index];
+                y -= 2*prevFoldView.bottomView.frame.size.height;
+                _index -= 1;
+            }
+
             CGFloat adjustedFraction = 0;
             if (index+1==self.numberOfFolds-1)
             {
@@ -290,7 +294,6 @@
             // unfold this foldView with the fraction
             // by calling the same function
             
-            NSLog(@"%i >>>>>> %f %f", index, nextFoldView.frame.size.height, adjustedFraction);
             // this drills in to the next subfold in a cascading effect depending on the number of available folds
             [self unfoldView:nextFoldView toFraction:adjustedFraction];
         }

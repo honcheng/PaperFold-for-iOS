@@ -79,15 +79,15 @@
         // disable right fold
         //[_paperFoldView setEnableRightFoldDragging:NO];
         
-        _topView = [[UIView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,100)];
+        _topView = [[UIView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,300)];
         [_topView setBackgroundColor:[UIColor whiteColor]];
         UILabel *topLabel = [[UILabel alloc] initWithFrame:_topView.frame];
         [topLabel setText:@"A"];
         [topLabel setBackgroundColor:[UIColor clearColor]];
-        [topLabel setFont:[UIFont boldSystemFontOfSize:90]];
+        [topLabel setFont:[UIFont boldSystemFontOfSize:300]];
         [topLabel setTextAlignment:UITextAlignmentCenter];
         [_topView addSubview:topLabel];
-        [_paperFoldView setTopFoldContentView:_topView topViewFoldCount:3 topViewPullFactor:0.9];
+        [_paperFoldView setTopFoldContentView:_topView topViewFoldCount:5 topViewPullFactor:0.9];
         
         _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,160)];
         UILabel *bottomLabel = [[UILabel alloc] initWithFrame:_bottomView.frame];
