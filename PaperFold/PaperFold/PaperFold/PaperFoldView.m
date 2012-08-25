@@ -157,11 +157,17 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
         CGPoint velocity = [gesture velocityInView:self];
         if ( abs(velocity.x) > abs(velocity.y))
         {
-            self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionHorizontal;
+            if (self.state==PaperFoldStateDefault)
+            {
+                self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionHorizontal;
+            }
         }
         else
         {
-            self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionVertical;
+            if (self.state==PaperFoldStateDefault)
+            {
+                self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionVertical;
+            }
         }
     }
     else
