@@ -42,6 +42,12 @@ typedef enum
     FoldStateTransition = 2
 } FoldState;
 
+typedef enum
+{
+    FoldDirectionHorizontal = 0,
+    FoldDirectionVertical = 1,
+} FoldDirection;
+
 @interface FoldView : UIView
 
 // each folderView consists of 2 facing views: leftView and rightView

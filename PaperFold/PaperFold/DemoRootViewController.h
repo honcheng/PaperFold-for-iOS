@@ -38,6 +38,7 @@
 
 @interface DemoRootViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, PaperFoldViewDelegate>
 @property (nonatomic, strong) PaperFoldView *paperFoldView;
-@property (strong, nonatomic) MKMapView *mapView;
-@property (strong, nonatomic) UITableView *leftTableView, *centerTableView;
+@property (nonatomic, strong) MKMapView *mapView;
+@property (nonatomic, strong) UITableView *leftTableView, *centerTableView;
+@property (nonatomic, strong) UIView *topView, *bottomView;
 @end

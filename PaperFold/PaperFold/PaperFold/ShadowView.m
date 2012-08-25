@@ -63,9 +63,9 @@
 	}
 	
 	if ([self.colorsArray count]>0)
-  {
-    [self.gradient setColors:self.colorsArray];
-  }
+    {
+        [self.gradient setColors:self.colorsArray];
+    }
 }
 
 @end

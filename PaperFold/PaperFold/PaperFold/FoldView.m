@@ -47,8 +47,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        
-        
         // foldview consists of leftView and rightView, and a content view
         // set shadow direction of leftView and rightView such that the shadow falls on the fold in the middle
         

@@ -37,17 +37,21 @@
 
 @interface MultiFoldView : UIView
 // number of folds
-@property (assign, nonatomic) int numberOfFolds;
+@property (nonatomic, assign) int numberOfFolds;
 // fraction of the view on the right to its immediate left
 // determines when the next fold on the right should open
-@property (assign, nonatomic) float pullFactor;
+@property (nonatomic, assign) float pullFactor;
 // indicate whether the fold is open or closed
-@property (assign, nonatomic) FoldState state;
+@property (nonatomic, assign) FoldState state;
+// fold direction
+@property (nonatomic, assign) FoldDirection foldDirection;
 
 @property (assign, nonatomic) UIView *contentView;
 
 // init with the number of folds and pull factor
+// defaults to horizontal fold
 - (id)initWithFrame:(CGRect)frame folds:(int)folds pullFactor:(float)pullFactor;
+- (id)initWithFrame:(CGRect)frame foldDirection:(FoldDirection)foldDirection folds:(int)folds pullFactor:(float)pullFactor;
 // set the content of the view
 - (void)setContent:(UIView *)contentView;
 // get screenshot of content to overlay in folds

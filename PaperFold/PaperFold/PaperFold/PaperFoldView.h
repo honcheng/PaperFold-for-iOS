@@ -37,14 +37,24 @@
 #import "FoldView.h"
 #import "MultiFoldView.h"
 #import "TouchThroughUIView.h"
+#import "VerticalFoldView.h"
 
 typedef enum
 {
     PaperFoldStateDefault = 0,
     PaperFoldStateLeftUnfolded = 1,
     PaperFoldStateRightUnfolded = 2,
-    PaperFoldStateTransition = 3
+    PaperFoldStateTopUnfolded = 3,
+    PaperFoldStateBottomUnfolded = 4,
+    PaperFoldStateTransition = 5
 } PaperFoldState;
+
+typedef enum
+{
+    PaperFoldInitialPanDirectionNone = 0,
+    PaperFoldInitialPanDirectionHorizontal = 1,
+    PaperFoldInitialPanDirectionVertical = 2,
+} PaperFoldInitialPanDirection;
 
 @protocol PaperFoldViewDelegate <NSObject>
 @optional
@@ -64,15 +74,20 @@ typedef enum
 @property (nonatomic, strong) NSTimer *animationTimer;
 // the fold view on the left
 @property (nonatomic, strong) FoldView *leftFoldView;
+@property (nonatomic, strong) VerticalFoldView *bottomFoldView;
 // the multiple fold view on the right
 @property (nonatomic, strong) MultiFoldView *rightFoldView;
+// the multiple fold view on the top
+@property (nonatomic, strong) MultiFoldView *topFoldView;
 // state of the current fold
 @property (nonatomic, assign) PaperFoldState state, lastState;
 // enable and disable dragging
-@property (nonatomic, assign) BOOL enableLeftFoldDragging, enableRightFoldDragging;
+@property (nonatomic, assign) BOOL enableLeftFoldDragging, enableRightFoldDragging, enableTopFoldDragging, enableBottomFoldDragging;
 // indicate if the fold was triggered by finger panning, or set state
 @property (nonatomic, assign) BOOL isAutomatedFolding;
 @property (nonatomic, assign) id<PaperFoldViewDelegate> delegate;
+// the initial panning direction
+@property (nonatomic, assign) PaperFoldInitialPanDirection paperFoldInitialPanDirection;
 
 // animate folding and unfolding when sent the offset of contentView
 // offset are either sent from pan gesture recognizer, or manual animation done with NSTimer after gesture ended
@@ -83,9 +98,18 @@ typedef enum
 // with the number of folds and pull factor
 - (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor;
 
+// set the top fold content view
+// and the top fold container view
+// with the number of folds and pull factor
+- (void)setTopFoldContentView:(UIView*)view topViewFoldCount:(int)topViewFoldCount topViewPullFactor:(float)topViewPullFactor;
+
 // set the left fold content view
 // and set the left fold container view frame
 - (void)setLeftFoldContentView:(UIView*)view;
+
+// set the bottom fold content view
+// and set the bottom fold container view frame
+- (void)setBottomFoldContentView:(UIView*)view;
 
 - (void)setCenterContentView:(UIView*)view;
 
