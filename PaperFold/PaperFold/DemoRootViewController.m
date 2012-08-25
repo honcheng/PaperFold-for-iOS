@@ -83,10 +83,10 @@
 //        [_topView setBackgroundColor:[UIColor redColor]];
 //        [_paperFoldView setTopFoldContentView:_topView topViewFoldCount:3 topViewPullFactor:0.9];
         
-        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,60)];
+        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,160)];
         UILabel *bottomLabel = [[UILabel alloc] initWithFrame:_bottomView.frame];
         [bottomLabel setText:@"A"];
-        [bottomLabel setFont:[UIFont boldSystemFontOfSize:50]];
+        [bottomLabel setFont:[UIFont boldSystemFontOfSize:150]];
         [bottomLabel setTextAlignment:UITextAlignmentCenter];
         [_bottomView addSubview:bottomLabel];
         [_paperFoldView setBottomFoldContentView:_bottomView];

@@ -179,8 +179,10 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
 
 - (void)onContentViewPannedVertically:(UIPanGestureRecognizer*)gesture
 {
+    [self.rightFoldView setHidden:YES];
     [self.leftFoldView setHidden:YES];
     [self.bottomFoldView setHidden:NO];
+    [self.topFoldView setHidden:NO];
     
     CGPoint point = [gesture translationInView:self];
     if ([gesture state]==UIGestureRecognizerStateChanged)
@@ -242,8 +244,10 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
 
 - (void)onContentViewPannedHorizontally:(UIPanGestureRecognizer*)gesture
 {
+    [self.rightFoldView setHidden:NO];
     [self.leftFoldView setHidden:NO];
     [self.bottomFoldView setHidden:YES];
+    [self.topFoldView setHidden:YES];
     
     CGPoint point = [gesture translationInView:self];
     if ([gesture state]==UIGestureRecognizerStateChanged)
@@ -510,30 +514,62 @@ CGFloat const kBottomViewUnfoldThreshold = 0.3;
 // restore contentView back to original position
 - (void)restoreView:(NSTimer*)timer
 {
-    CGAffineTransform transform = [self.contentView transform];
-    // restoring the x position 3/4 of the last x translation
-    float x = transform.tx/4*3;
-    transform = CGAffineTransformMakeTranslation(x, 0);
-    [self.contentView setTransform:transform];
-    
-    // if -5<x<5, stop timer animation
-    if ((x>=0 && x<5) || (x<=0 && x>-5))
+    if (self.paperFoldInitialPanDirection==PaperFoldInitialPanDirectionHorizontal)
     {
-        [timer invalidate];
-        transform = CGAffineTransformMakeTranslation(0, 0);
-        [self.contentView setTransform:transform];
-        [self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
         
-        if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+        CGAffineTransform transform = [self.contentView transform];
+        // restoring the x position 3/4 of the last x translation
+        float x = transform.tx/4*3;
+        transform = CGAffineTransformMakeTranslation(x, 0);
+        [self.contentView setTransform:transform];
+        
+        // if -5<x<5, stop timer animation
+        if ((x>=0 && x<5) || (x<=0 && x>-5))
         {
-            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
+            [timer invalidate];
+            transform = CGAffineTransformMakeTranslation(0, 0);
+            [self.contentView setTransform:transform];
+            [self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
+            
+            if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+            {
+                [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
+            }
+            [self setIsAutomatedFolding:NO];
         }
-        [self setIsAutomatedFolding:NO];
+        else
+        {
+            // use the x value to animate folding
+            [self animateWithContentOffset:CGPointMake(self.contentView.frame.origin.x, 0) panned:NO];
+        }
     }
-    else
+    else if (self.paperFoldInitialPanDirection==PaperFoldInitialPanDirectionVertical)
     {
-        // use the x value to animate folding
-        [self animateWithContentOffset:CGPointMake(self.contentView.frame.origin.x, 0) panned:NO];
+        CGAffineTransform transform = [self.contentView transform];
+        // restoring the y position 3/4 of the last y translation
+        float y = transform.ty/4*3;
+        transform = CGAffineTransformMakeTranslation(0, y);
+        [self.contentView setTransform:transform];
+        
+        // if -5<x<5, stop timer animation
+        if ((y>=0 && y<5) || (y<=0 && y>-5))
+        {
+            [timer invalidate];
+            transform = CGAffineTransformMakeTranslation(0, 0);
+            [self.contentView setTransform:transform];
+            [self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
+            
+            if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+            {
+                [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
+            }
+            [self setIsAutomatedFolding:NO];
+        }
+        else
+        {
+            // use the x value to animate folding
+            [self animateWithContentOffset:CGPointMake(0,self.contentView.frame.origin.y) panned:NO];
+        }
     }
 }
 

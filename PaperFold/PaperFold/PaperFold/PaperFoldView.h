@@ -51,9 +51,8 @@ typedef enum
 
 typedef enum
 {
-    PaperFoldInitialPanDirectionNone = 0,
-    PaperFoldInitialPanDirectionHorizontal = 1,
-    PaperFoldInitialPanDirectionVertical = 2,
+    PaperFoldInitialPanDirectionHorizontal = 0,
+    PaperFoldInitialPanDirectionVertical = 1,
 } PaperFoldInitialPanDirection;
 
 @protocol PaperFoldViewDelegate <NSObject>
