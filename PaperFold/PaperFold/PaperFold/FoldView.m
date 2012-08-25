@@ -88,21 +88,17 @@
         else if (self.foldDirection==FoldDirectionVertical)
         {
             // set anchor point of the leftView to the left edge
-            _bottomView = [[FacingView alloc] initWithFrame:CGRectMake(0,3*frame.size.height/4,frame.size.width,frame.size.height/2)];
+            _bottomView = [[FacingView alloc] initWithFrame:CGRectMake(0,3*frame.size.height/4,frame.size.width,frame.size.height/2) foldDirection:FoldDirectionVertical];
             [_bottomView setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
             [_bottomView.layer setAnchorPoint:CGPointMake(0.5, 1.0)];
             [self addSubview:_bottomView];
-            [_bottomView.shadowView.gradient setStartPoint:CGPointMake(0, 0)];
-            [_bottomView.shadowView.gradient setEndPoint:CGPointMake(0, 1)];
             [_bottomView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.05],[UIColor colorWithWhite:0 alpha:0.6], nil]];
             
             // set anchor point of the rightView to the right edge
-            _topView = [[FacingView alloc] initWithFrame:CGRectMake(0,3*frame.size.height/4,frame.size.width,frame.size.height/2)];
+            _topView = [[FacingView alloc] initWithFrame:CGRectMake(0,3*frame.size.height/4,frame.size.width,frame.size.height/2) foldDirection:FoldDirectionVertical];
             [_topView setBackgroundColor:[UIColor colorWithWhite:0.99 alpha:1]];
             [_topView.layer setAnchorPoint:CGPointMake(0.5, 0.0)];
             [self addSubview:_topView];
-            [_topView.shadowView.gradient setStartPoint:CGPointMake(0, 0)];
-            [_topView.shadowView.gradient setEndPoint:CGPointMake(0, 1)];
             [_topView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.9],[UIColor colorWithWhite:0 alpha:0.55], nil]];
             
             // set perspective of the transformation

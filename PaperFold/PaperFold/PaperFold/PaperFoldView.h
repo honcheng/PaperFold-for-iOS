@@ -38,22 +38,6 @@
 #import "MultiFoldView.h"
 #import "TouchThroughUIView.h"
 
-typedef enum
-{
-    PaperFoldStateDefault = 0,
-    PaperFoldStateLeftUnfolded = 1,
-    PaperFoldStateRightUnfolded = 2,
-    PaperFoldStateTopUnfolded = 3,
-    PaperFoldStateBottomUnfolded = 4,
-    PaperFoldStateTransition = 5
-} PaperFoldState;
-
-typedef enum
-{
-    PaperFoldInitialPanDirectionHorizontal = 0,
-    PaperFoldInitialPanDirectionVertical = 1,
-} PaperFoldInitialPanDirection;
-
 @protocol PaperFoldViewDelegate <NSObject>
 @optional
 // callback when paper fold transition state changes

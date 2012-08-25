@@ -36,22 +36,33 @@
 
 
 @implementation ShadowView
-@synthesize colorsArray = _colorsArray;
-@synthesize gradient = _gradient;
 
-- (id)initWithFrame:(CGRect)frame {
-    
+- (id)initWithFrame:(CGRect)frame foldDirection:(FoldDirection)foldDirection
+{
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code.
+        
 		_gradient = [CAGradientLayer layer];
 		[_gradient setFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
-        [_gradient setStartPoint:CGPointMake(0, 0)];
-        [_gradient setEndPoint:CGPointMake(1, 0)];
+        if (foldDirection==FoldDirectionHorizontal)
+        {
+            [_gradient setStartPoint:CGPointMake(0, 0)];
+            [_gradient setEndPoint:CGPointMake(1, 0)];
+        }
+        else if (foldDirection==FoldDirectionVertical)
+        {
+            [_gradient setStartPoint:CGPointMake(0, 1)];
+            [_gradient setEndPoint:CGPointMake(0, 0)];
+        }
 		[self.layer insertSublayer:_gradient atIndex:0];
 		[self setBackgroundColor:[UIColor clearColor]];
     }
     return self;
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    return [self initWithFrame:frame foldDirection:FoldDirectionHorizontal];
 }
 
 - (void)setColorArrays:(NSMutableArray*)colors

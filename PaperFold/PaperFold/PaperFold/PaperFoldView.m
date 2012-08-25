@@ -35,17 +35,18 @@
 #import "PaperFoldView.h"
 #import <QuartzCore/QuartzCore.h>
 
+//CGFloat const kLeftViewUnfoldThreshold = 0.3;
+//CGFloat const kRightViewUnfoldThreshold = 0.3;
+//CGFloat const kTopViewUnfoldThreshold = 0.3;
+//CGFloat const kBottomViewUnfoldThreshold = 0.3;
+
+
 @interface PaperFoldView ()
 - (void)onContentViewPannedHorizontally:(UIPanGestureRecognizer*)gesture;
 - (void)onContentViewPannedVertically:(UIPanGestureRecognizer*)gesture;
 @end
 
 @implementation PaperFoldView
-
-CGFloat const kLeftViewUnfoldThreshold = 0.3;
-CGFloat const kRightViewUnfoldThreshold = 0.3;
-CGFloat const kTopViewUnfoldThreshold = 0.3;
-CGFloat const kBottomViewUnfoldThreshold = 0.3;
 
 - (id)initWithFrame:(CGRect)frame
 {

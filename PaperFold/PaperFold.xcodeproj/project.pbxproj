@@ -27,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F84CDB2A15E917C500DBA1C1 /* PaperFoldConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperFoldConstants.h; sourceTree = "<group>"; };
 		F877BEF314E2B5F20076B1C6 /* FacingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacingView.h; sourceTree = "<group>"; };
 		F877BEF414E2B5F20076B1C6 /* FacingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacingView.m; sourceTree = "<group>"; };
 		F877BEF514E2B5F20076B1C6 /* FoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldView.h; sourceTree = "<group>"; };
@@ -92,6 +93,7 @@
 				F877BEFE14E2B5F20076B1C6 /* TouchThroughUIView.m */,
 				F877BEFF14E2B5F20076B1C6 /* UIView+Screenshot.h */,
 				F877BF0014E2B5F20076B1C6 /* UIView+Screenshot.m */,
+				F84CDB2A15E917C500DBA1C1 /* PaperFoldConstants.h */,
 			);
 			path = PaperFold;
 			sourceTree = "<group>";

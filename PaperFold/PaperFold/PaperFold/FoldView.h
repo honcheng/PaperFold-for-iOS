@@ -34,22 +34,9 @@
 
 #import <UIKit/UIKit.h>
 #import "FacingView.h"
-
-typedef enum
-{
-    FoldStateClosed = 0,
-    FoldStateOpened = 1,
-    FoldStateTransition = 2
-} FoldState;
-
-typedef enum
-{
-    FoldDirectionHorizontal = 0,
-    FoldDirectionVertical = 1,
-} FoldDirection;
+#import "FoldView.h"
 
 @interface FoldView : UIView
-
 
 // each folderView consists of 2 facing views: leftView and rightView
 @property (nonatomic) FacingView *leftView, *rightView;

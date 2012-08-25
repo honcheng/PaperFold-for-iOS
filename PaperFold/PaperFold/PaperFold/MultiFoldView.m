@@ -36,12 +36,6 @@
 #import "UIView+Screenshot.h"
 
 @implementation MultiFoldView
-@synthesize numberOfFolds;
-@synthesize pullFactor;
-@synthesize contentView = _contentView;
-@synthesize state = _state;
-
-#define FOLDVIEW_TAG 1000
 
 - (id)initWithFrame:(CGRect)frame foldDirection:(FoldDirection)foldDirection folds:(int)folds pullFactor:(float)factor
 {
@@ -70,7 +64,6 @@
             {
                 float foldHeight = frame.size.height/self.numberOfFolds;
                 FoldView *foldView = [[FoldView alloc] initWithFrame:CGRectMake(0,foldHeight*(self.numberOfFolds-i)-foldHeight,frame.size.width,foldHeight) foldDirection:foldDirection];
-                //FoldView *foldView = [[FoldView alloc] initWithFrame:CGRectMake(0,foldHeight*i,frame.size.width,foldHeight) foldDirection:foldDirection];
                 [foldView setTag:FOLDVIEW_TAG+i];
                 [self addSubview:foldView];
             }
