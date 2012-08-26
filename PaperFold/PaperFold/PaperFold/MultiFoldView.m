@@ -260,7 +260,15 @@
             float foldHeight = self.frame.size.height/self.numberOfFolds;
             // calculate the offset between the right edge of the last subfold, and the edge of the screen
             // use this offset to readjust the fraction
-            float y = self.superview.frame.origin.y - 2*foldView.bottomView.frame.size.height;
+            float y = 0.0;
+            if ([self.superview isKindOfClass:[UIScrollView class]])
+            {
+                y = -1*[(UIScrollView*)self.superview contentOffset].y - 2*foldView.bottomView.frame.size.height;
+            }
+            else
+            {
+                y = self.superview.frame.origin.y - 2*foldView.bottomView.frame.size.height;
+            }
             int _index = index - 1;
             while (_index>=0)
             {
