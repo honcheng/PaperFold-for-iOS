@@ -87,6 +87,11 @@
         [topLabel setFont:[UIFont boldSystemFontOfSize:300]];
         [topLabel setTextAlignment:UITextAlignmentCenter];
         [_topView addSubview:topLabel];
+        
+        ShadowView *topShadowView = [[ShadowView alloc] initWithFrame:CGRectMake(0,_topView.frame.size.height-5,_topView.frame.size.width,5) foldDirection:FoldDirectionVertical];
+        [topShadowView setColorArrays:@[[UIColor colorWithWhite:0 alpha:0.3],[UIColor clearColor]]];
+        [_topView addSubview:topShadowView];
+        
         [_paperFoldView setTopFoldContentView:_topView topViewFoldCount:5 topViewPullFactor:0.9];
         
         _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,160)];
@@ -95,6 +100,11 @@
         [bottomLabel setFont:[UIFont boldSystemFontOfSize:150]];
         [bottomLabel setTextAlignment:UITextAlignmentCenter];
         [_bottomView addSubview:bottomLabel];
+        
+        ShadowView *bottomShadowView = [[ShadowView alloc] initWithFrame:CGRectMake(0,0,_topView.frame.size.width,5) foldDirection:FoldDirectionVertical];
+        [bottomShadowView setColorArrays:@[[UIColor clearColor],[UIColor colorWithWhite:0 alpha:0.3]]];
+        [_bottomView addSubview:bottomShadowView];
+        
         [_paperFoldView setBottomFoldContentView:_bottomView];
         
         [_centerTableView setScrollEnabled:NO];

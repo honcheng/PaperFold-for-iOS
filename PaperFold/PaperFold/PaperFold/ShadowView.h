@@ -41,6 +41,6 @@
 @property (nonatomic, strong) CAGradientLayer *gradient;
 
 - (id)initWithFrame:(CGRect)frame foldDirection:(FoldDirection)foldDirection;
-- (void)setColorArrays:(NSMutableArray*)colors;
+- (void)setColorArrays:(NSArray*)colors;
 
 @end

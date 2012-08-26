@@ -65,7 +65,7 @@
     return [self initWithFrame:frame foldDirection:FoldDirectionHorizontal];
 }
 
-- (void)setColorArrays:(NSMutableArray*)colors
+- (void)setColorArrays:(NSArray*)colors
 {
 	_colorsArray = [NSMutableArray array];
 	for (UIColor *color in colors)
