@@ -154,7 +154,7 @@
             _state = FoldStateClosed;
             [self foldDidClosed];
         }
-        else if (fraction==1)
+        else if (fraction>=1)
         {
             _state = FoldStateOpened;
             [self foldDidOpened];
