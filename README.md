@@ -10,6 +10,7 @@ The left view supports only 1 fold. The right view supports variable number of f
 *Vertical fold is still in active testing, in an experimental branch (top-multifold) at the moment.*  
 
 <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/5-topfold.png"/> <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/6-topfold.png"/> <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/7-topfold.png"/> <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/8-bottomfold.png"/> <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/9-bottomfold.png"/>  
+<img width=300 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/verticalfold.gif"/>
 
 
 How it works
