@@ -68,22 +68,4 @@
     return screenshot;
 }
 
-- (void)takeScreenshot:(CompletionBlock)block
-{
-    dispatch_queue_t queue = dispatch_queue_create("screenshot", 0);
-    dispatch_async(queue, ^(void) {
-        
-        UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
-        [self.layer renderInContext:UIGraphicsGetCurrentContext()];
-        
-        UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            block(screenshot);
-        });
-        dispatch_release(queue);
-    });
-}
-
 @end
