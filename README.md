@@ -7,6 +7,12 @@ The left view supports only 1 fold. The right view supports variable number of f
 
 <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/1.png"/> <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/2.png"/> <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/3.png"/> <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/4.png"/>
 
+*Vertical fold is still in active testing, in an experimental branch (top-multifold) at the moment.*  
+
+<img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/5-topfold.png"/> <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/6-topfold.png"/> <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/7-topfold.png"/> <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/8-bottomfold.png"/> <img width=150 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/9-bottomfold.png"/>  
+<img width=300 src="https://github.com/honcheng/PaperFold-for-iOS/raw/master/Screenshots/verticalfold.gif"/>
+
+
 How it works
 ------------
 
@@ -80,11 +86,6 @@ Requirements
 
 This project uses ARC. If you are not using ARC in your project, add '-fobjc-arc' as a compiler flag for all the files in this project.
 XCode 4.4 is required for auto-synthesis.
-
-To-do
------
-
-Add folds to top and bottom view
 
 Known Problem
 -------------
