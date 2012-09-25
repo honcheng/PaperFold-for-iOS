@@ -69,6 +69,9 @@
 @property (nonatomic, assign) id<PaperFoldViewDelegate> delegate;
 // the initial panning direction
 @property (nonatomic, assign) PaperFoldInitialPanDirection paperFoldInitialPanDirection;
+// optimized screenshot follows the scale of the screen
+// non-optimized is always the non-retina image
+@property (nonatomic, assign) BOOL useOptimizedScreenshot;
 
 // animate folding and unfolding when sent the offset of contentView
 // offset are either sent from pan gesture recognizer, or manual animation done with NSTimer after gesture ended

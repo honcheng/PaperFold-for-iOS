@@ -48,6 +48,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        _useOptimizedScreenshot = YES;
         _foldDirection = foldDirection;
         
         // foldview consists of leftView & rightView (or topView & bottomView), and a content view
@@ -262,7 +263,7 @@
 
 - (void)drawScreenshotOnFolds
 {
-    UIImage *image = [self.contentView screenshot];
+    UIImage *image = [self.contentView screenshotWithOptimization:self.useOptimizedScreenshot];
     [self setImage:image];
 }
 

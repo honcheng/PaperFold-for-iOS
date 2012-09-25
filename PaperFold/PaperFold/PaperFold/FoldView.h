@@ -49,6 +49,9 @@
 // wrapper of the visible view
 @property (nonatomic) UIView *contentView;
 @property (nonatomic, assign) FoldDirection foldDirection;
+// optimized screenshot follows the scale of the screen
+// non-optimized is always the non-retina image
+@property (nonatomic, assign) BOOL useOptimizedScreenshot;
 
 
 - (id)initWithFrame:(CGRect)frame foldDirection:(FoldDirection)foldDirection;

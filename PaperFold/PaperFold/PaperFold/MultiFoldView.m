@@ -41,26 +41,28 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.foldDirection = foldDirection;
-        self.numberOfFolds = folds;
-        if (self.numberOfFolds==1)
+        
+        _useOptimizedScreenshot = YES;
+        _foldDirection = foldDirection;
+        _numberOfFolds = folds;
+        if (_numberOfFolds==1)
         {
             // no pull factor required if there is only one fold
-            self.pullFactor = 0;
+            _pullFactor = 0;
         }
-        else self.pullFactor = factor;
+        else _pullFactor = factor;
 
         // create multiple FoldView next to each other
-        for (int i=0; i<self.numberOfFolds; i++)
+        for (int i=0; i<_numberOfFolds; i++)
         {
-            if (self.foldDirection==FoldDirectionHorizontal)
+            if (_foldDirection==FoldDirectionHorizontal)
             {
                 float foldWidth = frame.size.width/self.numberOfFolds;
                 FoldView *foldView = [[FoldView alloc] initWithFrame:CGRectMake(foldWidth*i,0,foldWidth,frame.size.height) foldDirection:foldDirection];
                 [foldView setTag:FOLDVIEW_TAG+i];
                 [self addSubview:foldView];
             }
-            else if (self.foldDirection==FoldDirectionVertical)
+            else if (_foldDirection==FoldDirectionVertical)
             {
                 float foldHeight = frame.size.height/self.numberOfFolds;
                 FoldView *foldView = [[FoldView alloc] initWithFrame:CGRectMake(0,foldHeight*(self.numberOfFolds-i)-foldHeight,frame.size.width,foldHeight) foldDirection:foldDirection];
@@ -95,8 +97,14 @@
 - (void)drawScreenshotOnFolds
 {
 
-    UIImage *image = [self.contentView screenshot];
+    UIImage *image = [self.contentView screenshotWithOptimization:self.useOptimizedScreenshot];
+    [self setScreenshotImage:image];
     // get screenshot of content view, and splice the image to overlay in different folds
+    
+}
+
+- (void)setScreenshotImage:(UIImage*)image
+{
     
     if (self.foldDirection==FoldDirectionHorizontal)
     {

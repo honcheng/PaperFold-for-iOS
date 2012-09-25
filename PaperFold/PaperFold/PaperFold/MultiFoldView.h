@@ -45,6 +45,9 @@
 @property (nonatomic, assign) FoldState state;
 // fold direction
 @property (nonatomic, assign) FoldDirection foldDirection;
+// optimized screenshot follows the scale of the screen
+// non-optimized is always the non-retina image
+@property (nonatomic, assign) BOOL useOptimizedScreenshot;
 
 @property (assign, nonatomic) UIView *contentView;
 
@@ -56,6 +59,7 @@
 - (void)setContent:(UIView *)contentView;
 // get screenshot of content to overlay in folds
 - (void)drawScreenshotOnFolds;
+- (void)setScreenshotImage:(UIImage*)image;
 
 // set fold states based on offset value
 - (void)calculateFoldStateFromOffset:(float)offset;

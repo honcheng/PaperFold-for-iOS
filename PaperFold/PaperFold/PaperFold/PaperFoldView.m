@@ -53,6 +53,8 @@
     self = [super initWithFrame:frame];
     if (self)
     {
+        _useOptimizedScreenshot = YES;
+        
         [self setBackgroundColor:[UIColor darkGrayColor]];
         [self setAutoresizesSubviews:YES];
         [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
@@ -87,6 +89,7 @@
     if (self.leftFoldView) [self.leftFoldView removeFromSuperview];
 
     self.leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,self.frame.size.height)];
+    [self.leftFoldView setUseOptimizedScreenshot:self.useOptimizedScreenshot];
     [self.leftFoldView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self insertSubview:self.leftFoldView belowSubview:self.contentView];
     [self.leftFoldView setContent:view];
@@ -104,6 +107,7 @@
     if (self.bottomFoldView) [self.bottomFoldView removeFromSuperview];
     
     self.bottomFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,self.frame.size.height-view.frame.size.height,view.frame.size.width,view.frame.size.height) foldDirection:FoldDirectionVertical];
+    [self.bottomFoldView setUseOptimizedScreenshot:self.useOptimizedScreenshot];
     [self.bottomFoldView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [self insertSubview:self.bottomFoldView belowSubview:self.contentView];
     [self.bottomFoldView setContent:view];
@@ -119,6 +123,7 @@
 - (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
 {
     self.rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(self.frame.size.width,0,view.frame.size.width,self.frame.size.height) folds:rightViewFoldCount pullFactor:rightViewPullFactor];
+    [self.rightFoldView setUseOptimizedScreenshot:self.useOptimizedScreenshot];
     [self.rightFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [self.contentView insertSubview:self.rightFoldView atIndex:0];
     [self.rightFoldView setContent:view];
@@ -135,6 +140,7 @@
 - (void)setTopFoldContentView:(UIView*)view topViewFoldCount:(int)topViewFoldCount topViewPullFactor:(float)topViewPullFactor
 {
     self.topFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,-1*view.frame.size.height,view.frame.size.width,view.frame.size.height) foldDirection:FoldDirectionVertical folds:topViewFoldCount pullFactor:topViewPullFactor];
+    [self.topFoldView setUseOptimizedScreenshot:self.useOptimizedScreenshot];
     [self.topFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [self.contentView insertSubview:self.topFoldView atIndex:0];
     [self.topFoldView setContent:view];
