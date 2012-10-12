@@ -91,6 +91,7 @@ typedef enum
 
 // unfold the left and right view
 - (void)setPaperFoldState:(PaperFoldState)state;
+- (void)setPaperFoldState:(PaperFoldState)state animated:(BOOL)animated;
 
 // deprecate methods
 // use setPaperFoldState: instead

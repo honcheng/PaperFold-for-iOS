@@ -310,6 +310,48 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     }
 }
 
+- (void)setPaperFoldState:(PaperFoldState)state animated:(BOOL)animated
+{
+    if (animated)
+    {
+        [self setPaperFoldState:state];
+    }
+    else
+    {
+        if (state==PaperFoldStateDefault)
+        {
+            CGAffineTransform transform = transform = CGAffineTransformMakeTranslation(0, 0);
+            [self.contentView setTransform:transform];
+            
+            if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+            {
+                [self.delegate paperFoldView:self didFoldAutomatically:YES toState:PaperFoldStateDefault];
+            }
+        }
+        else if (state==PaperFoldStateLeftUnfolded)
+        {
+            CGAffineTransform transform = CGAffineTransformMakeTranslation(self.leftFoldView.frame.size.width, 0);
+            [self.contentView setTransform:transform];
+            
+            if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+            {
+                [self.delegate paperFoldView:self didFoldAutomatically:YES toState:PaperFoldStateLeftUnfolded];
+            }
+        }
+        else if (state==PaperFoldStateRightUnfolded)
+        {
+            CGAffineTransform transform = CGAffineTransformMakeTranslation(-self.rightFoldView.frame.size.width, 0);
+            [self.contentView setTransform:transform];
+            
+            if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+            {
+                [self.delegate paperFoldView:self didFoldAutomatically:YES toState:PaperFoldStateRightUnfolded];
+            }
+        }
+        self.state = state;
+    }
+}
+
 - (void)setPaperFoldState:(PaperFoldState)state
 {
     [self setIsAutomatedFolding:YES];
