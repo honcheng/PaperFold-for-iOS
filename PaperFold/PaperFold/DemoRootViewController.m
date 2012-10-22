@@ -47,7 +47,7 @@
         [self.view addSubview:_paperFoldView];
         
         _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,240,[self.view bounds].size.height)];
-        [_paperFoldView setRightFoldContentView:_mapView rightViewFoldCount:3 rightViewPullFactor:0.9];
+        [_paperFoldView setRightFoldContentView:_mapView foldCount:3 pullFactor:0.9];
         
         _centerTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width,[self.view bounds].size.height)];
         [_centerTableView setRowHeight:120];
@@ -58,7 +58,7 @@
         _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
         [_leftTableView setRowHeight:100];
         [_leftTableView setDataSource:self];
-        [_paperFoldView setLeftFoldContentView:_leftTableView];
+        [_paperFoldView setLeftFoldContentView:_leftTableView foldCount:3 pullFactor:0.9];
         
         UIView *line = [[UIView alloc] initWithFrame:CGRectMake(-1,0,1,[self.view bounds].size.height)];
         [_paperFoldView.contentView addSubview:line];

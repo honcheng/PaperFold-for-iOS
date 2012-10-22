@@ -55,7 +55,7 @@ typedef enum
 - (void)paperFoldView:(id)paperFoldView viewDidOffset:(CGPoint)offset;
 @end
 
-@interface PaperFoldView : UIView
+@interface PaperFoldView : UIView <MultiFoldViewDelegate>
 
 // main content view
 @property (nonatomic, strong) TouchThroughUIView *contentView;
@@ -63,7 +63,7 @@ typedef enum
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
 @property (nonatomic, strong) NSTimer *animationTimer;
 // the fold view on the left
-@property (nonatomic, strong) FoldView *leftFoldView;
+@property (nonatomic, strong) MultiFoldView *leftFoldView;
 // the multiple fold view on the right
 @property (nonatomic, strong) MultiFoldView *rightFoldView;
 // state of the current fold
@@ -81,11 +81,11 @@ typedef enum
 // set the right fold content view
 // and the right fold container view
 // with the number of folds and pull factor
-- (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor;
+- (void)setRightFoldContentView:(UIView*)view foldCount:(int)rightViewFoldCount pullFactor:(float)rightViewPullFactor;
 
 // set the left fold content view
 // and set the left fold container view frame
-- (void)setLeftFoldContentView:(UIView*)view;
+- (void)setLeftFoldContentView:(UIView*)view foldCount:(int)leftViewFoldCount pullFactor:(float)leftViewPullFactor;
 
 - (void)setCenterContentView:(UIView*)view;
 
@@ -98,5 +98,8 @@ typedef enum
 - (void)unfoldLeftView __attribute__((deprecated));
 - (void)unfoldRightView __attribute__((deprecated));
 - (void)restoreToCenter __attribute__((deprecated));
+// set fold views
+- (void)setLeftFoldContentView:(UIView*)view __attribute__((deprecated));
+- (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor __attribute__((deprecated));;
 
 @end

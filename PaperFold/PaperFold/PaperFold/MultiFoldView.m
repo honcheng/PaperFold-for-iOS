@@ -153,10 +153,10 @@
     }
     CGFloat fraction = offset /(-1*(foldWidth+self.pullFactor*foldWidth));
     
-    
-    if (fraction < 0) fraction = 0;
+    if (fraction < 0) fraction = -1*fraction;//0;
     if (fraction > 1) fraction = 1;
     [self unfoldViewToFraction:fraction];
+    
 }
 
 - (void)unfoldViewToFraction:(CGFloat)fraction
@@ -165,6 +165,8 @@
     // with the first foldView with index FOLDVIEW_TAG+0
     FoldView *firstFoldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG];
     [self unfoldView:firstFoldView toFraction:fraction];
+    
+   
 }
 
 - (void)unfoldView:(FoldView*)foldView toFraction:(CGFloat)fraction
@@ -174,6 +176,7 @@
     
     // check if there is another subfold beside this fold
     int index = [foldView tag] - FOLDVIEW_TAG;
+
     if (index < self.numberOfFolds-1)
     {
         FoldView *nextFoldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+index+1];
@@ -183,7 +186,16 @@
         float foldWidth = self.frame.size.width/self.numberOfFolds;
         // calculate the offset between the right edge of the last subfold, and the edge of the screen
         // use this offset to readjust the fraction
-        float x = self.superview.frame.origin.x+foldView.frame.origin.x+2*foldView.leftView.frame.size.width;
+        float displacement = 0.0;
+        if ([self.delegate respondsToSelector:@selector(displacementOfMultiFoldView:)])
+        {
+            displacement = [self.delegate displacementOfMultiFoldView:self];
+        }
+        else
+        {
+            displacement = self.superview.frame.origin.x;
+        }
+        float x = displacement+foldView.frame.origin.x+2*foldView.leftView.frame.size.width;
         CGFloat adjustedFraction = 0;
         if (index+1==self.numberOfFolds-1)
         {

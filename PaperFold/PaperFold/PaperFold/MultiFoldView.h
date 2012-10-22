@@ -35,6 +35,10 @@
 #import <UIKit/UIKit.h>
 #import "FoldView.h"
 
+@protocol MultiFoldViewDelegate <NSObject>
+- (CGFloat)displacementOfMultiFoldView:(id)multiFoldView;
+@end
+
 @interface MultiFoldView : UIView
 // number of folds
 @property (assign, nonatomic) int numberOfFolds;
@@ -45,6 +49,8 @@
 @property (assign, nonatomic) FoldState state;
 
 @property (assign, nonatomic) UIView *contentView;
+
+@property (nonatomic, assign) id<MultiFoldViewDelegate> delegate;
 
 // init with the number of folds and pull factor
 - (id)initWithFrame:(CGRect)frame folds:(int)folds pullFactor:(float)pullFactor;

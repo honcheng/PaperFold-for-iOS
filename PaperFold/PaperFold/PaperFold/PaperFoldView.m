@@ -72,11 +72,18 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     [self.contentView addSubview:view];
 }
 
+// this method is deprecated
 - (void)setLeftFoldContentView:(UIView*)view
+{
+    [self setLeftFoldContentView:view foldCount:1 pullFactor:0.9];
+}
+
+- (void)setLeftFoldContentView:(UIView*)view foldCount:(int)leftViewFoldCount pullFactor:(float)leftViewPullFactor
 {
     if (self.leftFoldView) [self.leftFoldView removeFromSuperview];
 
-    self.leftFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,self.frame.size.height)];
+    self.leftFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,self.frame.size.height) folds:leftViewFoldCount pullFactor:leftViewPullFactor];
+    [self.leftFoldView setDelegate:self];
     [self.leftFoldView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self insertSubview:self.leftFoldView belowSubview:self.contentView];
     [self.leftFoldView setContent:view];
@@ -89,9 +96,10 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
 }
 
-- (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
+- (void)setRightFoldContentView:(UIView*)view foldCount:(int)rightViewFoldCount pullFactor:(float)rightViewPullFactor
 {
     self.rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(self.frame.size.width,0,view.frame.size.width,self.frame.size.height) folds:rightViewFoldCount pullFactor:rightViewPullFactor];
+    [self.rightFoldView setDelegate:self];
     [self.rightFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [self.contentView insertSubview:self.rightFoldView atIndex:0];
     [self.rightFoldView setContent:view];
@@ -103,6 +111,12 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
     [self.contentView addSubview:line];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+}
+
+// this method is deprecated
+- (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
+{
+    [self setRightFoldContentView:view foldCount:rightViewFoldCount pullFactor:rightViewPullFactor];
 }
 
 - (void)onContentViewPanned:(UIPanGestureRecognizer*)gesture
@@ -382,6 +396,21 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 - (void)restoreToCenter
 {
     [self setPaperFoldState:PaperFoldStateDefault];
+}
+
+#pragma mark MultiFoldView delegate
+
+- (CGFloat)displacementOfMultiFoldView:(id)multiFoldView
+{
+    if (multiFoldView==self.rightFoldView)
+    {
+        return [self.contentView frame].origin.x;
+    }
+    else if (multiFoldView==self.leftFoldView)
+    {
+        return -1*[self.contentView frame].origin.x;
+    }
+    return 0.0;
 }
 
 @end
