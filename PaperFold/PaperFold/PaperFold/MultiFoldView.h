@@ -35,6 +35,10 @@
 #import <UIKit/UIKit.h>
 #import "FoldView.h"
 
+@protocol MultiFoldViewDelegate <NSObject>
+- (CGFloat)displacementOfMultiFoldView:(id)multiFoldView;
+@end
+
 @interface MultiFoldView : UIView
 // number of folds
 @property (nonatomic, assign) int numberOfFolds;
@@ -50,6 +54,8 @@
 @property (nonatomic, assign) BOOL useOptimizedScreenshot;
 
 @property (assign, nonatomic) UIView *contentView;
+
+@property (nonatomic, assign) id<MultiFoldViewDelegate> delegate;
 
 // init with the number of folds and pull factor
 // defaults to horizontal fold

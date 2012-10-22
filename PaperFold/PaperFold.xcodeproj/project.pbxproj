@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F82A503F1634C512005E7244 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F82A503E1634C512005E7244 /* Default-568h@2x.png */; };
 		F877BF0114E2B5F20076B1C6 /* FacingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF414E2B5F20076B1C6 /* FacingView.m */; };
 		F877BF0214E2B5F20076B1C6 /* FoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF614E2B5F20076B1C6 /* FoldView.m */; };
 		F877BF0314E2B5F20076B1C6 /* MultiFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF814E2B5F20076B1C6 /* MultiFoldView.m */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		F84CDB2A15E917C500DBA1C1 /* PaperFoldConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperFoldConstants.h; sourceTree = "<group>"; };
+		F82A503E1634C512005E7244 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F877BEF314E2B5F20076B1C6 /* FacingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacingView.h; sourceTree = "<group>"; };
 		F877BEF414E2B5F20076B1C6 /* FacingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacingView.m; sourceTree = "<group>"; };
 		F877BEF514E2B5F20076B1C6 /* FoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldView.h; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		F8C45D7814DF822C00F12A1D = {
 			isa = PBXGroup;
 			children = (
+				F82A503E1634C512005E7244 /* Default-568h@2x.png */,
 				F8C45D8D14DF822D00F12A1D /* PaperFold */,
 				F8C45D8614DF822D00F12A1D /* Frameworks */,
 				F8C45D8414DF822D00F12A1D /* Products */,
@@ -204,6 +207,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8C45D9214DF822D00F12A1D /* InfoPlist.strings in Resources */,
+				F82A503F1634C512005E7244 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

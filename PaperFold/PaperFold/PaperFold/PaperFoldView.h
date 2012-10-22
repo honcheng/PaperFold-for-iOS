@@ -47,7 +47,7 @@
 - (void)paperFoldView:(id)paperFoldView viewDidOffset:(CGPoint)offset;
 @end
 
-@interface PaperFoldView : UIView
+@interface PaperFoldView : UIView <MultiFoldViewDelegate>
 
 // main content view
 @property (nonatomic, strong) TouchThroughUIView *contentView;
@@ -55,7 +55,9 @@
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
 @property (nonatomic, strong) NSTimer *animationTimer;
 // the fold view on the left and bottom
-@property (nonatomic, strong) FoldView *leftFoldView, *bottomFoldView;
+@property (nonatomic, strong) FoldView *bottomFoldView;
+// the fold view on the left
+@property (nonatomic, strong) MultiFoldView *leftFoldView;
 // the multiple fold view on the right
 @property (nonatomic, strong) MultiFoldView *rightFoldView;
 // the multiple fold view on the top
@@ -80,7 +82,7 @@
 // set the right fold content view
 // and the right fold container view
 // with the number of folds and pull factor
-- (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor;
+- (void)setRightFoldContentView:(UIView*)view foldCount:(int)rightViewFoldCount pullFactor:(float)rightViewPullFactor;
 
 // set the top fold content view
 // and the top fold container view
@@ -89,7 +91,7 @@
 
 // set the left fold content view
 // and set the left fold container view frame
-- (void)setLeftFoldContentView:(UIView*)view;
+- (void)setLeftFoldContentView:(UIView*)view foldCount:(int)leftViewFoldCount pullFactor:(float)leftViewPullFactor;
 
 // set the bottom fold content view
 // and set the bottom fold container view frame
@@ -99,11 +101,15 @@
 
 // unfold the left and right view
 - (void)setPaperFoldState:(PaperFoldState)state;
+- (void)setPaperFoldState:(PaperFoldState)state animated:(BOOL)animated;
 
 // deprecate methods
 // use setPaperFoldState: instead
 - (void)unfoldLeftView __attribute__((deprecated));
 - (void)unfoldRightView __attribute__((deprecated));
 - (void)restoreToCenter __attribute__((deprecated));
+// set fold views
+- (void)setLeftFoldContentView:(UIView*)view __attribute__((deprecated));
+- (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor __attribute__((deprecated));;
 
 @end
