@@ -132,7 +132,7 @@
 
 - (void)paperFoldView:(id)paperFoldView didFoldAutomatically:(BOOL)automated toState:(PaperFoldState)paperFoldState
 {
-    NSLog(@"did transition to state %i", paperFoldState);
+    NSLog(@"did transition to state %i automated %i", paperFoldState, automated);
 }
 
 @end
