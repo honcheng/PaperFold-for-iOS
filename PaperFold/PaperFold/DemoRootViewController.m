@@ -107,6 +107,7 @@
         
         [_paperFoldView setBottomFoldContentView:_bottomView];
         
+#warning disabling scroll, requires tapping cell twice to select cells. to be fixed
         [_centerTableView setScrollEnabled:NO];
     }
     return self;
