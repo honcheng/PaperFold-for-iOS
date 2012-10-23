@@ -350,6 +350,11 @@
                 // set the limit of the right offset
                 if (x>=self.leftFoldView.frame.size.width)
                 {
+                    if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+                    {
+                        [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
+                        [self setIsAutomatedFolding:NO];
+                    }
                     self.lastState = self.state;
                     self.state = PaperFoldStateLeftUnfolded;
                     x = self.leftFoldView.frame.size.width;
@@ -372,6 +377,11 @@
                 float x1 = x;
                 if (x1<=-self.rightFoldView.frame.size.width)
                 {
+                    if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+                    {
+                        [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
+                        [self setIsAutomatedFolding:NO];
+                    }
                     self.lastState = self.state;
                     self.state = PaperFoldStateRightUnfolded;
                     x1 = -self.rightFoldView.frame.size.width;
@@ -502,11 +512,11 @@
         transform = CGAffineTransformMakeTranslation(self.leftFoldView.frame.size.width, 0);
         [self.contentView setTransform:transform];
         
-        if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-        {
-            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
-        }
-        [self setIsAutomatedFolding:NO];
+//        if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+//        {
+//            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
+//        }
+//        [self setIsAutomatedFolding:NO];
     }
     
     // use the x value to animate folding
@@ -552,11 +562,11 @@
         transform = CGAffineTransformMakeTranslation(-self.rightFoldView.frame.size.width, 0);
         [self.contentView setTransform:transform];
         
-        if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-        {
-            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
-        }
-        [self setIsAutomatedFolding:NO];
+//        if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+//        {
+//            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
+//        }
+//        [self setIsAutomatedFolding:NO];
     }
     
     // use the x value to animate folding
