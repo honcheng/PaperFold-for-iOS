@@ -85,6 +85,10 @@
 // show/hide all folds 
 - (void)showFolds:(BOOL)show;
 
+// unfold without animation
+// temporary method
+- (void)unfoldWithoutAnimation;
+
 #pragma mark states
 // states of folds
 - (void)foldDidOpened;

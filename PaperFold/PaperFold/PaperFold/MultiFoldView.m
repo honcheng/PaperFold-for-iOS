@@ -185,7 +185,7 @@
         CGFloat fraction = offset /(-1*(foldWidth+self.pullFactor*foldWidth));
         
         
-        if (fraction < 0) fraction = fraction = -1*fraction;//0;
+        if (fraction < 0) fraction  = -1*fraction;//0;
         if (fraction > 1) fraction = 1;
         [self unfoldViewToFraction:fraction];
     }
@@ -199,7 +199,7 @@
         }
         
         CGFloat fraction = offset /(foldHeight+self.pullFactor*foldHeight);
-        if (fraction < 0) fraction = fraction = -1*fraction;//0;
+        if (fraction < 0) fraction = -1*fraction;//0;
         if (fraction > 1) fraction = 1;
 
         [self unfoldViewToFraction:fraction];
@@ -212,8 +212,6 @@
     // with the first foldView with index FOLDVIEW_TAG+0
     FoldView *firstFoldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG];
     [self unfoldView:firstFoldView toFraction:fraction];
-    
-   
 }
 
 - (void)unfoldView:(FoldView*)foldView toFraction:(CGFloat)fraction
@@ -338,6 +336,12 @@
         FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
         [foldView setHidden:!show];
     }
+}
+
+- (void)unfoldWithoutAnimation
+{
+    [self unfoldWithParentOffset:self.frame.size.width];
+    [self foldDidOpened];
 }
 
 #pragma mark states

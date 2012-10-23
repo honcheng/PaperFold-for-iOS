@@ -121,7 +121,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return 3;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -140,21 +140,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==0)
+    if (tableView==self.centerTableView)
     {
-        // unfold left view
-        [self.paperFoldView setPaperFoldState:PaperFoldStateLeftUnfolded];
+        NSLog(@"did select");
+        if (indexPath.row==0)
+        {
+            // unfold left view
+            [self.paperFoldView setPaperFoldState:PaperFoldStateLeftUnfolded];
+        }
+        else if (indexPath.row==1)
+        {
+            // unfold right view
+            [self.paperFoldView setPaperFoldState:PaperFoldStateRightUnfolded];
+        }
+        else if (indexPath.row==2)
+        {
+            // restore to center
+            [self.paperFoldView setPaperFoldState:PaperFoldStateDefault];
+        }
     }
-    else if (indexPath.row==1)
-    {
-        // unfold right view
-        [self.paperFoldView setPaperFoldState:PaperFoldStateRightUnfolded];
-    }
-    else if (indexPath.row==2)
-    {
-        // restore to center
-        [self.paperFoldView setPaperFoldState:PaperFoldStateDefault];
-    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
