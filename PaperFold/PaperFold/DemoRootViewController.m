@@ -122,7 +122,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    if (tableView==self.leftTableView) return 10;
+    else return 3;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -133,9 +134,17 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    if (indexPath.row==0) [cell.textLabel setText:@"<-- unfold left view"];
-    else if (indexPath.row==1)[cell.textLabel setText:@"unfold right view -->"];
-    else if (indexPath.row==2)[cell.textLabel setText:@"--> restore <--"];
+    if (tableView==self.leftTableView)
+    {
+        [cell.textLabel setText:[NSString stringWithFormat:@"%i", indexPath.row]];
+    }
+    else
+    {
+        if (indexPath.row==0) [cell.textLabel setText:@"<-- unfold left view"];
+        else if (indexPath.row==1)[cell.textLabel setText:@"unfold right view -->"];
+        else if (indexPath.row==2)[cell.textLabel setText:@"--> restore <--"];
+    }
+    
     return cell;
 }
 

@@ -53,7 +53,7 @@
 // non-optimized is always the non-retina image
 @property (nonatomic, assign) BOOL useOptimizedScreenshot;
 
-@property (assign, nonatomic) UIView *contentView;
+@property (nonatomic, strong) UIView *contentViewHolder;
 
 @property (nonatomic, assign) id<MultiFoldViewDelegate> delegate;
 
