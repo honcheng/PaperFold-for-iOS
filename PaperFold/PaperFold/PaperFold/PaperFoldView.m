@@ -35,6 +35,12 @@
 #import "PaperFoldView.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface PaperFoldView ()
+
+@property (nonatomic, copy) CompletionBlock completionBlock;
+
+@end
+
 @implementation PaperFoldView
 
 CGFloat const kLeftViewUnfoldThreshold = 0.3;
@@ -191,10 +197,15 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 			// set the limit of the right offset
 			if (x>=self.leftFoldView.frame.size.width)
 			{
-				if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-				{
-					[self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
-					[self setIsAutomatedFolding:NO];
+				if (self.lastState!=PaperFoldStateLeftUnfolded) {
+					if (self.completionBlock != nil) {
+						self.completionBlock();
+						self.completionBlock = nil;
+					} else if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+					{
+						[self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
+						[self setIsAutomatedFolding:NO];
+					}
 				}
 				self.lastState = self.state;
 				self.state = PaperFoldStateLeftUnfolded;
@@ -218,10 +229,15 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 			float x1 = x;
 			if (x1<=-self.rightFoldView.frame.size.width)
 			{
-				if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-				{
-					[self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
-					[self setIsAutomatedFolding:NO];
+				if (self.lastState!=PaperFoldStateRightUnfolded) {
+					if (self.completionBlock != nil) {
+						self.completionBlock();
+						self.completionBlock = nil;
+					} else if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+					{
+						[self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
+						[self setIsAutomatedFolding:NO];
+					}
 				}
 				self.lastState = self.state;
 				self.state = PaperFoldStateRightUnfolded;
@@ -316,9 +332,14 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 		[self.contentView setTransform:transform];
 		[self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
 		
-		if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-		{
-			[self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
+		if (self.lastState!=PaperFoldStateDefault) {
+			if (self.completionBlock != nil) {
+				self.completionBlock();
+				self.completionBlock = nil;
+			} else if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+			{
+				[self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
+			}
 		}
 		[self setIsAutomatedFolding:NO];
 	}
@@ -387,6 +408,15 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 		self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
 	}
 }
+
+- (void)setPaperFoldState:(PaperFoldState)state
+								 animated:(BOOL)animated
+							 completion:(void (^)())completion
+{
+	self.completionBlock = completion;
+	[self setPaperFoldState:state animated:animated];
+}
+
 
 - (void)unfoldLeftView
 {
