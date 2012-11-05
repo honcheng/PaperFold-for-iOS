@@ -46,6 +46,8 @@ typedef enum
     PaperFoldStateTransition = 3
 } PaperFoldState;
 
+typedef void (^CompletionBlock)();
+
 @protocol PaperFoldViewDelegate <NSObject>
 @optional
 // callback when paper fold transition state changes
@@ -92,6 +94,9 @@ typedef enum
 // unfold the left and right view
 - (void)setPaperFoldState:(PaperFoldState)state;
 - (void)setPaperFoldState:(PaperFoldState)state animated:(BOOL)animated;
+- (void)setPaperFoldState:(PaperFoldState)state
+								 animated:(BOOL)animated
+							 completion:(CompletionBlock)completion;
 
 // deprecate methods
 // use setPaperFoldState: instead
