@@ -38,6 +38,7 @@
 @interface PaperFoldView ()
 
 @property (nonatomic, copy) CompletionBlock completionBlock;
+@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 
 @end
 
@@ -73,13 +74,13 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 	[_contentView setBackgroundColor:[UIColor whiteColor]];
 	[_contentView setAutoresizesSubviews:YES];
 	
-	UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
-	[_contentView addGestureRecognizer:panGestureRecognizer];
+	self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
+	[_contentView addGestureRecognizer:self.panGestureRecognizer];
 	
 	_state = PaperFoldStateDefault;
 	_lastState = _state;
-	_enableRightFoldDragging = YES;
-	_enableLeftFoldDragging = YES;
+	_enableRightFoldDragging = NO;
+	_enableLeftFoldDragging = NO;
 }
 
 - (void)setCenterContentView:(UIView*)view
@@ -103,6 +104,8 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 	[line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
 	[self.contentView addSubview:line];
 	[line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+	
+	self.enableLeftFoldDragging = YES;
 }
 
 - (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
@@ -119,7 +122,24 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 	[self.contentView addSubview:line];
 	[line setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
 	[line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+	
+	self.enableRightFoldDragging = YES;
 }
+
+- (void)setEnableLeftFoldDragging:(BOOL)enableLeftFoldDragging
+{
+	_enableLeftFoldDragging = enableLeftFoldDragging;
+	
+	self.panGestureRecognizer.enabled = self.enableLeftFoldDragging || self.enableRightFoldDragging;
+}
+
+- (void)setEnableRightFoldDragging:(BOOL)enableRightFoldDragging
+{
+	_enableRightFoldDragging = enableRightFoldDragging;
+	
+	self.panGestureRecognizer.enabled = self.enableLeftFoldDragging || self.enableRightFoldDragging;
+}
+
 
 - (void)onContentViewPanned:(UIPanGestureRecognizer*)gesture
 {
