@@ -37,8 +37,14 @@
 
 @interface PaperFoldView ()
 
+@property (nonatomic, weak) UIView *leftDividerLine;
+@property (nonatomic, weak) UIView *rightDividerLine;
+
 @property (nonatomic, copy) CompletionBlock completionBlock;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
+
+// indicate if the divider line should be visible
+@property (nonatomic, assign) BOOL showDividerLines;
 
 @end
 
@@ -77,6 +83,7 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 	self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
 	[_contentView addGestureRecognizer:self.panGestureRecognizer];
 	
+	_showDividerLines = NO;
 	_state = PaperFoldStateDefault;
 	_lastState = _state;
 	_enableRightFoldDragging = NO;
@@ -98,30 +105,34 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 	[self insertSubview:self.leftFoldView belowSubview:self.contentView];
 	[self.leftFoldView setContent:view];
 	[view setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
-	[self setPaperFoldState:PaperFoldStateDefault];
 	
 	UIView *line = [[UIView alloc] initWithFrame:CGRectMake(-1,0,1,self.frame.size.height)];
 	[line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
 	[self.contentView addSubview:line];
 	[line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+	line.alpha = 0;
+	self.leftDividerLine = line;
 	
 	self.enableLeftFoldDragging = YES;
 }
 
-- (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor
+- (void)setRightFoldContentView:(UIView*)view
+						 rightViewFoldCount:(int)rightViewFoldCount
+						rightViewPullFactor:(float)rightViewPullFactor
 {
 	self.rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(self.frame.size.width,0,view.frame.size.width,self.frame.size.height) folds:rightViewFoldCount pullFactor:rightViewPullFactor];
 	[self.rightFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
 	[self.contentView insertSubview:self.rightFoldView atIndex:0];
 	[self.rightFoldView setContent:view];
 	[view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-	[self setPaperFoldState:PaperFoldStateDefault];
 	
 	UIView *line = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width,0,1,self.frame.size.height)];
 	[line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
 	[self.contentView addSubview:line];
 	[line setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
 	[line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+	line.alpha = 0;
+	self.rightDividerLine = line;
 	
 	self.enableRightFoldDragging = YES;
 }
@@ -145,11 +156,14 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 {
 	// cancel gesture if another animation has not finished yet
 	if ([self.animationTimer isValid]) return;
-	
+
 	CGPoint point = [gesture translationInView:self];
 	
 	if ([gesture state]==UIGestureRecognizerStateChanged)
 	{
+		// show the divider while dragging
+		[self setShowDividerLines:YES animated:YES];
+		
 		if (_state==PaperFoldStateDefault)
 		{
 			// animate folding when panned
@@ -169,6 +183,9 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 	}
 	else if ([gesture state]==UIGestureRecognizerStateEnded || [gesture state]==UIGestureRecognizerStateCancelled)
 	{
+		// hide the divider once we are done
+		[self setShowDividerLines:NO animated:YES];
+
 		float x = point.x;
 		if (x>=0.0) // offset to the right
 		{
@@ -217,15 +234,9 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 			// set the limit of the right offset
 			if (x>=self.leftFoldView.frame.size.width)
 			{
-				if (self.lastState!=PaperFoldStateLeftUnfolded) {
-					if (self.completionBlock != nil) {
-						self.completionBlock();
-						self.completionBlock = nil;
-					} else if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-					{
-						[self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
-						[self setIsAutomatedFolding:NO];
-					}
+				if (self.lastState != PaperFoldStateLeftUnfolded) {
+					[self finishForState:PaperFoldStateLeftUnfolded];
+					[self setIsAutomatedFolding:NO];
 				}
 				self.lastState = self.state;
 				self.state = PaperFoldStateLeftUnfolded;
@@ -249,15 +260,8 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 			float x1 = x;
 			if (x1<=-self.rightFoldView.frame.size.width)
 			{
-				if (self.lastState!=PaperFoldStateRightUnfolded) {
-					if (self.completionBlock != nil) {
-						self.completionBlock();
-						self.completionBlock = nil;
-					} else if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-					{
-						[self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
-						[self setIsAutomatedFolding:NO];
-					}
+				if (self.lastState != PaperFoldStateRightUnfolded) {
+					[self finishForState:PaperFoldStateRightUnfolded];
 				}
 				self.lastState = self.state;
 				self.state = PaperFoldStateRightUnfolded;
@@ -299,11 +303,9 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 		transform = CGAffineTransformMakeTranslation(self.leftFoldView.frame.size.width, 0);
 		[self.contentView setTransform:transform];
 		
-		//        if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-		//        {
-		//            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
+		//        if (self.lastState != PaperFoldStateLeftUnfolded) {
+		//            [self finishForState:PaperFoldStateLeftUnfolded];
 		//        }
-		//        [self setIsAutomatedFolding:NO];
 	}
 	
 	// use the x value to animate folding
@@ -324,11 +326,9 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 		transform = CGAffineTransformMakeTranslation(-self.rightFoldView.frame.size.width, 0);
 		[self.contentView setTransform:transform];
 		
-		//        if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-		//        {
-		//            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
+		//        if (self.lastState != PaperFoldStateRightUnfolded) {
+		//            [self finishForState:PaperFoldStateRightUnfolded];
 		//        }
-		//        [self setIsAutomatedFolding:NO];
 	}
 	
 	// use the x value to animate folding
@@ -352,16 +352,9 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 		[self.contentView setTransform:transform];
 		[self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
 		
-		if (self.lastState!=PaperFoldStateDefault) {
-			if (self.completionBlock != nil) {
-				self.completionBlock();
-				self.completionBlock = nil;
-			} else if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-			{
-				[self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
-			}
+		if (self.lastState != PaperFoldStateDefault) {
+			[self finishForState:PaperFoldStateDefault];
 		}
-		[self setIsAutomatedFolding:NO];
 	}
 	else
 	{
@@ -414,7 +407,9 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 
 - (void)setPaperFoldState:(PaperFoldState)state
 {
+	self.showDividerLines = YES;
 	[self setIsAutomatedFolding:YES];
+	
 	if (state==PaperFoldStateDefault)
 	{
 		self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
@@ -452,5 +447,46 @@ CGFloat const kRightViewUnfoldThreshold = 0.3;
 {
 	[self setPaperFoldState:PaperFoldStateDefault];
 }
+
+#pragma mark - Private methods
+
+- (void)finishForState:(PaperFoldState)state
+{
+	[self setShowDividerLines:NO animated:YES];
+	
+	// we prefer executing the completion block, otherwise we notify the delegate
+	if (self.completionBlock != nil) {
+		self.completionBlock();
+		self.completionBlock = nil;
+		
+	} else if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)]) {
+		[self.delegate paperFoldView:self
+						didFoldAutomatically:self.isAutomatedFolding
+												 toState:state];
+	}
+
+	// no more animations
+	[self setIsAutomatedFolding:NO];
+}
+
+- (void)setShowDividerLines:(BOOL)showDividerLines
+{
+	[self setShowDividerLines:showDividerLines animated:NO];
+}
+
+- (void)setShowDividerLines:(BOOL)showDividerLines animated:(BOOL)animated
+{
+	if (_showDividerLines == showDividerLines)
+		return;
+	
+	_showDividerLines = showDividerLines;
+	[UIView animateWithDuration:animated ? 0.25 : 0
+									 animations:
+	 ^{
+		 self.leftDividerLine.alpha = showDividerLines ? 1 : 0;
+		 self.rightDividerLine.alpha = showDividerLines ? 1 : 0;
+	 }];
+}
+
 
 @end
