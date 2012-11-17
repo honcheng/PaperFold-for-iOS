@@ -31,7 +31,7 @@
  *
  */
 
-
+@class MKMapView;
 #import <UIKit/UIKit.h>
 #import "FoldView.h"
 
@@ -47,7 +47,7 @@
 @property (assign, nonatomic) UIView *contentView;
 
 // init with the number of folds and pull factor
-- (id)initWithFrame:(CGRect)frame folds:(int)folds pullFactor:(float)pullFactor;
+- (id)initWithFrame:(CGRect)frame folds:(int)folds pullFactor:(float)pullFactor forLeftview:(BOOL)leftView;
 // set the content of the view
 - (void)setContent:(UIView *)contentView;
 // get screenshot of content to overlay in folds
@@ -62,13 +62,13 @@
 // unfold using a fraction 0 to 1
 // 0 when it's completely folded
 // 1 when it's completely unfolded
-// fraction is calculated based on parent offset 
+// fraction is calculated based on parent offset
 - (void)unfoldViewToFraction:(CGFloat)fraction;
 
 // unfold foldView using fraction
 - (void)unfoldView:(FoldView*)foldView toFraction:(CGFloat)fraction;
 
-// show/hide all folds 
+// show/hide all folds
 - (void)showFolds:(BOOL)show;
 
 #pragma mark states

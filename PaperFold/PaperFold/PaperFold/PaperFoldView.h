@@ -65,7 +65,7 @@ typedef void (^CompletionBlock)();
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
 @property (nonatomic, strong) NSTimer *animationTimer;
 // the fold view on the left
-@property (nonatomic, strong) FoldView *leftFoldView;
+@property (nonatomic, strong) MultiFoldView *leftFoldView;
 // the multiple fold view on the right
 @property (nonatomic, strong) MultiFoldView *rightFoldView;
 // state of the current fold
@@ -87,7 +87,8 @@ typedef void (^CompletionBlock)();
 
 // set the left fold content view
 // and set the left fold container view frame
-- (void)setLeftFoldContentView:(UIView*)view;
+- (void)setLeftFoldContentView:(UIView*)view __attribute__ ((deprecated));
+- (void)setLeftFoldContentView:(UIView*)view leftViewFoldCount:(int)leftViewFoldCount leftViewPullFactor:(float)leftViewPullFactor;
 
 - (void)setCenterContentView:(UIView*)view;
 
