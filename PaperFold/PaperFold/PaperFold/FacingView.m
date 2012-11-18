@@ -50,7 +50,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    return [self initWithFrame:frame foldDirection:FoldDirectionHorizontal];
+    return [self initWithFrame:frame foldDirection:FoldDirectionHorizontalRightToLeft];
 }
 
 @end

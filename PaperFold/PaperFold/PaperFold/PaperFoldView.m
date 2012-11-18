@@ -35,13 +35,9 @@
 #import "PaperFoldView.h"
 #import <QuartzCore/QuartzCore.h>
 
-//CGFloat const kLeftViewUnfoldThreshold = 0.3;
-//CGFloat const kRightViewUnfoldThreshold = 0.3;
-//CGFloat const kTopViewUnfoldThreshold = 0.3;
-//CGFloat const kBottomViewUnfoldThreshold = 0.3;
-
 
 @interface PaperFoldView ()
+@property (nonatomic, copy) CompletionBlock completionBlock;
 - (void)onContentViewPannedHorizontally:(UIPanGestureRecognizer*)gesture;
 - (void)onContentViewPannedVertically:(UIPanGestureRecognizer*)gesture;
 @end
@@ -50,38 +46,48 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self)
-    {
-        _useOptimizedScreenshot = YES;
-        
-        [self setBackgroundColor:[UIColor darkGrayColor]];
-        [self setAutoresizesSubviews:YES];
-        [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-        
-        _contentView = [[TouchThroughUIView alloc] initWithFrame:CGRectMake(0,0,self.frame.size.width,self.frame.size.height)];
-        [_contentView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-        [self addSubview:_contentView];
-        [_contentView setBackgroundColor:[UIColor whiteColor]];
-        [_contentView setAutoresizesSubviews:YES];
-        
-        UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
-        [_contentView addGestureRecognizer:panGestureRecognizer];
-        
-        _state = PaperFoldStateDefault;
-        _lastState = _state;
-        _enableRightFoldDragging = YES;
-        _enableLeftFoldDragging = YES;
-        _enableBottomFoldDragging = YES;
-        _enableTopFoldDragging = YES;
-    }
-    return self;
+	self = [super initWithFrame:frame];
+	if (self)
+	{
+		[self initialize];
+	}
+	return self;
+}
+
+- (void)awakeFromNib
+{
+	[self initialize];
+}
+
+- (void)initialize
+{
+    _useOptimizedScreenshot = YES;
+    
+    [self setBackgroundColor:[UIColor darkGrayColor]];
+    [self setAutoresizesSubviews:YES];
+    [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+    
+    _contentView = [[TouchThroughUIView alloc] initWithFrame:CGRectMake(0,0,self.frame.size.width,self.frame.size.height)];
+    [_contentView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+    [self addSubview:_contentView];
+    [_contentView setBackgroundColor:[UIColor whiteColor]];
+    [_contentView setAutoresizesSubviews:YES];
+    
+    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
+    [_contentView addGestureRecognizer:panGestureRecognizer];
+    
+    _state = PaperFoldStateDefault;
+    _lastState = _state;
+    _enableRightFoldDragging = YES;
+    _enableLeftFoldDragging = YES;
+    _enableBottomFoldDragging = YES;
+    _enableTopFoldDragging = YES;
 }
 
 - (void)setCenterContentView:(UIView*)view
 {
-    [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    [self.contentView addSubview:view];
+	[view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+	[self.contentView addSubview:view];
 }
 
 // this method is deprecated
@@ -93,12 +99,14 @@
 - (void)setLeftFoldContentView:(UIView*)view foldCount:(int)leftViewFoldCount pullFactor:(float)leftViewPullFactor
 {
     if (self.leftFoldView) [self.leftFoldView removeFromSuperview];
-    self.leftFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,self.frame.size.height) folds:leftViewFoldCount pullFactor:leftViewPullFactor];
+    self.leftFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,self.frame.size.height) foldDirection:FoldDirectionHorizontalLeftToRight folds:leftViewFoldCount pullFactor:leftViewPullFactor];
     [self.leftFoldView setDelegate:self];
     [self.leftFoldView setUseOptimizedScreenshot:self.useOptimizedScreenshot];
     [self.leftFoldView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self insertSubview:self.leftFoldView belowSubview:self.contentView];
     [self.leftFoldView setContent:view];
+    //[self.leftFoldView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleHeight];
+    //[view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self setPaperFoldState:PaperFoldStateDefault];
     
@@ -128,7 +136,7 @@
 
 - (void)setRightFoldContentView:(UIView*)view foldCount:(int)rightViewFoldCount pullFactor:(float)rightViewPullFactor
 {
-    self.rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(self.frame.size.width,0,view.frame.size.width,self.frame.size.height) folds:rightViewFoldCount pullFactor:rightViewPullFactor];
+    self.rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(self.frame.size.width,0,view.frame.size.width,self.frame.size.height) foldDirection:FoldDirectionHorizontalRightToLeft folds:rightViewFoldCount pullFactor:rightViewPullFactor];
     [self.rightFoldView setDelegate:self];
     [self.rightFoldView setUseOptimizedScreenshot:self.useOptimizedScreenshot];
     [self.rightFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
@@ -524,11 +532,11 @@
         transform = CGAffineTransformMakeTranslation(self.leftFoldView.frame.size.width, 0);
         [self.contentView setTransform:transform];
         
-//        if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-//        {
-//            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
-//        }
-//        [self setIsAutomatedFolding:NO];
+        //        if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
+        //        {
+        //            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
+        //        }
+        //        [self setIsAutomatedFolding:NO];
     }
     
     // use the x value to animate folding
@@ -583,12 +591,6 @@
         [timer invalidate];
         transform = CGAffineTransformMakeTranslation(-self.rightFoldView.frame.size.width, 0);
         [self.contentView setTransform:transform];
-        
-//        if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-//        {
-//            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
-//        }
-//        [self setIsAutomatedFolding:NO];
     }
     
     // use the x value to animate folding
@@ -743,19 +745,28 @@
     }
 }
 
+- (void)setPaperFoldState:(PaperFoldState)state
+								 animated:(BOOL)animated
+							 completion:(void (^)())completion
+{
+	self.completionBlock = completion;
+	[self setPaperFoldState:state animated:animated];
+}
+
+
 - (void)unfoldLeftView
 {
-    [self setPaperFoldState:PaperFoldStateLeftUnfolded];
+	[self setPaperFoldState:PaperFoldStateLeftUnfolded];
 }
 
 - (void)unfoldRightView
 {
-    [self setPaperFoldState:PaperFoldStateRightUnfolded];
+	[self setPaperFoldState:PaperFoldStateRightUnfolded];
 }
 
 - (void)restoreToCenter
 {
-    [self setPaperFoldState:PaperFoldStateDefault];
+	[self setPaperFoldState:PaperFoldStateDefault];
 }
 
 #pragma mark MultiFoldView delegate

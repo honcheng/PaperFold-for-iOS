@@ -47,7 +47,7 @@
     _leftViewController = leftViewController;
     
     [self.leftViewController.view setFrame:CGRectMake(0,0,width,[self.view bounds].size.height)];
-    [self.paperFoldView setLeftFoldContentView:self.leftViewController.view];
+    [self.paperFoldView setLeftFoldContentView:self.leftViewController.view leftViewFoldCount:3 leftViewPullFactor:0.9];
 }
 
 - (void)paperFoldView:(id)paperFoldView didFoldAutomatically:(BOOL)automated toState:(PaperFoldState)paperFoldState

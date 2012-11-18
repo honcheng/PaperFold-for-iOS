@@ -24,8 +24,9 @@ typedef enum
 
 typedef enum
 {
-    FoldDirectionHorizontal = 0,
-    FoldDirectionVertical = 1,
+    FoldDirectionHorizontalRightToLeft = 0,
+    FoldDirectionHorizontalLeftToRight = 1,
+    FoldDirectionVertical = 2,
 } FoldDirection;
 
 typedef enum

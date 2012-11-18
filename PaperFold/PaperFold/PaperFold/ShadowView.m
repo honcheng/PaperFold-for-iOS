@@ -44,7 +44,7 @@
         
 		_gradient = [CAGradientLayer layer];
 		[_gradient setFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
-        if (foldDirection==FoldDirectionHorizontal)
+        if (foldDirection==FoldDirectionHorizontalRightToLeft)
         {
             [_gradient setStartPoint:CGPointMake(0, 0)];
             [_gradient setEndPoint:CGPointMake(1, 0)];
@@ -62,7 +62,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    return [self initWithFrame:frame foldDirection:FoldDirectionHorizontal];
+    return [self initWithFrame:frame foldDirection:FoldDirectionHorizontalRightToLeft];
 }
 
 - (void)setColorArrays:(NSArray*)colors

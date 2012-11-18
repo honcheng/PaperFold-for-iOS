@@ -38,6 +38,8 @@
 #import "MultiFoldView.h"
 #import "TouchThroughUIView.h"
 
+typedef void (^CompletionBlock)();
+
 @protocol PaperFoldViewDelegate <NSObject>
 @optional
 // callback when paper fold transition state changes
@@ -92,6 +94,7 @@
 // set the left fold content view
 // and set the left fold container view frame
 - (void)setLeftFoldContentView:(UIView*)view foldCount:(int)leftViewFoldCount pullFactor:(float)leftViewPullFactor;
+- (void)setLeftFoldContentView:(UIView*)view __attribute__ ((deprecated));
 
 // set the bottom fold content view
 // and set the bottom fold container view frame
@@ -102,6 +105,9 @@
 // unfold the left and right view
 - (void)setPaperFoldState:(PaperFoldState)state;
 - (void)setPaperFoldState:(PaperFoldState)state animated:(BOOL)animated;
+- (void)setPaperFoldState:(PaperFoldState)state
+								 animated:(BOOL)animated
+							 completion:(CompletionBlock)completion;
 
 // deprecate methods
 // use setPaperFoldState: instead
