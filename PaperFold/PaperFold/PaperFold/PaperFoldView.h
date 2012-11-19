@@ -94,7 +94,6 @@ typedef void (^CompletionBlock)();
 // set the left fold content view
 // and set the left fold container view frame
 - (void)setLeftFoldContentView:(UIView*)view foldCount:(int)leftViewFoldCount pullFactor:(float)leftViewPullFactor;
-- (void)setLeftFoldContentView:(UIView*)view __attribute__ ((deprecated));
 
 // set the bottom fold content view
 // and set the bottom fold container view frame

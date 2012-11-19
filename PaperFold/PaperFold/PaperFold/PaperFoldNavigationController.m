@@ -39,7 +39,7 @@
     _rightViewController = rightViewController;
     
     [self.rightViewController.view setFrame:CGRectMake(0,0,width,[self.view bounds].size.height)];
-    [self.paperFoldView setRightFoldContentView:self.rightViewController.view rightViewFoldCount:rightViewFoldCount rightViewPullFactor:rightViewPullFactor];
+    [self.paperFoldView setRightFoldContentView:self.rightViewController.view foldCount:rightViewFoldCount pullFactor:rightViewFoldCount];
 }
 
 - (void)setLeftViewController:(UIViewController *)leftViewController width:(float)width
@@ -47,7 +47,7 @@
     _leftViewController = leftViewController;
     
     [self.leftViewController.view setFrame:CGRectMake(0,0,width,[self.view bounds].size.height)];
-    [self.paperFoldView setLeftFoldContentView:self.leftViewController.view leftViewFoldCount:3 leftViewPullFactor:0.9];
+    [self.paperFoldView setLeftFoldContentView:self.leftViewController.view foldCount:3 pullFactor:0.9];
 }
 
 - (void)paperFoldView:(id)paperFoldView didFoldAutomatically:(BOOL)automated toState:(PaperFoldState)paperFoldState
