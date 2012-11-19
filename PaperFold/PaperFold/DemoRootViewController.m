@@ -55,7 +55,7 @@
         [_centerTableView setDelegate:self];
         [_centerTableView setDataSource:self];
         
-        _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
+        _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,150,[self.view bounds].size.height)];
         [_leftTableView setRowHeight:100];
         [_leftTableView setDataSource:self];
         [_paperFoldView setLeftFoldContentView:_leftTableView foldCount:3 pullFactor:0.9];
