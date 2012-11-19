@@ -61,7 +61,7 @@
         [_contentView setBackgroundColor:[UIColor clearColor]];
         [self addSubview:_contentView];
         
-        if (self.foldDirection==FoldDirectionHorizontalRightToLeft)
+        if (self.foldDirection==FoldDirectionHorizontalRightToLeft || self.foldDirection==FoldDirectionHorizontalLeftToRight)
         {
             // set anchor point of the leftView to the left edge
             _leftView = [[FacingView alloc] initWithFrame:CGRectMake(-1*frame.size.width/4,0,frame.size.width/2,frame.size.height)];
@@ -121,7 +121,7 @@
 
 - (void)unfoldViewToFraction:(CGFloat)fraction
 {
-    if (self.foldDirection==FoldDirectionHorizontalRightToLeft)
+    if (self.foldDirection==FoldDirectionHorizontalRightToLeft  || self.foldDirection==FoldDirectionHorizontalLeftToRight)
     {
         float delta = asinf(fraction);
         
@@ -166,7 +166,7 @@
 - (void)calculateFoldStateFromOffset:(float)offset
 {
     CGFloat fraction = 0.0;
-    if (self.foldDirection==FoldDirectionHorizontalRightToLeft)
+    if (self.foldDirection==FoldDirectionHorizontalRightToLeft  || self.foldDirection==FoldDirectionHorizontalLeftToRight)
     {
         fraction = offset / self.frame.size.width;
         if (fraction < 0) fraction = 0;
@@ -210,7 +210,7 @@
     [self calculateFoldStateFromOffset:offset];
 
     CGFloat fraction = 0.0;
-    if (self.foldDirection==FoldDirectionHorizontalRightToLeft)
+    if (self.foldDirection==FoldDirectionHorizontalRightToLeft  || self.foldDirection==FoldDirectionHorizontalLeftToRight)
     {
         fraction = offset / self.frame.size.width;
         if (fraction < 0) fraction = 0;
@@ -230,7 +230,7 @@
 - (void)setImage:(UIImage*)image
 {
     // split the image into 2, one for each folds
-    if (self.foldDirection==FoldDirectionHorizontalRightToLeft)
+    if (self.foldDirection==FoldDirectionHorizontalRightToLeft  || self.foldDirection==FoldDirectionHorizontalLeftToRight)
     {
         CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, 0, image.size.width*image.scale/2, image.size.height*image.scale));
         [self.leftView.layer setContents:(__bridge id)imageRef];
@@ -269,7 +269,7 @@
 
 - (void)showFolds:(BOOL)show
 {
-    if (self.foldDirection==FoldDirectionHorizontalRightToLeft)
+    if (self.foldDirection==FoldDirectionHorizontalRightToLeft  || self.foldDirection==FoldDirectionHorizontalLeftToRight)
     {
         [self.leftView setHidden:!show];
         [self.rightView setHidden:!show];

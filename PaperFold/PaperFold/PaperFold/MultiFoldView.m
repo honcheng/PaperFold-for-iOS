@@ -215,13 +215,14 @@
             }
             fraction = offset /(foldWidth+self.pullFactor*foldWidth);
         }
-        fraction = offset /(-1*(foldWidth+self.pullFactor*foldWidth));
+        //fraction = offset /(-1*(foldWidth+self.pullFactor*foldWidth));
         
         if (fraction < 0) fraction  = -1*fraction;//0;
         if (fraction > 1) fraction = 1;
         [self unfoldViewToFraction:fraction];
         
         if (self.foldDirection==FoldDirectionHorizontalLeftToRight) {
+            if (leftOffset<0) leftOffset = -1*leftOffset;
             [self unfoldViewToFraction:fraction withOffset:leftOffset];
         } else {
             [self unfoldViewToFraction:fraction];
@@ -269,7 +270,12 @@
     {
         if (self.foldDirection==FoldDirectionHorizontalLeftToRight) {
             [foldView setFrame:CGRectMake(offset - 2*foldView.rightView.frame.size.width, 0, foldView.frame.size.width, foldView.frame.size.height)];
+            
         }
+//        if (foldView.tag-FOLDVIEW_TAG==1)
+//        {
+//            NSLog(@"........ %f %f %f", foldView.frame.origin.x, offset, fraction);
+//        }
         
         // check if there is another subfold beside this fold
         int index = [foldView tag] - FOLDVIEW_TAG;
@@ -301,7 +307,11 @@
             if (self.foldDirection==FoldDirectionHorizontalLeftToRight) {
                 //x = (foldView.frame.origin.x + (fraction * foldView.frame.size.width)) - 2*foldView.rightView.frame.size.width;
 #warning check if this is correct 
-                x = (foldView.frame.origin.x + (fraction * foldView.frame.size.width)) - 2*foldView.rightView.frame.size.width;
+                //x =  (foldView.frame.origin.x + (fraction * foldView.frame.size.width)) - 2*foldView.rightView.frame.size.width;
+
+                x =  (foldView.frame.origin.x + (fraction * foldView.frame.size.width)) - 2*foldView.rightView.frame.size.width;
+                //x = displacement - x;
+                
             } else{
                 x = displacement+foldView.frame.origin.x+2*foldView.leftView.frame.size.width;
                 //x = self.superview.frame.origin.x+foldView.frame.origin.x+2*foldView.leftView.frame.size.width;
@@ -331,6 +341,7 @@
             // this drills in to the next subfold in a cascading effect depending on the number of available folds
             
             //[self unfoldView:nextFoldView toFraction:adjustedFraction];
+            //NSLog(@"%@ %f", foldView, foldView.frame.origin.x);
             [self unfoldView:nextFoldView toFraction:adjustedFraction withOffset:foldView.frame.origin.x];
         }
     }

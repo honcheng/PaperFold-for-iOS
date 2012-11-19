@@ -370,7 +370,8 @@
                     x = self.leftFoldView.frame.size.width;
                 }
                 [self.contentView setTransform:CGAffineTransformMakeTranslation(x, 0)];
-                [self.leftFoldView unfoldWithParentOffset:-1*x];
+                //[self.leftFoldView unfoldWithParentOffset:-1*x];
+                [self.leftFoldView unfoldWithParentOffset:x];
                 
                 if ([self.delegate respondsToSelector:@selector(paperFoldView:viewDidOffset:)])
                 {
