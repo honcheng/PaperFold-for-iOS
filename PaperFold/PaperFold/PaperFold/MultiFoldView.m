@@ -85,6 +85,8 @@
 
 - (void)setContent:(UIView *)contentView
 {
+    if ([contentView isKindOfClass:[MKMapView class]]) _shouldTakeScreenshotBeforeUnfolding = YES;
+    
     // set the content view
     self.contentViewHolder = [[UIView alloc] initWithFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
     //[self.contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
@@ -119,10 +121,10 @@
 
 - (void)setScreenshotImage:(UIImage*)image
 {
-    
-    if (self.foldDirection==FoldDirectionHorizontalLeftToRight || FoldDirectionHorizontalRightToLeft)
+    if (self.foldDirection==FoldDirectionHorizontalLeftToRight || self.foldDirection==FoldDirectionHorizontalRightToLeft)
     {
         float foldWidth = image.size.width/self.numberOfFolds;
+        
         for (int i=0; i<self.numberOfFolds; i++)
         {
             CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(foldWidth*i*image.scale, 0, foldWidth*image.scale, image.size.height*image.scale));
@@ -436,8 +438,11 @@
 // when fold is about to be opened, make sure content view is hidden, and show fold
 - (void)foldWillOpen
 {
-//    [self.contentViewHolder setHidden:NO];
-//    [self drawScreenshotOnFolds];
+    if (self.shouldTakeScreenshotBeforeUnfolding)
+    {
+        [self.contentViewHolder setHidden:NO];
+        [self drawScreenshotOnFolds];
+    }
     [self.contentViewHolder setHidden:YES];
     [self showFolds:YES];
 }

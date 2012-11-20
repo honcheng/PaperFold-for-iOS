@@ -52,6 +52,9 @@
 // optimized screenshot follows the scale of the screen
 // non-optimized is always the non-retina image
 @property (nonatomic, assign) BOOL useOptimizedScreenshot;
+// take screenshot just before unfolding
+// this is only necessary for mapview, not for the rest of the views
+@property (nonatomic, readonly) BOOL shouldTakeScreenshotBeforeUnfolding;
 
 @property (nonatomic, strong) UIView *contentViewHolder;
 
