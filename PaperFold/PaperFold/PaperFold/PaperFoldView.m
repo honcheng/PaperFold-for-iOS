@@ -78,10 +78,10 @@
     
     _state = PaperFoldStateDefault;
     _lastState = _state;
-    _enableRightFoldDragging = YES;
-    _enableLeftFoldDragging = YES;
-    _enableBottomFoldDragging = YES;
-    _enableTopFoldDragging = YES;
+    _enableRightFoldDragging = NO;
+    _enableLeftFoldDragging = NO;
+    _enableBottomFoldDragging = NO;
+    _enableTopFoldDragging = NO;
 }
 
 - (void)setCenterContentView:(UIView*)view
@@ -114,6 +114,8 @@
     [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:line];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+    
+    self.enableLeftFoldDragging = YES;
 }
 
 - (void)setBottomFoldContentView:(UIView*)view
@@ -132,6 +134,8 @@
     [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:line];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+    
+    self.enableBottomFoldDragging = YES;
 }
 
 - (void)setRightFoldContentView:(UIView*)view foldCount:(int)rightViewFoldCount pullFactor:(float)rightViewPullFactor
@@ -150,6 +154,8 @@
     [self.contentView addSubview:line];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+    
+    self.enableRightFoldDragging = YES;
 }
 
 // this method is deprecated
@@ -174,6 +180,8 @@
     [self.contentView addSubview:line];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+    
+    self.enableTopFoldDragging = YES;
 }
 
 - (void)onContentViewPanned:(UIPanGestureRecognizer*)gesture
