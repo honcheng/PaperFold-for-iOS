@@ -85,6 +85,8 @@
 
 - (void)setContent:(UIView *)contentView
 {
+    if ([contentView isKindOfClass:[MKMapView class]]) _shouldTakeScreenshotBeforeUnfolding = YES;
+    
     // set the content view
     self.contentViewHolder = [[UIView alloc] initWithFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
     //[self.contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
@@ -436,8 +438,11 @@
 // when fold is about to be opened, make sure content view is hidden, and show fold
 - (void)foldWillOpen
 {
-//    [self.contentViewHolder setHidden:NO];
-//    [self drawScreenshotOnFolds];
+    if (self.shouldTakeScreenshotBeforeUnfolding)
+    {
+        [self.contentViewHolder setHidden:NO];
+        [self drawScreenshotOnFolds];
+    }
     [self.contentViewHolder setHidden:YES];
     [self showFolds:YES];
 }
