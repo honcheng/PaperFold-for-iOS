@@ -72,6 +72,12 @@
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0];
+//    NSString *testScreenshot = [documentsDirectory stringByAppendingPathComponent:@"test.png"];
+//    NSData *imageData = UIImagePNGRepresentation(screenshot);
+//    [imageData writeToFile:testScreenshot atomically:YES];
+    
     return screenshot;
 }
 

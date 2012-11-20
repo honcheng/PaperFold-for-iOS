@@ -119,10 +119,10 @@
 
 - (void)setScreenshotImage:(UIImage*)image
 {
-    
-    if (self.foldDirection==FoldDirectionHorizontalLeftToRight || FoldDirectionHorizontalRightToLeft)
+    if (self.foldDirection==FoldDirectionHorizontalLeftToRight || self.foldDirection==FoldDirectionHorizontalRightToLeft)
     {
         float foldWidth = image.size.width/self.numberOfFolds;
+        
         for (int i=0; i<self.numberOfFolds; i++)
         {
             CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(foldWidth*i*image.scale, 0, foldWidth*image.scale, image.size.height*image.scale));
