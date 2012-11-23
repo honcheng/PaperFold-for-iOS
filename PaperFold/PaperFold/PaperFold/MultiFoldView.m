@@ -85,7 +85,7 @@
 
 - (void)setContent:(UIView *)contentView
 {
-    if ([contentView isKindOfClass:[MKMapView class]]) _shouldTakeScreenshotBeforeUnfolding = YES;
+    if ([contentView isKindOfClass:NSClassFromString(@"MKMapView")]) _shouldTakeScreenshotBeforeUnfolding = YES;
     
     // set the content view
     self.contentViewHolder = [[UIView alloc] initWithFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
