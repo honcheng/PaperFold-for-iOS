@@ -75,6 +75,7 @@
     
     UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
     [_contentView addGestureRecognizer:panGestureRecognizer];
+    [panGestureRecognizer setDelegate:self];
     
     _state = PaperFoldStateDefault;
     _lastState = _state;
@@ -82,6 +83,12 @@
     _enableLeftFoldDragging = NO;
     _enableBottomFoldDragging = NO;
     _enableTopFoldDragging = NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    if (self.enableHorizontalEdgeDragging) return YES;
+    else return NO;
 }
 
 - (void)setCenterContentView:(UIView*)view
@@ -188,7 +195,7 @@
 {
     // cancel gesture if another animation has not finished yet
     if ([self.animationTimer isValid]) return;
-
+  
     if ([gesture state]==UIGestureRecognizerStateBegan)
     {
         CGPoint velocity = [gesture velocityInView:self];
@@ -196,7 +203,16 @@
         {
             if (self.state==PaperFoldStateDefault)
             {
-                self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionHorizontal;
+                if (self.enableHorizontalEdgeDragging)
+                {
+                    CGPoint location = [gesture locationInView:self.contentView];
+                    if (location.x < kEdgeScrollWidth || location.x > (self.contentView.frame.size.width-kEdgeScrollWidth))
+                    {
+                        self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionHorizontal;
+                    }
+                    else self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionVertical;
+                }
+                else self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionHorizontal;
             }
         }
         else
@@ -312,7 +328,6 @@
             CGPoint adjustedPoint = CGPointMake(point.x - self.rightFoldView.frame.size.width, point.y);
             [self animateWithContentOffset:adjustedPoint panned:YES];
         }
-        
     }
     else if ([gesture state]==UIGestureRecognizerStateEnded || [gesture state]==UIGestureRecognizerStateCancelled)
     {
