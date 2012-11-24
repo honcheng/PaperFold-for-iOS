@@ -76,7 +76,8 @@ typedef void (^CompletionBlock)();
 // optimized screenshot follows the scale of the screen
 // non-optimized is always the non-retina image
 @property (nonatomic, assign) BOOL useOptimizedScreenshot;
-
+// restrict the dragging gesture recogniser to a certain UIRect of this view. Useful to restrict
+// dragging to, say, a navigation bar.
 @property (nonatomic, assign) CGRect restrictedDraggingRect;
 
 // animate folding and unfolding when sent the offset of contentView
