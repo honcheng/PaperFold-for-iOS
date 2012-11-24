@@ -37,7 +37,18 @@
 
 
 @interface PaperFoldView ()
+
+@property (nonatomic, weak) UIView *leftDividerLine;
+@property (nonatomic, weak) UIView *rightDividerLine;
+@property (nonatomic, weak) UIView *topDividerLine;
+@property (nonatomic, weak) UIView *bottomDividerLine;
+
 @property (nonatomic, copy) CompletionBlock completionBlock;
+@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
+
+// indicate if the divider line should be visible
+@property (nonatomic, assign) BOOL showDividerLines;
+
 - (void)onContentViewPannedHorizontally:(UIPanGestureRecognizer*)gesture;
 - (void)onContentViewPannedVertically:(UIPanGestureRecognizer*)gesture;
 @end
@@ -74,6 +85,7 @@
     [_contentView setAutoresizesSubviews:YES];
     
     UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
+	panGestureRecognizer.delegate = self;
     [_contentView addGestureRecognizer:panGestureRecognizer];
     
     _state = PaperFoldStateDefault;
@@ -82,6 +94,8 @@
     _enableLeftFoldDragging = NO;
     _enableBottomFoldDragging = NO;
     _enableTopFoldDragging = NO;
+	_restrictedDraggingRect = CGRectNull;
+	_showDividerLines = NO;
 }
 
 - (void)setCenterContentView:(UIView*)view
@@ -108,12 +122,13 @@
     //[self.leftFoldView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleHeight];
     //[view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
-    [self setPaperFoldState:PaperFoldStateDefault];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(-1,0,1,self.frame.size.height)];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:line];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+	line.alpha = 0;
+	self.leftDividerLine = line;
     
     self.enableLeftFoldDragging = YES;
 }
@@ -128,12 +143,13 @@
     [self insertSubview:self.bottomFoldView belowSubview:self.contentView];
     [self.bottomFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [self setPaperFoldState:PaperFoldStateDefault];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0,self.frame.size.height,self.frame.size.width,1)];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:line];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+	line.alpha = 0;
+	self.bottomDividerLine = line;
     
     self.enableBottomFoldDragging = YES;
 }
@@ -147,13 +163,14 @@
     [self.contentView insertSubview:self.rightFoldView atIndex:0];
     [self.rightFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    [self setPaperFoldState:PaperFoldStateDefault];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width,0,1,self.frame.size.height)];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:line];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+	line.alpha = 0;
+	self.rightDividerLine = line;
     
     self.enableRightFoldDragging = YES;
 }
@@ -173,13 +190,14 @@
     [self.contentView insertSubview:self.topFoldView atIndex:0];
     [self.topFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    [self setPaperFoldState:PaperFoldStateDefault];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0,-1,self.contentView.frame.size.width,1)];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:line];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+	line.alpha = 0;
+	self.topDividerLine = line;
     
     self.enableTopFoldDragging = YES;
 }
@@ -188,10 +206,13 @@
 {
     // cancel gesture if another animation has not finished yet
     if ([self.animationTimer isValid]) return;
-
+	
     if ([gesture state]==UIGestureRecognizerStateBegan)
     {
-        CGPoint velocity = [gesture velocityInView:self];
+		// show the divider while dragging
+		[self setShowDividerLines:YES animated:YES];
+
+		CGPoint velocity = [gesture velocityInView:self];
         if ( abs(velocity.x) > abs(velocity.y))
         {
             if (self.state==PaperFoldStateDefault)
@@ -217,6 +238,11 @@
         {
             [self onContentViewPannedVertically:gesture];
         }
+		
+		if (gesture.state != UIGestureRecognizerStateChanged) {
+			// hide the divider line
+			[self setShowDividerLines:NO animated:YES];
+		}
     }
 }
 
@@ -368,11 +394,9 @@
                 // set the limit of the right offset
                 if (x>=self.leftFoldView.frame.size.width)
                 {
-                    if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-                    {
-                        [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
-                        [self setIsAutomatedFolding:NO];
-                    }
+                    if (self.lastState != PaperFoldStateLeftUnfolded) {
+						[self finishForState:PaperFoldStateLeftUnfolded];
+					}
                     self.lastState = self.state;
                     self.state = PaperFoldStateLeftUnfolded;
                     x = self.leftFoldView.frame.size.width;
@@ -396,11 +420,9 @@
                 float x1 = x;
                 if (x1<=-self.rightFoldView.frame.size.width)
                 {
-                    if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-                    {
-                        [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
-                        [self setIsAutomatedFolding:NO];
-                    }
+					if (self.lastState != PaperFoldStateRightUnfolded) {
+						[self finishForState:PaperFoldStateRightUnfolded];
+					}
                     self.lastState = self.state;
                     self.state = PaperFoldStateRightUnfolded;
                     x1 = -self.rightFoldView.frame.size.width;
@@ -511,12 +533,10 @@
         [timer invalidate];
         transform = CGAffineTransformMakeTranslation(0,-1*self.bottomFoldView.frame.size.height);
         [self.contentView setTransform:transform];
-        
-        if (self.lastState!=PaperFoldStateBottomUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-        {
-            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateBottomUnfolded];
-        }
-        [self setIsAutomatedFolding:NO];
+
+		if (self.lastState != PaperFoldStateBottomUnfolded) {
+			[self finishForState:PaperFoldStateBottomUnfolded];
+		}
     }
 
     // use the x value to animate folding
@@ -571,11 +591,9 @@
         transform = CGAffineTransformMakeTranslation(0,self.topFoldView.frame.size.height);
         [self.contentView setTransform:transform];
         
-        if (self.lastState!=PaperFoldStateTopUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-        {
-            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateTopUnfolded];
-        }
-        [self setIsAutomatedFolding:NO];
+		if (self.lastState != PaperFoldStateTopUnfolded) {
+			[self finishForState:PaperFoldStateTopUnfolded];
+		}
     }
     
     // use the x value to animate folding
@@ -625,15 +643,10 @@
             [self.contentView setTransform:transform];
             [self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
             
-            if (self.lastState!=PaperFoldStateDefault)
-            {
-                if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-                {
-                    [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
-                }
-                self.state = PaperFoldStateDefault;
-            }
-            [self setIsAutomatedFolding:NO];
+			if (self.lastState != PaperFoldStateDefault) {
+				[self finishForState:PaperFoldStateDefault];
+			}
+			self.state = PaperFoldStateDefault;
         }
         else
         {
@@ -657,15 +670,10 @@
             [self.contentView setTransform:transform];
             [self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
             
-            if (self.lastState!=PaperFoldStateDefault)
-            {
-                if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-                {
-                    [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
-                }
-                self.state = PaperFoldStateDefault;
-            }
-            [self setIsAutomatedFolding:NO];
+			if (self.lastState != PaperFoldStateDefault) {
+				[self finishForState:PaperFoldStateDefault];
+			}
+			self.state = PaperFoldStateDefault;
             
         }
         else
@@ -694,10 +702,9 @@
             CGAffineTransform transform = transform = CGAffineTransformMakeTranslation(0, 0);
             [self.contentView setTransform:transform];
             
-            if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-            {
-                [self.delegate paperFoldView:self didFoldAutomatically:YES toState:PaperFoldStateDefault];
-            }
+			if (self.lastState != PaperFoldStateDefault) {
+				[self finishForState:PaperFoldStateDefault];
+			}
         }
         else if (state==PaperFoldStateLeftUnfolded)
         {
@@ -707,10 +714,9 @@
             [self.contentView setTransform:transform];
             [self.leftFoldView unfoldWithoutAnimation];
             
-            if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-            {
-                [self.delegate paperFoldView:self didFoldAutomatically:YES toState:PaperFoldStateLeftUnfolded];
-            }
+			if (self.lastState != PaperFoldStateLeftUnfolded) {
+				[self finishForState:PaperFoldStateLeftUnfolded];
+			}
         }
         else if (state==PaperFoldStateRightUnfolded)
         {
@@ -720,10 +726,9 @@
             [self.contentView setTransform:transform];
             [self.rightFoldView unfoldWithoutAnimation];
             
-            if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-            {
-                [self.delegate paperFoldView:self didFoldAutomatically:YES toState:PaperFoldStateRightUnfolded];
-            }
+			if (self.lastState != PaperFoldStateRightUnfolded) {
+				[self finishForState:PaperFoldStateRightUnfolded];
+			}
         }
         self.state = state;
     }
@@ -778,7 +783,50 @@
 	[self setPaperFoldState:PaperFoldStateDefault];
 }
 
-#pragma mark MultiFoldView delegate
+- (void)finishForState:(PaperFoldState)state
+{
+    [self setShowDividerLines:NO animated:YES];
+	
+    // we prefer executing the completion block, otherwise we notify the delegate
+    if (self.completionBlock != nil) {
+        self.completionBlock();
+        self.completionBlock = nil;
+		
+    } else if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)]) {
+        [self.delegate paperFoldView:self
+				didFoldAutomatically:self.isAutomatedFolding
+							 toState:state];
+    }
+	
+    // no more animations
+    [self setIsAutomatedFolding:NO];
+}
+
+
+
+- (void)setShowDividerLines:(BOOL)showDividerLines
+{
+    [self setShowDividerLines:showDividerLines animated:NO];
+}
+
+- (void)setShowDividerLines:(BOOL)showDividerLines animated:(BOOL)animated
+{
+    if (_showDividerLines == showDividerLines)
+        return;
+
+    _showDividerLines = showDividerLines;
+	CGFloat alpha = showDividerLines ? 1 : 0;
+    [UIView animateWithDuration:animated ? 0.25 : 0
+                                     animations:
+     ^{
+         self.leftDividerLine.alpha = alpha;
+         self.topDividerLine.alpha = alpha;
+         self.rightDividerLine.alpha = alpha;
+         self.bottomDividerLine.alpha = alpha;
+     }];
+}
+
+#pragma mark - MultiFoldView delegate
 
 - (CGFloat)displacementOfMultiFoldView:(id)multiFoldView
 {
@@ -813,6 +861,19 @@
         }
     }
     return 0.0;
+}
+
+#pragma mark - Gesture recogniser delegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+	// only allow panning if we didn't restrict it to start at a certain rect
+	if (NO == CGRectIsNull(self.restrictedDraggingRect)
+		&& NO == CGRectContainsPoint(self.restrictedDraggingRect, [gestureRecognizer locationInView:self])) {
+		return NO;
+	} else {
+		return YES;
+	}
 }
 
 @end

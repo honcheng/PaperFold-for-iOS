@@ -49,7 +49,7 @@ typedef void (^CompletionBlock)();
 - (void)paperFoldView:(id)paperFoldView viewDidOffset:(CGPoint)offset;
 @end
 
-@interface PaperFoldView : UIView <MultiFoldViewDelegate>
+@interface PaperFoldView : UIView <MultiFoldViewDelegate, UIGestureRecognizerDelegate>
 
 // main content view
 @property (nonatomic, strong) TouchThroughUIView *contentView;
@@ -76,6 +76,9 @@ typedef void (^CompletionBlock)();
 // optimized screenshot follows the scale of the screen
 // non-optimized is always the non-retina image
 @property (nonatomic, assign) BOOL useOptimizedScreenshot;
+// restrict the dragging gesture recogniser to a certain UIRect of this view. Useful to restrict
+// dragging to, say, a navigation bar.
+@property (nonatomic, assign) CGRect restrictedDraggingRect;
 
 // animate folding and unfolding when sent the offset of contentView
 // offset are either sent from pan gesture recognizer, or manual animation done with NSTimer after gesture ended
