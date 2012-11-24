@@ -40,6 +40,8 @@
 
 @property (nonatomic, weak) UIView *leftDividerLine;
 @property (nonatomic, weak) UIView *rightDividerLine;
+@property (nonatomic, weak) UIView *topDividerLine;
+@property (nonatomic, weak) UIView *bottomDividerLine;
 
 @property (nonatomic, copy) CompletionBlock completionBlock;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
@@ -118,7 +120,6 @@
     //[self.leftFoldView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleHeight];
     //[view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
-    [self setPaperFoldState:PaperFoldStateDefault];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(-1,0,1,self.frame.size.height)];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
@@ -140,14 +141,13 @@
     [self insertSubview:self.bottomFoldView belowSubview:self.contentView];
     [self.bottomFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [self setPaperFoldState:PaperFoldStateDefault];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0,self.frame.size.height,self.frame.size.width,1)];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:line];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
 	line.alpha = 0;
-	self.rightDividerLine = line;
+	self.bottomDividerLine = line;
     
     self.enableBottomFoldDragging = YES;
 }
@@ -161,13 +161,14 @@
     [self.contentView insertSubview:self.rightFoldView atIndex:0];
     [self.rightFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    [self setPaperFoldState:PaperFoldStateDefault];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width,0,1,self.frame.size.height)];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:line];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+	line.alpha = 0;
+	self.rightDividerLine = line;
     
     self.enableRightFoldDragging = YES;
 }
@@ -187,13 +188,14 @@
     [self.contentView insertSubview:self.topFoldView atIndex:0];
     [self.topFoldView setContent:view];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    [self setPaperFoldState:PaperFoldStateDefault];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0,-1,self.contentView.frame.size.width,1)];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:line];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [line setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+	line.alpha = 0;
+	self.topDividerLine = line;
     
     self.enableTopFoldDragging = YES;
 }
@@ -205,7 +207,11 @@
 
     if ([gesture state]==UIGestureRecognizerStateBegan)
     {
-        CGPoint velocity = [gesture velocityInView:self];
+		// show the divider while dragging
+		[self setShowDividerLines:YES animated:YES];
+
+        
+		CGPoint velocity = [gesture velocityInView:self];
         if ( abs(velocity.x) > abs(velocity.y))
         {
             if (self.state==PaperFoldStateDefault)
@@ -231,6 +237,11 @@
         {
             [self onContentViewPannedVertically:gesture];
         }
+		
+		if (gesture.state != UIGestureRecognizerStateChanged) {
+			// hide the divider line
+			[self setShowDividerLines:NO animated:YES];
+		}
     }
 }
 
@@ -790,6 +801,28 @@
 - (void)restoreToCenter
 {
 	[self setPaperFoldState:PaperFoldStateDefault];
+}
+
+- (void)setShowDividerLines:(BOOL)showDividerLines
+{
+    [self setShowDividerLines:showDividerLines animated:NO];
+}
+
+- (void)setShowDividerLines:(BOOL)showDividerLines animated:(BOOL)animated
+{
+    if (_showDividerLines == showDividerLines)
+        return;
+
+    _showDividerLines = showDividerLines;
+	CGFloat alpha = showDividerLines ? 1 : 0;
+    [UIView animateWithDuration:animated ? 0.25 : 0
+                                     animations:
+     ^{
+         self.leftDividerLine.alpha = alpha;
+         self.topDividerLine.alpha = alpha;
+         self.rightDividerLine.alpha = alpha;
+         self.bottomDividerLine.alpha = alpha;
+     }];
 }
 
 #pragma mark MultiFoldView delegate
