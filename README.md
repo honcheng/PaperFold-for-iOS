@@ -37,15 +37,15 @@ Usage
     _paperFoldView = [[PaperFoldView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
     [self.view addSubview:_paperFoldView];
 
-2) To set left view, use setLeftFoldContentView:. Example below uses a UITableView, but it can any UIView.
+2) To set left view, use setLeftFoldContentView:foldCount:pullFactor:. Example below uses a UITableView, but it can any UIView.
 
     _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,100,[self.view bounds].size.height)];
-    [_paperFoldView setLeftFoldContentView:_leftTableView];
+    [_paperFoldView setLeftFoldContentView:_leftTableView foldCount:3 pullFactor:0.9];
 
-3) To set the right view, use setRightFoldContentView:rightViewFoldCount:rightViewPullFactor:. Example below uses a MKMapView, but it can any UIView. The fold count is the number of folds in the right view. The pull factor controls the ratio of folding/unfolding of the different folds away from the center.
+3) To set the right view, use setRightFoldContentView:foldCount:pullFactor:. Example below uses a MKMapView, but it can any UIView. The fold count is the number of folds in the right view. The pull factor controls the ratio of folding/unfolding of the different folds away from the center.
 
     _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,240,[self.view bounds].size.height)];
-    [_paperFoldView setRightFoldContentView:_mapView rightViewFoldCount:3 rightViewPullFactor:0.9];
+    [_paperFoldView setRightFoldContentView:_mapView foldCount:3 pullFactor:0.9];
 
 4) To set the center view
 
@@ -81,11 +81,33 @@ Usage
     // callback comes from the following delegate method 
     - (void)paperFoldView:(id)paperFoldView didFoldAutomatically:(BOOL)automatic toState:(PaperFoldState)paperFoldState
 
+
 Requirements
 ---
 
 This project uses ARC. If you are not using ARC in your project, add '-fobjc-arc' as a compiler flag for all the files in this project.
 XCode 4.4 is required for auto-synthesis.
+
+Apps that uses PaperFold
+------------------------
+
+[Showy](https://itunes.apple.com/sg/app/id547022322)
+, [LargeType](https://itunes.apple.com/sg/app/largetype-full-screen-text/id568459406)
+, [NextRide](https://itunes.apple.com/us/app/nextride-singapore-public/id565103559) 
+, [SG NextBus](https://itunes.apple.com/sg/app/sg-nextbus/id361404839)
+, [Hangzhou Metro](https://itunes.apple.com/cn/app/hang-zhou-de-tie/id518531257?mt=8)
+
+[Contact me](http://twitter.com/honcheng) if you want your app listed here. Thanks 
+
+
+Other Projects that uses PaperFold
+----------------------------------	
+
+[PaperFoldMenuController](https://github.com/honcheng/PaperFoldMenuController) by me.
+
+[PaperFold CocoaPod Demo for RubyMotion](https://github.com/yestoall/PaperFold-pod-DEMO) by [yestoall](yestoall).
+
+[Titanium Mobile Mobule for PaperFold](https://github.com/atsusy/TiPaperFold) by [atsusy](https://github.com/atsusy/).
 
 Known Problem
 -------------

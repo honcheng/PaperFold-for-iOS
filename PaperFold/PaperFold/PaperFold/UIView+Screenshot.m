@@ -37,35 +37,53 @@
 
 @implementation UIView (Screenshot)
 
-- (UIImage*)screenshot
+- (UIImage*)screenshotWithOptimization:(BOOL)optimized
 {
-    // take screenshot of the view
-    if ([self isKindOfClass:NSClassFromString(@"MKMapView")])
+    if (optimized)
     {
-        if ([[[UIDevice currentDevice] systemVersion] floatValue]>=6.0)
+        // take screenshot of the view
+        if ([self isKindOfClass:NSClassFromString(@"MKMapView")])
         {
-            // in iOS6, there is no problem using a non-retina screenshot in a retina display screen
-            UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 1.0);
+            if ([[[UIDevice currentDevice] systemVersion] floatValue]>=6.0)
+            {
+                // in iOS6, there is no problem using a non-retina screenshot in a retina display screen
+                UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 1.0);
+            }
+            else
+            {
+                // if the view is a mapview in iOS5.0 and below, screenshot has to take the screen scale into consideration
+                // else, the screen shot in retina display devices will be of a less detail map (note, it is not the size of the screenshot, but it is the level of detail of the screenshot
+                UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
+            }
         }
         else
         {
-            // if the view is a mapview in iOS5.0 and below, screenshot has to take the screen scale into consideration
-            // else, the screen shot in retina display devices will be of a less detail map (note, it is not the size of the screenshot, but it is the level of detail of the screenshot
-            UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
+            // for performance consideration, everything else other than mapview will use a lower quality screenshot
+            UIGraphicsBeginImageContext(self.frame.size);
         }
     }
-    else 
+    else
     {
-        // for performance consideration, everything else other than mapview will use a lower quality screenshot
-        UIGraphicsBeginImageContext(self.frame.size);
+        UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
     }
     
     [self.layer renderInContext:UIGraphicsGetCurrentContext()];
     
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
+    
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0];
+//    NSString *testScreenshot = [documentsDirectory stringByAppendingPathComponent:@"test.png"];
+//    NSData *imageData = UIImagePNGRepresentation(screenshot);
+//    [imageData writeToFile:testScreenshot atomically:YES];
+    
     return screenshot;
+}
+
+- (UIImage*)screenshot
+{
+    return [self screenshotWithOptimization:YES];
 }
 
 @end

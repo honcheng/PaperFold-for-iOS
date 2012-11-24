@@ -34,19 +34,23 @@
 #import "FacingView.h"
 
 @implementation FacingView
-@synthesize shadowView = _shadowView;
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame foldDirection:(FoldDirection)foldDirection
 {
     self = [super initWithFrame:frame];
     if (self) {
         
         // add a shadow overlay on top of the view
-        _shadowView = [[ShadowView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        _shadowView = [[ShadowView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) foldDirection:foldDirection];
         [self addSubview:_shadowView];
         [_shadowView setBackgroundColor:[UIColor clearColor]];
     }
     return self;
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    return [self initWithFrame:frame foldDirection:FoldDirectionHorizontalRightToLeft];
 }
 
 @end

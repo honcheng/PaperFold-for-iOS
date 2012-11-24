@@ -34,8 +34,9 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^CompletionBlock)(UIImage *image);
+//typedef void (^CompletionBlock)(UIImage *image);
 
 @interface UIView (Screenshot)
 - (UIImage*)screenshot;
+- (UIImage*)screenshotWithOptimization:(BOOL)optimized;
 @end

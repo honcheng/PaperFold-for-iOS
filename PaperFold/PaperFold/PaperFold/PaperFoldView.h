@@ -38,14 +38,6 @@
 #import "MultiFoldView.h"
 #import "TouchThroughUIView.h"
 
-typedef enum
-{
-    PaperFoldStateDefault = 0,
-    PaperFoldStateLeftUnfolded = 1,
-    PaperFoldStateRightUnfolded = 2,
-    PaperFoldStateTransition = 3
-} PaperFoldState;
-
 typedef void (^CompletionBlock)();
 
 @protocol PaperFoldViewDelegate <NSObject>
@@ -57,24 +49,33 @@ typedef void (^CompletionBlock)();
 - (void)paperFoldView:(id)paperFoldView viewDidOffset:(CGPoint)offset;
 @end
 
-@interface PaperFoldView : UIView
+@interface PaperFoldView : UIView <MultiFoldViewDelegate>
 
 // main content view
 @property (nonatomic, strong) TouchThroughUIView *contentView;
 // timer to animate folds after gesture ended
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
 @property (nonatomic, strong) NSTimer *animationTimer;
+// the fold view on the left and bottom
+@property (nonatomic, strong) FoldView *bottomFoldView;
 // the fold view on the left
-@property (nonatomic, strong) FoldView *leftFoldView;
+@property (nonatomic, strong) MultiFoldView *leftFoldView;
 // the multiple fold view on the right
 @property (nonatomic, strong) MultiFoldView *rightFoldView;
+// the multiple fold view on the top
+@property (nonatomic, strong) MultiFoldView *topFoldView;
 // state of the current fold
 @property (nonatomic, assign) PaperFoldState state, lastState;
 // enable and disable dragging
-@property (nonatomic, assign) BOOL enableLeftFoldDragging, enableRightFoldDragging;
+@property (nonatomic, assign) BOOL enableLeftFoldDragging, enableRightFoldDragging, enableTopFoldDragging, enableBottomFoldDragging;
 // indicate if the fold was triggered by finger panning, or set state
 @property (nonatomic, assign) BOOL isAutomatedFolding;
 @property (nonatomic, assign) id<PaperFoldViewDelegate> delegate;
+// the initial panning direction
+@property (nonatomic, assign) PaperFoldInitialPanDirection paperFoldInitialPanDirection;
+// optimized screenshot follows the scale of the screen
+// non-optimized is always the non-retina image
+@property (nonatomic, assign) BOOL useOptimizedScreenshot;
 
 // animate folding and unfolding when sent the offset of contentView
 // offset are either sent from pan gesture recognizer, or manual animation done with NSTimer after gesture ended
@@ -83,11 +84,20 @@ typedef void (^CompletionBlock)();
 // set the right fold content view
 // and the right fold container view
 // with the number of folds and pull factor
-- (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor;
+- (void)setRightFoldContentView:(UIView*)view foldCount:(int)rightViewFoldCount pullFactor:(float)rightViewPullFactor;
+
+// set the top fold content view
+// and the top fold container view
+// with the number of folds and pull factor
+- (void)setTopFoldContentView:(UIView*)view topViewFoldCount:(int)topViewFoldCount topViewPullFactor:(float)topViewPullFactor;
 
 // set the left fold content view
 // and set the left fold container view frame
-- (void)setLeftFoldContentView:(UIView*)view;
+- (void)setLeftFoldContentView:(UIView*)view foldCount:(int)leftViewFoldCount pullFactor:(float)leftViewPullFactor;
+
+// set the bottom fold content view
+// and set the bottom fold container view frame
+- (void)setBottomFoldContentView:(UIView*)view;
 
 - (void)setCenterContentView:(UIView*)view;
 
@@ -103,5 +113,8 @@ typedef void (^CompletionBlock)();
 - (void)unfoldLeftView __attribute__((deprecated));
 - (void)unfoldRightView __attribute__((deprecated));
 - (void)restoreToCenter __attribute__((deprecated));
+// set fold views
+- (void)setLeftFoldContentView:(UIView*)view __attribute__((deprecated));
+- (void)setRightFoldContentView:(UIView*)view rightViewFoldCount:(int)rightViewFoldCount rightViewPullFactor:(float)rightViewPullFactor __attribute__((deprecated));;
 
 @end
