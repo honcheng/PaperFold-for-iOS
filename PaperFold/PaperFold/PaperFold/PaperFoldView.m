@@ -85,6 +85,7 @@
     [_contentView setAutoresizesSubviews:YES];
     
     UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
+	panGestureRecognizer.delegate = self;
     [_contentView addGestureRecognizer:panGestureRecognizer];
     
     _state = PaperFoldStateDefault;
@@ -93,6 +94,7 @@
     _enableLeftFoldDragging = NO;
     _enableBottomFoldDragging = NO;
     _enableTopFoldDragging = NO;
+	_restrictedDraggingRect = CGRectNull;
 	_showDividerLines = NO;
 }
 
@@ -204,13 +206,12 @@
 {
     // cancel gesture if another animation has not finished yet
     if ([self.animationTimer isValid]) return;
-
+	
     if ([gesture state]==UIGestureRecognizerStateBegan)
     {
 		// show the divider while dragging
 		[self setShowDividerLines:YES animated:YES];
 
-        
 		CGPoint velocity = [gesture velocityInView:self];
         if ( abs(velocity.x) > abs(velocity.y))
         {
@@ -860,6 +861,19 @@
         }
     }
     return 0.0;
+}
+
+#pragma mark - Gesture recogniser delegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+	// only allow panning if we didn't restrict it to start at a certain rect
+	if (NO == CGRectIsNull(self.restrictedDraggingRect)
+		&& NO == CGRectContainsPoint(self.restrictedDraggingRect, [gestureRecognizer locationInView:self])) {
+		return NO;
+	} else {
+		return YES;
+	}
 }
 
 @end
