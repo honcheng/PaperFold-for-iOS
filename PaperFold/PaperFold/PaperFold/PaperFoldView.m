@@ -393,11 +393,9 @@
                 // set the limit of the right offset
                 if (x>=self.leftFoldView.frame.size.width)
                 {
-                    if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-                    {
-                        [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateLeftUnfolded];
-                        [self setIsAutomatedFolding:NO];
-                    }
+                    if (self.lastState != PaperFoldStateLeftUnfolded) {
+						[self finishForState:PaperFoldStateLeftUnfolded];
+					}
                     self.lastState = self.state;
                     self.state = PaperFoldStateLeftUnfolded;
                     x = self.leftFoldView.frame.size.width;
@@ -421,11 +419,9 @@
                 float x1 = x;
                 if (x1<=-self.rightFoldView.frame.size.width)
                 {
-                    if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-                    {
-                        [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateRightUnfolded];
-                        [self setIsAutomatedFolding:NO];
-                    }
+					if (self.lastState != PaperFoldStateRightUnfolded) {
+						[self finishForState:PaperFoldStateRightUnfolded];
+					}
                     self.lastState = self.state;
                     self.state = PaperFoldStateRightUnfolded;
                     x1 = -self.rightFoldView.frame.size.width;
@@ -536,12 +532,10 @@
         [timer invalidate];
         transform = CGAffineTransformMakeTranslation(0,-1*self.bottomFoldView.frame.size.height);
         [self.contentView setTransform:transform];
-        
-        if (self.lastState!=PaperFoldStateBottomUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-        {
-            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateBottomUnfolded];
-        }
-        [self setIsAutomatedFolding:NO];
+
+		if (self.lastState != PaperFoldStateBottomUnfolded) {
+			[self finishForState:PaperFoldStateBottomUnfolded];
+		}
     }
 
     // use the x value to animate folding
@@ -596,11 +590,9 @@
         transform = CGAffineTransformMakeTranslation(0,self.topFoldView.frame.size.height);
         [self.contentView setTransform:transform];
         
-        if (self.lastState!=PaperFoldStateTopUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-        {
-            [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateTopUnfolded];
-        }
-        [self setIsAutomatedFolding:NO];
+		if (self.lastState != PaperFoldStateTopUnfolded) {
+			[self finishForState:PaperFoldStateTopUnfolded];
+		}
     }
     
     // use the x value to animate folding
@@ -650,15 +642,10 @@
             [self.contentView setTransform:transform];
             [self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
             
-            if (self.lastState!=PaperFoldStateDefault)
-            {
-                if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-                {
-                    [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
-                }
-                self.state = PaperFoldStateDefault;
-            }
-            [self setIsAutomatedFolding:NO];
+			if (self.lastState != PaperFoldStateDefault) {
+				[self finishForState:PaperFoldStateDefault];
+			}
+			self.state = PaperFoldStateDefault;
         }
         else
         {
@@ -682,15 +669,10 @@
             [self.contentView setTransform:transform];
             [self animateWithContentOffset:CGPointMake(0, 0) panned:NO];
             
-            if (self.lastState!=PaperFoldStateDefault)
-            {
-                if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-                {
-                    [self.delegate paperFoldView:self didFoldAutomatically:self.isAutomatedFolding toState:PaperFoldStateDefault];
-                }
-                self.state = PaperFoldStateDefault;
-            }
-            [self setIsAutomatedFolding:NO];
+			if (self.lastState != PaperFoldStateDefault) {
+				[self finishForState:PaperFoldStateDefault];
+			}
+			self.state = PaperFoldStateDefault;
             
         }
         else
@@ -719,10 +701,9 @@
             CGAffineTransform transform = transform = CGAffineTransformMakeTranslation(0, 0);
             [self.contentView setTransform:transform];
             
-            if (self.lastState!=PaperFoldStateDefault && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-            {
-                [self.delegate paperFoldView:self didFoldAutomatically:YES toState:PaperFoldStateDefault];
-            }
+			if (self.lastState != PaperFoldStateDefault) {
+				[self finishForState:PaperFoldStateDefault];
+			}
         }
         else if (state==PaperFoldStateLeftUnfolded)
         {
@@ -732,10 +713,9 @@
             [self.contentView setTransform:transform];
             [self.leftFoldView unfoldWithoutAnimation];
             
-            if (self.lastState!=PaperFoldStateLeftUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-            {
-                [self.delegate paperFoldView:self didFoldAutomatically:YES toState:PaperFoldStateLeftUnfolded];
-            }
+			if (self.lastState != PaperFoldStateLeftUnfolded) {
+				[self finishForState:PaperFoldStateLeftUnfolded];
+			}
         }
         else if (state==PaperFoldStateRightUnfolded)
         {
@@ -745,10 +725,9 @@
             [self.contentView setTransform:transform];
             [self.rightFoldView unfoldWithoutAnimation];
             
-            if (self.lastState!=PaperFoldStateRightUnfolded && [self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)])
-            {
-                [self.delegate paperFoldView:self didFoldAutomatically:YES toState:PaperFoldStateRightUnfolded];
-            }
+			if (self.lastState != PaperFoldStateRightUnfolded) {
+				[self finishForState:PaperFoldStateRightUnfolded];
+			}
         }
         self.state = state;
     }
@@ -803,6 +782,27 @@
 	[self setPaperFoldState:PaperFoldStateDefault];
 }
 
+- (void)finishForState:(PaperFoldState)state
+{
+    [self setShowDividerLines:NO animated:YES];
+	
+    // we prefer executing the completion block, otherwise we notify the delegate
+    if (self.completionBlock != nil) {
+        self.completionBlock();
+        self.completionBlock = nil;
+		
+    } else if ([self.delegate respondsToSelector:@selector(paperFoldView:didFoldAutomatically:toState:)]) {
+        [self.delegate paperFoldView:self
+				didFoldAutomatically:self.isAutomatedFolding
+							 toState:state];
+    }
+	
+    // no more animations
+    [self setIsAutomatedFolding:NO];
+}
+
+
+
 - (void)setShowDividerLines:(BOOL)showDividerLines
 {
     [self setShowDividerLines:showDividerLines animated:NO];
@@ -825,7 +825,7 @@
      }];
 }
 
-#pragma mark MultiFoldView delegate
+#pragma mark - MultiFoldView delegate
 
 - (CGFloat)displacementOfMultiFoldView:(id)multiFoldView
 {
