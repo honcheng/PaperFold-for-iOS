@@ -38,11 +38,6 @@
 
 @interface PaperFoldView ()
 
-@property (nonatomic, weak) UIView *leftDividerLine;
-@property (nonatomic, weak) UIView *rightDividerLine;
-@property (nonatomic, weak) UIView *topDividerLine;
-@property (nonatomic, weak) UIView *bottomDividerLine;
-
 @property (nonatomic, copy) CompletionBlock completionBlock;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 

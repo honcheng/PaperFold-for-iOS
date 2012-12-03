@@ -79,6 +79,13 @@ typedef void (^CompletionBlock)();
 // restrict the dragging gesture recogniser to a certain UIRect of this view. Useful to restrict
 // dragging to, say, a navigation bar.
 @property (nonatomic, assign) CGRect restrictedDraggingRect;
+// divider lines
+// these are exposed so that it is possible to hide the lines
+// especially when views have rounded corners
+@property (nonatomic, weak) UIView *leftDividerLine;
+@property (nonatomic, weak) UIView *rightDividerLine;
+@property (nonatomic, weak) UIView *topDividerLine;
+@property (nonatomic, weak) UIView *bottomDividerLine;
 
 // animate folding and unfolding when sent the offset of contentView
 // offset are either sent from pan gesture recognizer, or manual animation done with NSTimer after gesture ended
