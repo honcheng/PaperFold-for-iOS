@@ -519,10 +519,10 @@
     [self.rightFoldView setHidden:YES];
     
     CGAffineTransform transform = [self.contentView transform];
-    float y = transform.ty - (self.bottomFoldView.frame.size.height-transform.ty)/4;
+    float y = transform.ty - (self.bottomFoldView.frame.size.height+transform.ty)/4;
     transform = CGAffineTransformMakeTranslation(0, y);
     [self.contentView setTransform:transform];
-
+  
     if (-y>=self.bottomFoldView.frame.size.height-2)
     {
         [timer invalidate];
@@ -579,7 +579,7 @@
     float y = transform.ty + (self.topFoldView.frame.size.height-transform.ty)/8;
     transform = CGAffineTransformMakeTranslation(0, y);
     [self.contentView setTransform:transform];
-    
+
     if (y>=self.topFoldView.frame.size.height-5)
     {
         [timer invalidate];
