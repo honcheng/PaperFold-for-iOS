@@ -114,6 +114,7 @@
     [self.leftFoldView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self insertSubview:self.leftFoldView belowSubview:self.contentView];
     [self.leftFoldView setContent:view];
+    [self.leftFoldView setHidden:YES];
     //[self.leftFoldView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleHeight];
     //[view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
@@ -137,6 +138,7 @@
     [self.bottomFoldView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [self insertSubview:self.bottomFoldView belowSubview:self.contentView];
     [self.bottomFoldView setContent:view];
+    [self.bottomFoldView setHidden:YES];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0,self.frame.size.height,self.frame.size.width,1)];
@@ -157,6 +159,7 @@
     [self.rightFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [self.contentView insertSubview:self.rightFoldView atIndex:0];
     [self.rightFoldView setContent:view];
+    [self.rightFoldView setHidden:YES];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width,0,1,self.frame.size.height)];
@@ -184,6 +187,7 @@
     [self.topFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [self.contentView insertSubview:self.topFoldView atIndex:0];
     [self.topFoldView setContent:view];
+    [self.topFoldView setHidden:YES];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0,-1,self.contentView.frame.size.width,1)];
