@@ -14,7 +14,7 @@
 #define kRightViewUnfoldThreshold 0.3
 #define kTopViewUnfoldThreshold 0.3
 #define kBottomViewUnfoldThreshold 0.3
-#define kEdgeScrollWidth 35.0
+#define kEdgeScrollWidth 40.0
 
 typedef enum
 {

@@ -94,12 +94,6 @@
 	_showDividerLines = NO;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    if (self.enableHorizontalEdgeDragging) return YES;
-    else return NO;
-}
-
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
@@ -891,6 +885,21 @@
 }
 
 #pragma mark - Gesture recogniser delegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    if (self.enableHorizontalEdgeDragging)
+    {
+        CGPoint location = [gestureRecognizer locationInView:self.contentView];
+        if (location.x < kEdgeScrollWidth || location.x > (self.contentView.frame.size.width-kEdgeScrollWidth))
+        {
+            
+            return NO;
+        }
+        else return YES;
+    }
+    else return NO;
+}
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
