@@ -104,7 +104,7 @@
     
     CGRect rightFoldViewFrame = self.rightFoldView.frame;
     rightFoldViewFrame.size.height = frame.size.height;
-    [self.rightFoldView setFrame:leftFoldViewFrame];
+    [self.rightFoldView setFrame:rightFoldViewFrame];
 }
 
 - (void)setCenterContentView:(UIView*)view
@@ -341,7 +341,7 @@
     [self.leftFoldView setHidden:NO];
     [self.bottomFoldView setHidden:YES];
     [self.topFoldView setHidden:YES];
-    
+
     CGPoint point = [gesture translationInView:self];
     if ([gesture state]==UIGestureRecognizerStateChanged)
     {
