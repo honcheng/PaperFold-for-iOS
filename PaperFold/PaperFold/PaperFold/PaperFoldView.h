@@ -68,6 +68,7 @@ typedef void (^CompletionBlock)();
 @property (nonatomic, assign) PaperFoldState state, lastState;
 // enable and disable dragging
 @property (nonatomic, assign) BOOL enableLeftFoldDragging, enableRightFoldDragging, enableTopFoldDragging, enableBottomFoldDragging;
+@property (nonatomic, assign) BOOL enableHorizontalEdgeDragging;
 // indicate if the fold was triggered by finger panning, or set state
 @property (nonatomic, assign) BOOL isAutomatedFolding;
 @property (nonatomic, assign) id<PaperFoldViewDelegate> delegate;

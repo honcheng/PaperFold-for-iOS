@@ -82,6 +82,7 @@
     UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onContentViewPanned:)];
 	panGestureRecognizer.delegate = self;
     [_contentView addGestureRecognizer:panGestureRecognizer];
+    [panGestureRecognizer setDelegate:self];
     
     _state = PaperFoldStateDefault;
     _lastState = _state;
@@ -91,6 +92,25 @@
     _enableTopFoldDragging = NO;
 	_restrictedDraggingRect = CGRectNull;
 	_showDividerLines = NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    if (self.enableHorizontalEdgeDragging) return YES;
+    else return NO;
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    
+    CGRect leftFoldViewFrame = self.leftFoldView.frame;
+    leftFoldViewFrame.size.height = frame.size.height;
+    [self.leftFoldView setFrame:leftFoldViewFrame];
+    
+    CGRect rightFoldViewFrame = self.rightFoldView.frame;
+    rightFoldViewFrame.size.height = frame.size.height;
+    [self.rightFoldView setFrame:leftFoldViewFrame];
 }
 
 - (void)setCenterContentView:(UIView*)view
@@ -205,7 +225,7 @@
 {
     // cancel gesture if another animation has not finished yet
     if ([self.animationTimer isValid]) return;
-	
+
     if ([gesture state]==UIGestureRecognizerStateBegan)
     {
 		// show the divider while dragging
@@ -216,7 +236,16 @@
         {
             if (self.state==PaperFoldStateDefault)
             {
-                self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionHorizontal;
+                if (self.enableHorizontalEdgeDragging)
+                {
+                    CGPoint location = [gesture locationInView:self.contentView];
+                    if (location.x < kEdgeScrollWidth || location.x > (self.contentView.frame.size.width-kEdgeScrollWidth))
+                    {
+                        self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionHorizontal;
+                    }
+                    else self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionVertical;
+                }
+                else self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionHorizontal;
             }
         }
         else
@@ -337,7 +366,6 @@
             CGPoint adjustedPoint = CGPointMake(point.x - self.rightFoldView.frame.size.width, point.y);
             [self animateWithContentOffset:adjustedPoint panned:YES];
         }
-        
     }
     else if ([gesture state]==UIGestureRecognizerStateEnded || [gesture state]==UIGestureRecognizerStateCancelled)
     {
