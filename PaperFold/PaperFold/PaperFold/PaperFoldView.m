@@ -91,6 +91,19 @@
     else return NO;
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    
+    CGRect leftFoldViewFrame = self.leftFoldView.frame;
+    leftFoldViewFrame.size.height = frame.size.height;
+    [self.leftFoldView setFrame:leftFoldViewFrame];
+    
+    CGRect rightFoldViewFrame = self.rightFoldView.frame;
+    rightFoldViewFrame.size.height = frame.size.height;
+    [self.rightFoldView setFrame:leftFoldViewFrame];
+}
+
 - (void)setCenterContentView:(UIView*)view
 {
 	[view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
