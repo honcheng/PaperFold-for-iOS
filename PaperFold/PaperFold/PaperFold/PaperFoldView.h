@@ -49,7 +49,7 @@ typedef void (^CompletionBlock)();
 - (void)paperFoldView:(id)paperFoldView viewDidOffset:(CGPoint)offset;
 @end
 
-@interface PaperFoldView : UIView <MultiFoldViewDelegate, UIGestureRecognizerDelegate>
+@interface PaperFoldView : UIView < UIGestureRecognizerDelegate>
 
 // main content view
 @property (nonatomic, strong) TouchThroughUIView *contentView;
@@ -57,7 +57,7 @@ typedef void (^CompletionBlock)();
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
 @property (nonatomic, strong) NSTimer *animationTimer;
 // the fold view on the left and bottom
-@property (nonatomic, strong) FoldView *bottomFoldView;
+@property (nonatomic, strong) MultiFoldView *bottomFoldView;
 // the fold view on the left
 @property (nonatomic, strong) MultiFoldView *leftFoldView;
 // the multiple fold view on the right

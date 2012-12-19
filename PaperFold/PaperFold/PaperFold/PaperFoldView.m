@@ -123,7 +123,6 @@
 {
     if (self.leftFoldView) [self.leftFoldView removeFromSuperview];
     self.leftFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,0,view.frame.size.width,self.frame.size.height) foldDirection:FoldDirectionHorizontalLeftToRight folds:leftViewFoldCount pullFactor:leftViewPullFactor];
-    [self.leftFoldView setDelegate:self];
     [self.leftFoldView setUseOptimizedScreenshot:self.useOptimizedScreenshot];
     [self.leftFoldView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self insertSubview:self.leftFoldView belowSubview:self.contentView];
@@ -147,13 +146,16 @@
 {
     if (self.bottomFoldView) [self.bottomFoldView removeFromSuperview];
     
-    self.bottomFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,self.frame.size.height-view.frame.size.height,view.frame.size.width,view.frame.size.height) foldDirection:FoldDirectionVertical];
+    //    self.bottomFoldView = [[FoldView alloc] initWithFrame:CGRectMake(0,self.frame.size.height-view.frame.size.height,view.frame.size.width,view.frame.size.height) foldDirection:FoldDirectionVertical];
+    self.bottomFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,self.frame.size.height-view.frame.size.height,view.frame.size.width,view.frame.size.height) foldDirection:FoldDirectionVerticalBottomToTop folds:5 pullFactor:0.9];
+//    [self.bottomFoldView setDelegate:self];
     [self.bottomFoldView setUseOptimizedScreenshot:self.useOptimizedScreenshot];
     [self.bottomFoldView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [self insertSubview:self.bottomFoldView belowSubview:self.contentView];
     [self.bottomFoldView setContent:view];
     [self.bottomFoldView setHidden:YES];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0,self.frame.size.height,self.frame.size.width,1)];
     [line setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
@@ -168,7 +170,7 @@
 - (void)setRightFoldContentView:(UIView*)view foldCount:(int)rightViewFoldCount pullFactor:(float)rightViewPullFactor
 {
     self.rightFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(self.frame.size.width,0,view.frame.size.width,self.frame.size.height) foldDirection:FoldDirectionHorizontalRightToLeft folds:rightViewFoldCount pullFactor:rightViewPullFactor];
-    [self.rightFoldView setDelegate:self];
+
     [self.rightFoldView setUseOptimizedScreenshot:self.useOptimizedScreenshot];
     [self.rightFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [self.contentView insertSubview:self.rightFoldView atIndex:0];
@@ -195,8 +197,8 @@
 
 - (void)setTopFoldContentView:(UIView*)view topViewFoldCount:(int)topViewFoldCount topViewPullFactor:(float)topViewPullFactor
 {
-    self.topFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,-1*view.frame.size.height,view.frame.size.width,view.frame.size.height) foldDirection:FoldDirectionVertical folds:topViewFoldCount pullFactor:topViewPullFactor];
-    [self.topFoldView setDelegate:self];
+    self.topFoldView = [[MultiFoldView alloc] initWithFrame:CGRectMake(0,-1*view.frame.size.height,view.frame.size.width,view.frame.size.height) foldDirection:FoldDirectionVerticalTopToBottom folds:topViewFoldCount pullFactor:topViewPullFactor];
+
     [self.topFoldView setUseOptimizedScreenshot:self.useOptimizedScreenshot];
     [self.topFoldView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleHeight];
     [self.contentView insertSubview:self.topFoldView atIndex:0];
@@ -219,12 +221,12 @@
 {
     // cancel gesture if another animation has not finished yet
     if ([self.animationTimer isValid]) return;
-
+    
     if ([gesture state]==UIGestureRecognizerStateBegan)
     {
 		// show the divider while dragging
 		[self setShowDividerLines:YES animated:YES];
-
+        
 		CGPoint velocity = [gesture velocityInView:self];
         if ( abs(velocity.x) > abs(velocity.y))
         {
@@ -331,7 +333,7 @@
         //[self setPaperFoldState:PaperFoldStateDefault];
         self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
         
-
+        
     }
 }
 
@@ -341,7 +343,7 @@
     [self.leftFoldView setHidden:NO];
     [self.bottomFoldView setHidden:YES];
     [self.topFoldView setHidden:YES];
-
+    
     CGPoint point = [gesture translationInView:self];
     if ([gesture state]==UIGestureRecognizerStateChanged)
     {
@@ -449,7 +451,7 @@
                     x1 = -self.rightFoldView.frame.size.width;
                 }
                 [self.contentView setTransform:CGAffineTransformMakeTranslation(x1, 0)];
-                [self.rightFoldView unfoldWithParentOffset:x];
+                [self.rightFoldView unfoldWithParentOffset:-x];
                 
                 if ([self.delegate respondsToSelector:@selector(paperFoldView:viewDidOffset:)])
                 {
@@ -490,7 +492,7 @@
                     y = -self.bottomFoldView.frame.size.height;
                 }
                 [self.contentView setTransform:CGAffineTransformMakeTranslation(0, y)];
-                [self.bottomFoldView unfoldWithParentOffset:y];
+                [self.bottomFoldView unfoldWithParentOffset:-y];
                 
                 if ([self.delegate respondsToSelector:@selector(paperFoldView:viewDidOffset:)])
                 {
@@ -548,18 +550,18 @@
     float y = transform.ty - (self.bottomFoldView.frame.size.height+transform.ty)/4;
     transform = CGAffineTransformMakeTranslation(0, y);
     [self.contentView setTransform:transform];
-  
+    
     if (-y>=self.bottomFoldView.frame.size.height-2)
     {
         [timer invalidate];
         transform = CGAffineTransformMakeTranslation(0,-1*self.bottomFoldView.frame.size.height);
         [self.contentView setTransform:transform];
-
+        
 		if (self.lastState != PaperFoldStateBottomUnfolded) {
 			[self finishForState:PaperFoldStateBottomUnfolded];
 		}
     }
-
+    
     // use the x value to animate folding
     [self animateWithContentOffset:CGPointMake(0, self.contentView.frame.origin.y) panned:NO];
 }
@@ -605,7 +607,7 @@
     float y = transform.ty + (self.topFoldView.frame.size.height-transform.ty)/8;
     transform = CGAffineTransformMakeTranslation(0, y);
     [self.contentView setTransform:transform];
-
+    
     if (y>=self.topFoldView.frame.size.height-5)
     {
         [timer invalidate];
@@ -633,7 +635,7 @@
     float x = transform.tx - (transform.tx+self.rightFoldView.frame.size.width)/8;
     transform = CGAffineTransformMakeTranslation(x, 0);
     [self.contentView setTransform:transform];
-
+    
     if (x<=-self.rightFoldView.frame.size.width+5)
     {
         [timer invalidate];
@@ -781,8 +783,8 @@
 }
 
 - (void)setPaperFoldState:(PaperFoldState)state
-								 animated:(BOOL)animated
-							 completion:(void (^)())completion
+                 animated:(BOOL)animated
+               completion:(void (^)())completion
 {
 	self.completionBlock = completion;
 	[self setPaperFoldState:state animated:animated];
@@ -834,11 +836,11 @@
 {
     if (_showDividerLines == showDividerLines)
         return;
-
+    
     _showDividerLines = showDividerLines;
 	CGFloat alpha = showDividerLines ? 1 : 0;
     [UIView animateWithDuration:animated ? 0.25 : 0
-                                     animations:
+                     animations:
      ^{
          self.leftDividerLine.alpha = alpha;
          self.topDividerLine.alpha = alpha;
