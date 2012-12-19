@@ -25,6 +25,8 @@
 
 @property (nonatomic, strong) UIView *contentViewHolder;
 
+@property (nonatomic, readonly, assign) float offset;
+
 // init with the number of folds and pull factor
 
 // defaults to horizontal fold

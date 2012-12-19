@@ -194,6 +194,7 @@
         NSLog(@"Error! %s offset MUST BE a Positive Number %f",__func__, offset);
         offset = -offset;
     }
+    _offset = offset;
     [self calculateFoldStateFromOffset:offset];
     if (self.foldDirection == FoldDirectionHorizontalLeftToRight) {
         [self unfoldLeftToRightViewWithParentOffset:offset];

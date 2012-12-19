@@ -7,6 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DAE7DB86168207EA00C3E7FB /* SinglePaperFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAE7DB85168207EA00C3E7FB /* SinglePaperFoldView.m */; };
+		DAE7DB9416821B8900C3E7FB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45D9314DF822D00F12A1D /* main.m */; };
+		DAE7DB9516821B8900C3E7FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C45D9714DF822D00F12A1D /* AppDelegate.m */; };
+		DAE7DB9716821B8900C3E7FB /* FacingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF414E2B5F20076B1C6 /* FacingView.m */; };
+		DAE7DB9816821B8900C3E7FB /* FoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF614E2B5F20076B1C6 /* FoldView.m */; };
+		DAE7DB9916821B8900C3E7FB /* MultiFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF814E2B5F20076B1C6 /* MultiFoldView.m */; };
+		DAE7DB9A16821B8900C3E7FB /* PaperFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFA14E2B5F20076B1C6 /* PaperFoldView.m */; };
+		DAE7DB9B16821B8900C3E7FB /* ShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFC14E2B5F20076B1C6 /* ShadowView.m */; };
+		DAE7DB9C16821B8900C3E7FB /* TouchThroughUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEFE14E2B5F20076B1C6 /* TouchThroughUIView.m */; };
+		DAE7DB9D16821B8900C3E7FB /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BF0014E2B5F20076B1C6 /* UIView+Screenshot.m */; };
+		DAE7DB9E16821B8900C3E7FB /* SinglePaperFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAE7DB85168207EA00C3E7FB /* SinglePaperFoldView.m */; };
+		DAE7DBA016821B8900C3E7FB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8DB47B214E0A68E00067048 /* CoreLocation.framework */; };
+		DAE7DBA116821B8900C3E7FB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8DB47AC14E0A41400067048 /* MapKit.framework */; };
+		DAE7DBA216821B8900C3E7FB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45DA114DF848700F12A1D /* QuartzCore.framework */; };
+		DAE7DBA316821B8900C3E7FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8714DF822D00F12A1D /* UIKit.framework */; };
+		DAE7DBA416821B8900C3E7FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8914DF822D00F12A1D /* Foundation.framework */; };
+		DAE7DBA516821B8900C3E7FB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C45D8B14DF822D00F12A1D /* CoreGraphics.framework */; };
+		DAE7DBA716821B8900C3E7FB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8C45D9014DF822D00F12A1D /* InfoPlist.strings */; };
+		DAE7DBA816821B8900C3E7FB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F82A503E1634C512005E7244 /* Default-568h@2x.png */; };
+		DAE7DBB016821BCF00C3E7FB /* SinglePaperFold-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAE7DBAF16821BCF00C3E7FB /* SinglePaperFold-Info.plist */; };
+		DAE7DBB91682215300C3E7FB /* SinglePaperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAE7DBB71682215200C3E7FB /* SinglePaperViewController.m */; };
+		DAE7DBBA1682215300C3E7FB /* SinglePaperViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAE7DBB81682215200C3E7FB /* SinglePaperViewController.xib */; };
+		DAE7DBBE1682289600C3E7FB /* miao.png in Resources */ = {isa = PBXBuildFile; fileRef = DAE7DBBD1682289600C3E7FB /* miao.png */; };
 		F82A503F1634C512005E7244 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F82A503E1634C512005E7244 /* Default-568h@2x.png */; };
 		F877BF0114E2B5F20076B1C6 /* FacingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF414E2B5F20076B1C6 /* FacingView.m */; };
 		F877BF0214E2B5F20076B1C6 /* FoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F877BEF614E2B5F20076B1C6 /* FoldView.m */; };
@@ -28,8 +51,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F84CDB2A15E917C500DBA1C1 /* PaperFoldConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperFoldConstants.h; sourceTree = "<group>"; };
+		DAE7DB84168207EA00C3E7FB /* SinglePaperFoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePaperFoldView.h; sourceTree = "<group>"; };
+		DAE7DB85168207EA00C3E7FB /* SinglePaperFoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglePaperFoldView.m; sourceTree = "<group>"; };
+		DAE7DBAC16821B8900C3E7FB /* SinglePaperFold.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SinglePaperFold.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAE7DBAF16821BCF00C3E7FB /* SinglePaperFold-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SinglePaperFold-Info.plist"; sourceTree = "<group>"; };
+		DAE7DBB61682215200C3E7FB /* SinglePaperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePaperViewController.h; sourceTree = "<group>"; };
+		DAE7DBB71682215200C3E7FB /* SinglePaperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglePaperViewController.m; sourceTree = "<group>"; };
+		DAE7DBB81682215200C3E7FB /* SinglePaperViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SinglePaperViewController.xib; sourceTree = "<group>"; };
+		DAE7DBBD1682289600C3E7FB /* miao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = miao.png; path = PaperFold/Resources/miao.png; sourceTree = "<group>"; };
 		F82A503E1634C512005E7244 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		F84CDB2A15E917C500DBA1C1 /* PaperFoldConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperFoldConstants.h; sourceTree = "<group>"; };
 		F877BEF314E2B5F20076B1C6 /* FacingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacingView.h; sourceTree = "<group>"; };
 		F877BEF414E2B5F20076B1C6 /* FacingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacingView.m; sourceTree = "<group>"; };
 		F877BEF514E2B5F20076B1C6 /* FoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldView.h; sourceTree = "<group>"; };
@@ -62,6 +93,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DAE7DB9F16821B8900C3E7FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAE7DBA016821B8900C3E7FB /* CoreLocation.framework in Frameworks */,
+				DAE7DBA116821B8900C3E7FB /* MapKit.framework in Frameworks */,
+				DAE7DBA216821B8900C3E7FB /* QuartzCore.framework in Frameworks */,
+				DAE7DBA316821B8900C3E7FB /* UIKit.framework in Frameworks */,
+				DAE7DBA416821B8900C3E7FB /* Foundation.framework in Frameworks */,
+				DAE7DBA516821B8900C3E7FB /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8C45D8014DF822D00F12A1D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -96,6 +140,8 @@
 				F877BEFF14E2B5F20076B1C6 /* UIView+Screenshot.h */,
 				F877BF0014E2B5F20076B1C6 /* UIView+Screenshot.m */,
 				F84CDB2A15E917C500DBA1C1 /* PaperFoldConstants.h */,
+				DAE7DB84168207EA00C3E7FB /* SinglePaperFoldView.h */,
+				DAE7DB85168207EA00C3E7FB /* SinglePaperFoldView.m */,
 			);
 			path = PaperFold;
 			sourceTree = "<group>";
@@ -114,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				F8C45D8314DF822D00F12A1D /* PaperFold.app */,
+				DAE7DBAC16821B8900C3E7FB /* SinglePaperFold.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -138,6 +185,9 @@
 				F8C45D9714DF822D00F12A1D /* AppDelegate.m */,
 				F8DB47A814E0A3E400067048 /* DemoRootViewController.h */,
 				F8DB47A914E0A3E400067048 /* DemoRootViewController.m */,
+				DAE7DBB61682215200C3E7FB /* SinglePaperViewController.h */,
+				DAE7DBB71682215200C3E7FB /* SinglePaperViewController.m */,
+				DAE7DBB81682215200C3E7FB /* SinglePaperViewController.xib */,
 				F877BEF214E2B5F20076B1C6 /* PaperFold */,
 				F8C45D8E14DF822D00F12A1D /* Supporting Files */,
 			);
@@ -147,6 +197,8 @@
 		F8C45D8E14DF822D00F12A1D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DAE7DBBD1682289600C3E7FB /* miao.png */,
+				DAE7DBAF16821BCF00C3E7FB /* SinglePaperFold-Info.plist */,
 				F8C45D8F14DF822D00F12A1D /* PaperFold-Info.plist */,
 				F8C45D9014DF822D00F12A1D /* InfoPlist.strings */,
 				F8C45D9314DF822D00F12A1D /* main.m */,
@@ -158,6 +210,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DAE7DB9216821B8900C3E7FB /* SinglePaperFold */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAE7DBA916821B8900C3E7FB /* Build configuration list for PBXNativeTarget "SinglePaperFold" */;
+			buildPhases = (
+				DAE7DB9316821B8900C3E7FB /* Sources */,
+				DAE7DB9F16821B8900C3E7FB /* Frameworks */,
+				DAE7DBA616821B8900C3E7FB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SinglePaperFold;
+			productName = PaperFold;
+			productReference = DAE7DBAC16821B8900C3E7FB /* SinglePaperFold.app */;
+			productType = "com.apple.product-type.application";
+		};
 		F8C45D8214DF822D00F12A1D /* PaperFold */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F8C45D9B14DF822D00F12A1D /* Build configuration list for PBXNativeTarget "PaperFold" */;
@@ -197,11 +266,24 @@
 			projectRoot = "";
 			targets = (
 				F8C45D8214DF822D00F12A1D /* PaperFold */,
+				DAE7DB9216821B8900C3E7FB /* SinglePaperFold */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DAE7DBA616821B8900C3E7FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAE7DBA716821B8900C3E7FB /* InfoPlist.strings in Resources */,
+				DAE7DBA816821B8900C3E7FB /* Default-568h@2x.png in Resources */,
+				DAE7DBB016821BCF00C3E7FB /* SinglePaperFold-Info.plist in Resources */,
+				DAE7DBBA1682215300C3E7FB /* SinglePaperViewController.xib in Resources */,
+				DAE7DBBE1682289600C3E7FB /* miao.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8C45D8114DF822D00F12A1D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -214,6 +296,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DAE7DB9316821B8900C3E7FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAE7DB9416821B8900C3E7FB /* main.m in Sources */,
+				DAE7DB9516821B8900C3E7FB /* AppDelegate.m in Sources */,
+				DAE7DB9716821B8900C3E7FB /* FacingView.m in Sources */,
+				DAE7DB9816821B8900C3E7FB /* FoldView.m in Sources */,
+				DAE7DB9916821B8900C3E7FB /* MultiFoldView.m in Sources */,
+				DAE7DB9A16821B8900C3E7FB /* PaperFoldView.m in Sources */,
+				DAE7DB9B16821B8900C3E7FB /* ShadowView.m in Sources */,
+				DAE7DB9C16821B8900C3E7FB /* TouchThroughUIView.m in Sources */,
+				DAE7DB9D16821B8900C3E7FB /* UIView+Screenshot.m in Sources */,
+				DAE7DB9E16821B8900C3E7FB /* SinglePaperFoldView.m in Sources */,
+				DAE7DBB91682215300C3E7FB /* SinglePaperViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8C45D7F14DF822D00F12A1D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -228,6 +328,7 @@
 				F877BF0514E2B5F20076B1C6 /* ShadowView.m in Sources */,
 				F877BF0614E2B5F20076B1C6 /* TouchThroughUIView.m in Sources */,
 				F877BF0714E2B5F20076B1C6 /* UIView+Screenshot.m in Sources */,
+				DAE7DB86168207EA00C3E7FB /* SinglePaperFoldView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +346,37 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		DAE7DBAA16821B8900C3E7FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PaperFold/PaperFold-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/PaperFold/SinglePaperFold-Info.plist";
+				OTHER_CFLAGS = "-DSINGLE_PAPER_FOLD";
+				PRODUCT_NAME = SinglePaperFold;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DAE7DBAB16821B8900C3E7FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: buUuk private limited";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PaperFold/PaperFold-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/PaperFold/SinglePaperFold-Info.plist";
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-DSINGLE_PAPER_FOLD",
+				);
+				PRODUCT_NAME = SinglePaperFold;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9806D7FE-4AB9-493C-AD7B-ED64E700C58C";
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		F8C45D9914DF822D00F12A1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -319,6 +451,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DAE7DBA916821B8900C3E7FB /* Build configuration list for PBXNativeTarget "SinglePaperFold" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAE7DBAA16821B8900C3E7FB /* Debug */,
+				DAE7DBAB16821B8900C3E7FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F8C45D7D14DF822C00F12A1D /* Build configuration list for PBXProject "PaperFold" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
