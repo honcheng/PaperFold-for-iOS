@@ -12,7 +12,7 @@
 @interface SinglePaperViewController : UIViewController
 
 @property (weak, nonatomic) SinglePaperFoldView *singlePaperFoldView;
-@property (weak, nonatomic) IBOutlet UIImageView *contentView;
+@property (strong, nonatomic) IBOutlet UIView *contentView;
 
 - (IBAction)changeFoldOrUnfold:(id)sender;
 

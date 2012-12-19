@@ -29,6 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor darkGrayColor];
     SinglePaperFoldView *singlePaperFoldView = [[SinglePaperFoldView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height) foldDirection:FoldDirectionHorizontalRightToLeft folds:4 pullFactor:0.9];
     [singlePaperFoldView setContent:self.contentView];
     singlePaperFoldView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
@@ -44,6 +45,7 @@
 
 - (void)viewDidUnload {
     [self setSinglePaperFoldView:nil];
+    [self setContentView:nil];
     [super viewDidUnload];
 }
 

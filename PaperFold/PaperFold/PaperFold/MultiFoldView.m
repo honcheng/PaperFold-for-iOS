@@ -28,6 +28,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         
         _useOptimizedScreenshot = YES;
         _foldDirection = foldDirection;

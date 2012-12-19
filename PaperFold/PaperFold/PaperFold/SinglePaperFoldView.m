@@ -20,6 +20,7 @@
 - (id)initWithFrame:(CGRect)frame foldDirection:(FoldDirection)foldDirection folds:(int)folds pullFactor:(float)factor {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         _multiFoldView = [[MultiFoldView alloc] initWithFrame:frame foldDirection:foldDirection folds:folds pullFactor:factor];
         [self addSubview:_multiFoldView];
     }
