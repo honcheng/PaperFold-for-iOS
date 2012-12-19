@@ -66,12 +66,21 @@
 
 - (void)unfoldView:(NSTimer*)timer {
     if (self.multiFoldView.foldDirection == FoldDirectionHorizontalLeftToRight) {
-        float x = self.multiFoldView.offset + (self.multiFoldView.frame.size.width - self.multiFoldView.offset)/8;
+        float x = self.multiFoldView.offset + (self.multiFoldView.frame.size.width - self.multiFoldView.offset) / 8;
         if (x > self.multiFoldView.frame.size.width - 3) {
             [timer invalidate];
             x = self.multiFoldView.frame.size.width;
         }
         [self.multiFoldView unfoldWithParentOffset:x];
+    }
+    else if (self.multiFoldView.foldDirection == FoldDirectionHorizontalRightToLeft) {
+        float x = self.multiFoldView.offset + (self.multiFoldView.frame.size.width - self.multiFoldView.offset) / 8;
+        if (x > self.multiFoldView.frame.size.width - 3) {
+            [timer invalidate];
+            x = self.multiFoldView.frame.size.width;
+        }
+        [self.multiFoldView unfoldWithParentOffset:x];
+        [self.multiFoldView setTransform:CGAffineTransformMakeTranslation(self.multiFoldView.frame.size.width - self.multiFoldView.offset, 0)];
     }
 }
 
