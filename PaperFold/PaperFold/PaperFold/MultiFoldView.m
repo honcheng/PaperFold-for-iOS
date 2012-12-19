@@ -57,6 +57,7 @@
                 [self addSubview:foldView];
             }
         }
+        [self showFolds:NO];
         [self setAutoresizesSubviews:YES];
     }
     return self;
@@ -316,7 +317,7 @@
 - (void)foldDidClosed
 {
     [self.contentViewHolder setHidden:YES];
-    [self showFolds:YES];
+    [self showFolds:NO];
 }
 
 // when fold is about to be opened, make sure content view is hidden, and show fold
