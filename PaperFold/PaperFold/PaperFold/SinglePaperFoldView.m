@@ -65,22 +65,24 @@
 }
 
 - (void)unfoldView:(NSTimer*)timer {
-    if (self.multiFoldView.foldDirection == FoldDirectionHorizontalLeftToRight) {
+    if (self.multiFoldView.foldDirection == FoldDirectionHorizontalLeftToRight || self.multiFoldView.foldDirection == FoldDirectionHorizontalRightToLeft) {
         float x = self.multiFoldView.offset + (self.multiFoldView.frame.size.width - self.multiFoldView.offset) / 8;
         if (x > self.multiFoldView.frame.size.width - 3) {
             [timer invalidate];
             x = self.multiFoldView.frame.size.width;
         }
         [self.multiFoldView unfoldWithParentOffset:x];
+        if (self.multiFoldView.foldDirection == FoldDirectionHorizontalRightToLeft) {
+            [self.multiFoldView setTransform:CGAffineTransformMakeTranslation(self.multiFoldView.frame.size.width - self.multiFoldView.offset, 0)];
+        }
     }
-    else if (self.multiFoldView.foldDirection == FoldDirectionHorizontalRightToLeft) {
-        float x = self.multiFoldView.offset + (self.multiFoldView.frame.size.width - self.multiFoldView.offset) / 8;
-        if (x > self.multiFoldView.frame.size.width - 3) {
+    else if (self.multiFoldView.foldDirection == FoldDirectionVerticalBottomToTop) {
+        float y = self.multiFoldView.offset + (self.multiFoldView.frame.size.height - self.multiFoldView.offset) / 8;
+        if (y > self.multiFoldView.frame.size.height - 3) {
             [timer invalidate];
-            x = self.multiFoldView.frame.size.width;
+            y = self.multiFoldView.frame.size.height;
         }
-        [self.multiFoldView unfoldWithParentOffset:x];
-        [self.multiFoldView setTransform:CGAffineTransformMakeTranslation(self.multiFoldView.frame.size.width - self.multiFoldView.offset, 0)];
+        [self.multiFoldView unfoldWithParentOffset:y];
     }
 }
 
