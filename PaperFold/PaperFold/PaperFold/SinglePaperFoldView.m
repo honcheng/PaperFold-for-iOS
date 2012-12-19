@@ -90,7 +90,32 @@
 }
 
 - (void)restoreView:(NSTimer *)timer {
-    
+    if (self.multiFoldView.foldDirection == FoldDirectionHorizontalLeftToRight || self.multiFoldView.foldDirection == FoldDirectionHorizontalRightToLeft) {
+        float x = self.multiFoldView.offset - self.multiFoldView.offset / 8;
+        if (x < 3) {
+            [timer invalidate];
+            x = 0;
+        }
+        [self.multiFoldView unfoldWithParentOffset:x];
+        if (self.multiFoldView.foldDirection == FoldDirectionHorizontalRightToLeft) {
+            [self.multiFoldView setTransform:CGAffineTransformMakeTranslation(self.multiFoldView.frame.size.width - self.multiFoldView.offset, 0)];
+        }
+    }
+    else if (self.multiFoldView.foldDirection == FoldDirectionVerticalBottomToTop || self.multiFoldView.foldDirection == FoldDirectionVerticalTopToBottom) {
+        float y = self.multiFoldView.offset - self.multiFoldView.offset / 8;
+        if (y <  3) {
+            [timer invalidate];
+            y = 0;
+        }
+        [self.multiFoldView unfoldWithParentOffset:y];
+        if (self.multiFoldView.foldDirection == FoldDirectionVerticalTopToBottom) {
+            [self.multiFoldView setTransform:CGAffineTransformMakeTranslation(0, - (self.multiFoldView.frame.size.height - self.multiFoldView.offset))];
+        }
+    }
+}
+
+- (FoldState)foldState {
+    return self.multiFoldView.state;
 }
 
 @end

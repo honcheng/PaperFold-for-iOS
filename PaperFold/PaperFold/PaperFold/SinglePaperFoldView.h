@@ -13,11 +13,15 @@
 
 - (id)initWithFrame:(CGRect)frame foldDirection:(FoldDirection)foldDirection folds:(int)folds pullFactor:(float)factor;
 
+#pragma mark Getter & Setter
+- (void)setContent:(UIView *)contentView;
+
+#pragma mark Unfold & fold
 - (void)unfoldWithParentOffset:(float)offset;
 - (void)unfoldViewToFraction:(CGFloat)fraction;
 
-- (void)setContent:(UIView *)contentView;
-
 - (void)unfoldPaper:(BOOL)unfold Animation:(BOOL)animation;
+
+- (FoldState)foldState;
 
 @end

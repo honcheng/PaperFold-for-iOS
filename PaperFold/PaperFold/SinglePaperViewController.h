@@ -14,4 +14,6 @@
 @property (weak, nonatomic) SinglePaperFoldView *singlePaperFoldView;
 @property (weak, nonatomic) IBOutlet UIImageView *contentView;
 
+- (IBAction)changeFoldOrUnfold:(id)sender;
+
 @end
