@@ -28,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    SinglePaperFoldView *singlePaperFoldView = [[SinglePaperFoldView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height) foldDirection:FoldDirectionVerticalBottomToTop folds:4 pullFactor:0.9];
+    SinglePaperFoldView *singlePaperFoldView = [[SinglePaperFoldView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height) foldDirection:FoldDirectionVerticalTopToBottom folds:4 pullFactor:0.9];
     [singlePaperFoldView setContent:self.contentView];
     singlePaperFoldView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:singlePaperFoldView];

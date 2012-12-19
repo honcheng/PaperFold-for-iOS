@@ -76,13 +76,16 @@
             [self.multiFoldView setTransform:CGAffineTransformMakeTranslation(self.multiFoldView.frame.size.width - self.multiFoldView.offset, 0)];
         }
     }
-    else if (self.multiFoldView.foldDirection == FoldDirectionVerticalBottomToTop) {
+    else if (self.multiFoldView.foldDirection == FoldDirectionVerticalBottomToTop || self.multiFoldView.foldDirection == FoldDirectionVerticalTopToBottom) {
         float y = self.multiFoldView.offset + (self.multiFoldView.frame.size.height - self.multiFoldView.offset) / 8;
         if (y > self.multiFoldView.frame.size.height - 3) {
             [timer invalidate];
             y = self.multiFoldView.frame.size.height;
         }
         [self.multiFoldView unfoldWithParentOffset:y];
+        if (self.multiFoldView.foldDirection == FoldDirectionVerticalTopToBottom) {
+            [self.multiFoldView setTransform:CGAffineTransformMakeTranslation(0, - (self.multiFoldView.frame.size.height - self.multiFoldView.offset))];
+        }
     }
 }
 
