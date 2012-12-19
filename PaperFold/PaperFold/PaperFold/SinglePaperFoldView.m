@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        _multiFoldView = [[MultiFoldView alloc] initWithFrame:frame foldDirection:foldDirection folds:folds pullFactor:factor];
+        _multiFoldView = [[MultiFoldView alloc] initWithFrame:self.bounds foldDirection:foldDirection folds:folds pullFactor:factor];
         [self addSubview:_multiFoldView];
     }
     return self;
