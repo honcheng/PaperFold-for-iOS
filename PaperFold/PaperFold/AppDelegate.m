@@ -9,6 +9,10 @@
 #import "AppDelegate.h"
 #import "DemoRootViewController.h"
 
+#ifdef SINGLE_PAPER_FOLD
+#import "SinglePaperViewController.h"
+#endif
+
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -20,7 +24,11 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+#ifdef SINGLE_PAPER_FOLD
+    SinglePaperViewController *paper = [[SinglePaperViewController alloc] initWithNibName:@"SinglePaperViewController" bundle:nil];
+#else
     DemoRootViewController *paper = [[DemoRootViewController alloc] init];
+#endif
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:paper];
     [navController setNavigationBarHidden:YES];
     [self.window setRootViewController:navController];

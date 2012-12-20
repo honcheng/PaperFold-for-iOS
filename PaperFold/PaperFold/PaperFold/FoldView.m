@@ -47,7 +47,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        self.backgroundColor = [UIColor clearColor];
         _useOptimizedScreenshot = YES;
         _foldDirection = foldDirection;
         
@@ -69,6 +69,7 @@
             [_leftView.layer setAnchorPoint:CGPointMake(0.0, 0.5)];
             [self addSubview:_leftView];
             [_leftView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.05],[UIColor colorWithWhite:0 alpha:0.6], nil]];
+            _leftView.backgroundColor = [UIColor clearColor];
             
             // set anchor point of the rightView to the right edge
             _rightView = [[FacingView alloc] initWithFrame:CGRectMake(-1*frame.size.width/4,0,frame.size.width/2,frame.size.height)];
@@ -76,6 +77,7 @@
             [_rightView.layer setAnchorPoint:CGPointMake(1.0, 0.5)];
             [self addSubview:_rightView];
             [_rightView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.9],[UIColor colorWithWhite:0 alpha:0.55], nil]];
+            _rightView.backgroundColor = [UIColor clearColor];
             
             // set perspective of the transformation
             CATransform3D transform = CATransform3DIdentity;
@@ -86,7 +88,7 @@
             [_leftView.layer setTransform:CATransform3DMakeRotation((M_PI / 2), 0, 1, 0)];
             [_rightView.layer setTransform:CATransform3DMakeRotation((M_PI / 2), 0, 1, 0)];
         }
-        else if (self.foldDirection==FoldDirectionVertical)
+        else if (self.foldDirection==FoldDirectionVerticalBottomToTop || self.foldDirection == FoldDirectionVerticalTopToBottom)
         {
             // set anchor point of the leftView to the left edge
             _bottomView = [[FacingView alloc] initWithFrame:CGRectMake(0,3*frame.size.height/4,frame.size.width,frame.size.height/2) foldDirection:FoldDirectionVertical];
@@ -94,6 +96,7 @@
             [_bottomView.layer setAnchorPoint:CGPointMake(0.5, 1.0)];
             [self addSubview:_bottomView];
             [_bottomView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.05],[UIColor colorWithWhite:0 alpha:0.6], nil]];
+            _bottomView.backgroundColor = [UIColor clearColor];
             
             // set anchor point of the rightView to the right edge
             _topView = [[FacingView alloc] initWithFrame:CGRectMake(0,3*frame.size.height/4,frame.size.width,frame.size.height/2) foldDirection:FoldDirectionVertical];
@@ -101,6 +104,7 @@
             [_topView.layer setAnchorPoint:CGPointMake(0.5, 0.0)];
             [self addSubview:_topView];
             [_topView.shadowView setColorArrays:[NSArray arrayWithObjects:[UIColor colorWithWhite:0 alpha:0.9],[UIColor colorWithWhite:0 alpha:0.55], nil]];
+            _topView.backgroundColor = [UIColor clearColor];
             
             // set perspective of the transformation
             CATransform3D transform = CATransform3DIdentity;
@@ -117,6 +121,16 @@
         [_contentView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     }
     return self;
+}
+
+- (CGSize)realSize {
+    if (self.foldDirection == FoldDirectionHorizontalLeftToRight || self.foldDirection == FoldDirectionHorizontalRightToLeft) {
+        return CGSizeMake(self.leftView.frame.size.width + self.rightView.frame.size.width, self.frame.size.height);
+    }
+    else if (self.foldDirection == FoldDirectionVerticalBottomToTop || self.foldDirection == FoldDirectionVerticalTopToBottom) {
+        return CGSizeMake(self.frame.size.width, self.topView.frame.size.height + self.bottomView.frame.size.height);
+    }
+    return CGSizeZero;
 }
 
 - (void)unfoldViewToFraction:(CGFloat)fraction
@@ -140,7 +154,7 @@
         [self.leftView.shadowView setAlpha:1-fraction];
         [self.rightView.shadowView setAlpha:1-fraction];
     }
-    else if (self.foldDirection==FoldDirectionVertical)
+    else if (self.foldDirection==FoldDirectionVerticalBottomToTop || self.foldDirection == FoldDirectionVerticalTopToBottom)
     {
         float delta = asinf(fraction);
         
@@ -172,7 +186,7 @@
         if (fraction < 0) fraction = 0;
         if (fraction > 1) fraction = 1;
     }
-    else if (self.foldDirection==FoldDirectionVertical)
+    else if (self.foldDirection==FoldDirectionVerticalBottomToTop || self.foldDirection == FoldDirectionVerticalTopToBottom)
     {
         fraction = offset / self.frame.size.height;
         if (fraction < 0) fraction = -1*fraction;
@@ -218,13 +232,13 @@
         
         [self unfoldViewToFraction:fraction];
     }
-    else if (self.foldDirection==FoldDirectionVertical)
+    else if (self.foldDirection==FoldDirectionVerticalBottomToTop || self.foldDirection == FoldDirectionVerticalTopToBottom)
     {
         fraction = offset / self.frame.size.height;
         if (fraction < 0) fraction = -1*fraction;
         if (fraction > 1) fraction = 1;
+        [self unfoldViewToFraction:fraction];
     }
-    [self unfoldViewToFraction:fraction];
 }
 
 - (void)setImage:(UIImage*)image
@@ -240,7 +254,7 @@
         [self.rightView.layer setContents:(__bridge id)imageRef2];
         CFRelease(imageRef2);
     }
-    else if (self.foldDirection==FoldDirectionVertical)
+    else if (self.foldDirection==FoldDirectionVerticalBottomToTop || self.foldDirection == FoldDirectionVerticalTopToBottom)
     {
         CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, image.size.height*image.scale/2, image.size.width*image.scale, image.size.height*image.scale/2));
         [self.bottomView.layer setContents:(__bridge id)imageRef];
@@ -274,7 +288,7 @@
         [self.leftView setHidden:!show];
         [self.rightView setHidden:!show];
     }
-    else if (self.foldDirection==FoldDirectionVertical)
+    else if (self.foldDirection==FoldDirectionVerticalBottomToTop || self.foldDirection == FoldDirectionVerticalTopToBottom)
     {
         [self.topView setHidden:!show];
         [self.bottomView setHidden:!show];

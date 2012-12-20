@@ -44,7 +44,7 @@
         
 		_gradient = [CAGradientLayer layer];
 		[_gradient setFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
-        if (foldDirection==FoldDirectionVertical)
+        if (foldDirection == FoldDirectionVerticalBottomToTop || foldDirection == FoldDirectionVerticalTopToBottom)
         {
             [_gradient setStartPoint:CGPointMake(0, 1)];
             [_gradient setEndPoint:CGPointMake(0, 0)];
