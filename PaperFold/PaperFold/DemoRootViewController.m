@@ -109,6 +109,7 @@
         
 #warning disabling scroll, requires tapping cell twice to select cells. to be fixed
         [_centerTableView setScrollEnabled:NO];
+        //[_paperFoldView setEnableHorizontalEdgeDragging:YES];
     }
     return self;
 }

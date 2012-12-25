@@ -85,7 +85,7 @@
 
 - (void)setContent:(UIView *)contentView
 {
-    if ([contentView isKindOfClass:[MKMapView class]]) _shouldTakeScreenshotBeforeUnfolding = YES;
+    if ([contentView isKindOfClass:NSClassFromString(@"MKMapView")]) _shouldTakeScreenshotBeforeUnfolding = YES;
     
     // set the content view
     self.contentViewHolder = [[UIView alloc] initWithFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
@@ -128,15 +128,19 @@
         for (int i=0; i<self.numberOfFolds; i++)
         {
             CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(foldWidth*i*image.scale, 0, foldWidth*image.scale, image.size.height*image.scale));
-            UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
-            CFRelease(imageRef);
-            FoldView *foldView = nil;
-            if (self.foldDirection==FoldDirectionHorizontalLeftToRight) {
-                foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG + (self.numberOfFolds - 1) - i];
-            } else {
-                foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
+            if (imageRef)
+            {
+                UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+                CFRelease(imageRef);
+                FoldView *foldView = nil;
+                if (self.foldDirection==FoldDirectionHorizontalLeftToRight) {
+                    foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG + (self.numberOfFolds - 1) - i];
+                } else {
+                    foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
+                }
+                [foldView setImage:croppedImage];
             }
-            [foldView setImage:croppedImage];
+            
         }
     }
     else if (self.foldDirection==FoldDirectionVertical)
@@ -145,10 +149,13 @@
         for (int i=0; i<self.numberOfFolds; i++)
         {
             CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, foldHeight*(self.numberOfFolds-i-1)*image.scale, image.size.width*image.scale, foldHeight*image.scale));
-            UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
-            CFRelease(imageRef);
-            FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
-            [foldView setImage:croppedImage];
+            if (imageRef)
+            {
+                UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+                CFRelease(imageRef);
+                FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
+                [foldView setImage:croppedImage];
+            }
         }
     }
 }

@@ -95,6 +95,7 @@ Apps that uses PaperFold
 , [LargeType](https://itunes.apple.com/sg/app/largetype-full-screen-text/id568459406)
 , [NextRide](https://itunes.apple.com/us/app/nextride-singapore-public/id565103559) 
 , [SG NextBus](https://itunes.apple.com/sg/app/sg-nextbus/id361404839)
+, [Hangzhou Metro](https://itunes.apple.com/cn/app/hang-zhou-de-tie/id518531257?mt=8)
 
 [Contact me](http://twitter.com/honcheng) if you want your app listed here. Thanks 
 
