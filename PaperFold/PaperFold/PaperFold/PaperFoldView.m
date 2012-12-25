@@ -189,6 +189,8 @@
     // cancel gesture if another animation has not finished yet
     if ([self.animationTimer isValid]) return;
 
+    BOOL isVoiceOverRunning = UIAccessibilityIsVoiceOverRunning();
+    
     if ([gesture state]==UIGestureRecognizerStateBegan)
     {
         CGPoint velocity = [gesture velocityInView:self];
@@ -197,6 +199,25 @@
             if (self.state==PaperFoldStateDefault)
             {
                 self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionHorizontal;
+                
+                if (isVoiceOverRunning)
+                {
+                    if (velocity.x>0)
+                    {
+                        [self setPaperFoldState:PaperFoldStateLeftUnfolded animated:YES];
+                    }
+                    else if (velocity.x<0)
+                    {
+                        [self setPaperFoldState:PaperFoldStateRightUnfolded animated:YES];
+                    }
+                }
+            }
+            else
+            {
+                if (isVoiceOverRunning)
+                {
+                    [self setPaperFoldState:PaperFoldStateDefault animated:YES];
+                }
             }
         }
         else
@@ -207,7 +228,7 @@
             }
         }
     }
-    else
+    else if (!isVoiceOverRunning)
     {
         if (self.paperFoldInitialPanDirection==PaperFoldInitialPanDirectionHorizontal)
         {
