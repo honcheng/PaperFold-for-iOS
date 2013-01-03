@@ -566,6 +566,8 @@
     [self.leftFoldView setHidden:YES];
     [self.rightFoldView setHidden:YES];
     
+    self.paperFoldInitialPanDirection=PaperFoldInitialPanDirectionVertical;
+    
     CGAffineTransform transform = [self.contentView transform];
     float y = transform.ty - (self.bottomFoldView.frame.size.height+transform.ty)/4;
     transform = CGAffineTransformMakeTranslation(0, y);
@@ -622,6 +624,8 @@
     [self.bottomFoldView setHidden:NO];
     [self.leftFoldView setHidden:YES];
     [self.rightFoldView setHidden:YES];
+    
+    self.paperFoldInitialPanDirection=PaperFoldInitialPanDirectionVertical;
     
     CGAffineTransform transform = [self.contentView transform];
     float y = transform.ty + (self.topFoldView.frame.size.height-transform.ty)/8;
