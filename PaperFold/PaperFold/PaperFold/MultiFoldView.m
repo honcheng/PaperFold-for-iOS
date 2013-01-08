@@ -90,7 +90,7 @@
     // set the content view
     self.contentViewHolder = [[UIView alloc] initWithFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
     //[self.contentView setFrame:CGRectMake(0,0,contentView.frame.size.width,contentView.frame.size.height)];
-    [self.contentViewHolder setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleWidth];
+    [self.contentViewHolder setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     // place content view below folds
     [self insertSubview:self.contentViewHolder atIndex:0];
     [self.contentViewHolder addSubview:contentView];
