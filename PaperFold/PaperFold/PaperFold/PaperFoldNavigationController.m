@@ -39,7 +39,7 @@
     _rightViewController = rightViewController;
     
     [self.rightViewController.view setFrame:CGRectMake(0,0,width,[self.view bounds].size.height)];
-    [self.paperFoldView setRightFoldContentView:self.rightViewController.view foldCount:rightViewFoldCount pullFactor:rightViewFoldCount];
+    [self.paperFoldView setRightFoldContentView:self.rightViewController.view foldCount:rightViewFoldCount pullFactor:rightViewPullFactor];
 }
 
 - (void)setLeftViewController:(UIViewController *)leftViewController width:(float)width
