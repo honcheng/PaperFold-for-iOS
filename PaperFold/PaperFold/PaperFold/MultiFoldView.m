@@ -78,6 +78,55 @@
     return self;
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+
+    CGRect contentViewHolderFrame = [self.contentViewHolder frame];
+    contentViewHolderFrame.size.height = frame.size.height;
+    [self.contentViewHolder setFrame:contentViewHolderFrame];
+    
+    
+    for (UIView *subview in self.subviews)
+    {
+        if ([subview isKindOfClass:[FoldView class]]) [subview removeFromSuperview];
+    }
+    
+    for (int i=0; i<_numberOfFolds; i++)
+    {
+        if (_foldDirection==FoldDirectionHorizontalLeftToRight || _foldDirection==FoldDirectionHorizontalRightToLeft)
+        {
+            float foldWidth = frame.size.width/self.numberOfFolds;
+            FoldView *foldView = [[FoldView alloc] initWithFrame:CGRectMake(foldWidth*i,0,foldWidth,frame.size.height) foldDirection:_foldDirection];
+            [foldView setTag:FOLDVIEW_TAG+i];
+            [self addSubview:foldView];
+        }
+        else if (_foldDirection==FoldDirectionVertical)
+        {
+            float foldHeight = frame.size.height/self.numberOfFolds;
+            FoldView *foldView = [[FoldView alloc] initWithFrame:CGRectMake(0,foldHeight*(self.numberOfFolds-i)-foldHeight,frame.size.width,foldHeight) foldDirection:_foldDirection];
+            [foldView setTag:FOLDVIEW_TAG+i];
+            [self addSubview:foldView];
+        }
+    }
+    
+//    for (int i=0; i<_numberOfFolds; i++)
+//    {
+//        if (_foldDirection==FoldDirectionHorizontalLeftToRight || _foldDirection==FoldDirectionHorizontalRightToLeft)
+//        {
+//            float foldWidth = frame.size.width/self.numberOfFolds;
+//            FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
+//            [foldView setFrame:CGRectMake(foldWidth*i,0,foldWidth,frame.size.height)];
+//        }
+//        else if (_foldDirection==FoldDirectionVertical)
+//        {
+//            float foldHeight = frame.size.height/self.numberOfFolds;
+//            FoldView *foldView = (FoldView*)[self viewWithTag:FOLDVIEW_TAG+i];
+//            [foldView setFrame:CGRectMake(0,foldHeight*(self.numberOfFolds-i)-foldHeight,frame.size.width,foldHeight)];
+//        }
+//    }
+}
+
 - (id)initWithFrame:(CGRect)frame folds:(int)folds pullFactor:(float)factor
 {
     return [self initWithFrame:frame foldDirection:FoldDirectionHorizontalRightToLeft folds:folds pullFactor:factor];
