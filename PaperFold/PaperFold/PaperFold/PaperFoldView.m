@@ -351,7 +351,10 @@
         // use NSTimer to create manual animation to restore view
         
         //[self setPaperFoldState:PaperFoldStateDefault];
-        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
+        if ((y > 0 && self.enableTopFoldDragging) || (y < 0 && self.enableBottomFoldDragging))
+        {
+            self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
+        }
         
 
     }
@@ -414,7 +417,10 @@
         // after panning completes
         // if offset does not exceed threshold
         // use NSTimer to create manual animation to restore view
-        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
+        if ((x < 0 && self.enableLeftFoldDragging) || (x > 0 && self.enableLeftFoldDragging))
+        {
+            self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
+        }
         
         //self.paperFoldInitialPanDirection = PaperFoldInitialPanDirectionNone;
     }
@@ -786,23 +792,23 @@
     [self setIsAutomatedFolding:YES];
     if (state==PaperFoldStateDefault)
     {
-        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:_timerStepDuration target:self selector:@selector(restoreView:) userInfo:nil repeats:YES];
     }
     else if (state==PaperFoldStateLeftUnfolded)
     {
-        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:_timerStepDuration target:self selector:@selector(unfoldLeftView:) userInfo:nil repeats:YES];
     }
     else if (state==PaperFoldStateRightUnfolded)
     {
-        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:_timerStepDuration target:self selector:@selector(unfoldRightView:) userInfo:nil repeats:YES];
     }
     else if (state==PaperFoldStateTopUnfolded)
     {
-        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldTopView:) userInfo:nil repeats:YES];
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:_timerStepDuration target:self selector:@selector(unfoldTopView:) userInfo:nil repeats:YES];
     }
     else if (state==PaperFoldStateBottomUnfolded)
     {
-        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(unfoldBottomView:) userInfo:nil repeats:YES];
+        self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:_timerStepDuration target:self selector:@selector(unfoldBottomView:) userInfo:nil repeats:YES];
     }
 }
 

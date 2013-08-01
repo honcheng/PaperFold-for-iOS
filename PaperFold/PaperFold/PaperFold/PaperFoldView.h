@@ -56,6 +56,8 @@ typedef void (^CompletionBlock)();
 // timer to animate folds after gesture ended
 // manual animation with NSTimer is required to sync the offset of the contentView, with the folding of views
 @property (nonatomic, strong) NSTimer *animationTimer;
+// step duration for animating a frame of paper-folding. Default value is 0.01;
+@property(nonatomic) CGFloat timerStepDuration;
 // the fold view on the left and bottom
 @property (nonatomic, strong) FoldView *bottomFoldView;
 // the fold view on the left
