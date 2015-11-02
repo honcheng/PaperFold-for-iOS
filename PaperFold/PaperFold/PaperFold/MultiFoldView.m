@@ -99,6 +99,7 @@
             float foldWidth = frame.size.width/self.numberOfFolds;
             FoldView *foldView = [[FoldView alloc] initWithFrame:CGRectMake(foldWidth*i,0,foldWidth,frame.size.height) foldDirection:_foldDirection];
             [foldView setTag:FOLDVIEW_TAG+i];
+            [foldView setHidden:!self.contentViewHolder.hidden];
             [self addSubview:foldView];
         }
         else if (_foldDirection==FoldDirectionVertical)
@@ -106,6 +107,7 @@
             float foldHeight = frame.size.height/self.numberOfFolds;
             FoldView *foldView = [[FoldView alloc] initWithFrame:CGRectMake(0,foldHeight*(self.numberOfFolds-i)-foldHeight,frame.size.width,foldHeight) foldDirection:_foldDirection];
             [foldView setTag:FOLDVIEW_TAG+i];
+            [foldView setHidden:!self.contentViewHolder.hidden];
             [self addSubview:foldView];
         }
     }

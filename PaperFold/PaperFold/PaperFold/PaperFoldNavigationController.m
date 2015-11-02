@@ -14,6 +14,36 @@
 
 @implementation PaperFoldNavigationController
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+
+    if (self.rootViewControllerID) {
+        self.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.rootViewControllerID];
+        [self initWithRootViewController:self.rootViewController];
+    }
+    if (self.leftViewControllerID) {
+        int leftWidth = 150;
+        
+        if (self.leftViewWidth) leftWidth = [self.leftViewWidth intValue];
+
+        self.leftViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.leftViewControllerID];
+        [self setLeftViewController:self.leftViewController width:leftWidth];
+    }
+    if (self.rightViewControllerID) {
+        int rightWidth = 250;
+        int rightFoldCount = 3;
+        float rightPullFactor = .9f;
+        
+        if (self.rightViewWidth) rightWidth = [self.rightViewWidth intValue];
+        if (self.rightViewFoldCount) rightFoldCount = [self.rightViewFoldCount intValue];
+        if (self.rightViewPullFactor) rightPullFactor = [self.rightViewPullFactor floatValue];
+        
+        self.rightViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.rightViewControllerID];
+        [self setRightViewController:self.rightViewController width:rightWidth rightViewFoldCount:rightFoldCount rightViewPullFactor:rightPullFactor];
+    }
+    
+}
+
 - (id)initWithRootViewController:(UIViewController*)rootViewController
 {
     self = [super init];
@@ -39,7 +69,7 @@
     _rightViewController = rightViewController;
     
     [self.rightViewController.view setFrame:CGRectMake(0,0,width,[self.view bounds].size.height)];
-    [self.paperFoldView setRightFoldContentView:self.rightViewController.view foldCount:rightViewFoldCount pullFactor:rightViewFoldCount];
+    [self.paperFoldView setRightFoldContentView:self.rightViewController.view foldCount:rightViewFoldCount pullFactor:rightViewPullFactor];
 }
 
 - (void)setLeftViewController:(UIViewController *)leftViewController width:(float)width

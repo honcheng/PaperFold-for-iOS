@@ -10,6 +10,9 @@
 #import "PaperFoldView.h"
 
 @interface PaperFoldNavigationController : UIViewController <PaperFoldViewDelegate>
+@property (nonatomic, copy, readonly) NSString *rootViewControllerID, *leftViewControllerID, *rightViewControllerID;
+@property (nonatomic, copy, readonly) NSNumber *leftViewWidth;
+@property (nonatomic, copy, readonly) NSNumber *rightViewWidth, *rightViewFoldCount, *rightViewPullFactor;
 @property (nonatomic, strong) UIViewController *rootViewController, *leftViewController, *rightViewController;
 @property (nonatomic, strong) PaperFoldView *paperFoldView;
 - (id)initWithRootViewController:(UIViewController*)rootViewController;
