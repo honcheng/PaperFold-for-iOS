@@ -24,7 +24,7 @@
     if (self.leftViewControllerID) {
         int leftWidth = 150;
         
-        if (self.leftViewWidth) leftWidth = (int)self.leftViewWidth;
+        if (self.leftViewWidth) leftWidth = [self.leftViewWidth intValue];
 
         self.leftViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.leftViewControllerID];
         [self setLeftViewController:self.leftViewController width:leftWidth];
@@ -34,8 +34,8 @@
         int rightFoldCount = 3;
         float rightPullFactor = .9f;
         
-        if (self.rightViewWidth) rightWidth = (int)self.rightViewWidth;
-        if (self.rightViewFoldCount) rightFoldCount = (int)self.rightViewFoldCount;
+        if (self.rightViewWidth) rightWidth = [self.rightViewWidth intValue];
+        if (self.rightViewFoldCount) rightFoldCount = [self.rightViewFoldCount intValue];
         if (self.rightViewPullFactor) rightPullFactor = [self.rightViewPullFactor floatValue];
         
         self.rightViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.rightViewControllerID];
